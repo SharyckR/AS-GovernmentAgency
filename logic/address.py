@@ -1,60 +1,59 @@
 from pydantic import BaseModel
+from typing import Optional
 
 
-class VehicleHistory(BaseModel):
+class Address(BaseModel):
     """
-    Class to represent vehicle history.
+    Class to represent an address.
 
     Attributes:
-        information_person (object): Information about the person associated with the vehicle.
-        vehicle (str): The make or manufacturer of the vehicle.
-        type_vehicle (str): The type or category of the vehicle.
-        description_vehicle (str): A description or additional information about the vehicle.
-        plate_vehicle (str): The license plate number of the vehicle.
+        street (str): Street name.
+        number (int): Address number.
+        apartment (int): Apartment number.
+        postal_code (int): Postal code.
+        locality (str): City or locality.
+        department (str): Department or state.
+        country (str): Country.
 
     Methods:
-        __str__(): Returns a string representation of the VehicleHistory object.
-        __eq__(other): Compares two VehicleHistory objects to check if they are equal.
+        __str__(): Returns a string representation of the address.
+        __eq__(other): Compares two addresses to check if they are equal.
     """
 
-    information_person: str  # Information about the person associated with the vehicle
-    vehicle: str  # The make or manufacturer of the vehicle
-    type_vehicle: str  # The type or category of the vehicle
-    description_vehicle: str  # A description or additional information about the vehicle
-    plate_vehicle: str  # The license plate number of the vehicle
+    street: str
+    number: int
+    apartment: Optional[str]
+    postal_code: int
+    locality: str
+    department: str
+    country: str
 
-    def __str__(self) -> str:
+    def __str__(self):
         """
-        Returns a string representation of the VehicleHistory object.
+        Returns a string representation of the address.
         """
-        return '({0},{1},{2},{3},{4})'.format(
-            self.information_person, self.vehicle, self.type_vehicle,
-            self.description_vehicle, self.plate_vehicle
+        apartment_str = str(self.apartment) if self.apartment is not None else "None"
+
+        return '({0}, {1}, {2}, {3}, {4}, {5}, {6})'.format(
+            self.street, self.number, apartment_str,
+            self.postal_code, self.locality, self.department,
+            self.country
         )
 
-    def __eq__(self, other) -> bool:
+    def __eq__(self, other):
         """
-        Compares two VehicleHistory objects to check if they are equal.
+        Compares two addresses to check if they are equal.
 
         Args:
-            other (VehicleHistory): Another VehicleHistory object to compare.
+            other (Address): Another address to compare.
 
         Returns:
-            bool: True if the VehicleHistory objects are equal, False otherwise.
+            bool: True if the addresses are equal, False otherwise.
         """
-        if isinstance(other, VehicleHistory):
-            return (self.information_person == other.information_person and self.vehicle == other.vehicle and
-                    self.type_vehicle == other.type_vehicle and
-                    self.description_vehicle == other.description_vehicle and
-                    self.plate_vehicle == other.plate_vehicle)
+        if isinstance(other, Address):
+            return (self.street == other.street and self.number == other.number and
+                    self.apartment == other.apartment and
+                    self.postal_code == other.postal_code and self.locality == other.locality and
+                    self.department == other.department and self.country == other.country)
         else:
             return False
-
-
-if __name__ == '__main__':
-    vehicleH1 = VehicleHistory(information_person='Person()', vehicle='Y', type_vehicle='Toyota',
-                               description_vehicle='Red and small', plate_vehicle='10200220')
-    vehicleH2 = VehicleHistory(information_person='Person()', vehicle='Y', type_vehicle='Ferrari',
-                               description_vehicle='black and large', plate_vehicle='1020030')
-    print(vehicleH1.__str__())
-    print(vehicleH1.__eq__(vehicleH2))
