@@ -52,3 +52,30 @@ class MedicalHistory(BaseModel):
                'Date treatment: {5} - {6} - {7}'.format(self.dni_person, self.type_blood, self.pathologies,
                                                         self.description_treatment, self.doctor_charge, self.year,
                                                         self.month, self.day)
+
+
+if __name__ == '__main__':
+    # Prueba Medical History class
+
+    medical_history1 = MedicalHistory(dni_person=1043638720, type_blood="O+", pathologies="None",
+                                      description_treatment="Wound healing", doctor_charge="Kevin Rodriguez",
+                                      day=5, month=10, year=2023, date_treatment=date(2023, 10, 5))
+
+    medical_history2 = MedicalHistory(dni_person=45761873, type_blood="A+", pathologies="Hypertension",
+                                      description_treatment="Control", doctor_charge="Tomas Antonio",
+                                      day=31, month=7, year=2023, date_treatment=date(2023, 7, 31))
+
+    medical_history1_str = medical_history1.__str__()
+    print(f"Medical History 1 Information \n {medical_history1_str}")
+    medical_history2_str = medical_history2.__str__()
+    print(f"Case History 2 Information \n {medical_history2_str}")
+
+    are_equal_medical_history = medical_history1.__eq__(medical_history2)
+    print(f"Are equals ? \n {are_equal_medical_history} \n\n")
+
+medical_history1 = MedicalHistory(dni_person=1043638720, type_blood="O+", pathologies="None",
+                                  description_treatment="Wound healing", doctor_charge="Kevin Rodriguez",
+                                  day=5, month=10, year=2023, date_treatment=date(2023, 10, 5))
+medical_history2 = MedicalHistory(dni_person=45761873, type_blood="A+", pathologies="Hypertension",
+                                  description_treatment="Control", doctor_charge="Tomas Antonio",
+                                  day=31, month=7, year=2023, date_treatment=date(2023, 7, 31))
