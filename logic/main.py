@@ -1,4 +1,6 @@
 from datetime import date
+
+from logic.fine_history import FineHistory
 from logic.person import Person
 from logic.address import Address
 from logic.agency import Agency
@@ -63,6 +65,19 @@ if __name__ == '__main__':
     are_equal_edu_history = edu_history1.__eq__(edu_history2)
     # print(are_equal_edu_history)
 
+    # Prueba Fine History class
+
+    fine_history1 = FineHistory(dni_person=1043638720, fine="Yes", type_fine="Fine for high speed",
+                                description_fine="The person was going more than 100k/h", paid="No")
+
+    fine_history2 = FineHistory(dni_person=45761873, fine="No", type_fine="", description_fine="", paid="")
+
+    fine_history_str = fine_history1.__str__()
+    print(fine_history_str)
+
+    are_equal_fine_history = fine_history1.__eq__(fine_history2)
+    print(are_equal_fine_history)
+
     # Prueba Mediator clas
 
     mediator = Mediator()
@@ -73,24 +88,39 @@ if __name__ == '__main__':
     mediator.add_education_history(edu_history1)
     mediator.add_education_history(edu_history2)
 
-    # Enlazar las historias educativas con las personas
-    mediator.link_education_history_to_person(edu_history1, person1)
-    mediator.link_education_history_to_person(edu_history2, person2)
+    mediator.add_fine_history(fine_history1)
+    mediator.add_fine_history(fine_history2)
 
-    print(person1.education_history)
-    print(person2.education_history)
+    # mediator.link_education_history_to_person(edu_history1, person1)
+    # mediator.link_education_history_to_person(edu_history2, person2)
 
-    # Buscar una historia educativa por DNI
-    found_education_history = mediator.get_education_history_by_dni(1043638720)
+    mediator.link_fine_history_to_person(fine_history1, person1)
+    mediator.link_fine_history_to_person(fine_history2, person2)
+
+    # print(person1.education_history)
+    # print(person2.education_history)
+
+    print(person1.fine_history)
+    print(person2.fine_history)
+
+    """ found_person = mediator.get_person_by_dni(1043638720)
+    if found_person:
+        print(found_person.name)
+    else:
+        print("Person not found") """
+
+    """ found_education_history = mediator.get_education_history_by_dni(1043638720)
     if found_education_history:
         print(found_education_history.dni_person, found_education_history.education,
               found_education_history.name_institution, found_education_history.location,
               found_education_history.title_obtained, found_education_history.date_graduation)
     else:
-        print("Education history not found")
+        print("Education history not found") """
 
-    found_person = mediator.get_person_by_dni(1043638720)
-    if found_person:
-        print(found_person.name)
+    found_fine_history = mediator.get_fine_history_by_dni(1043638720)
+    if found_fine_history:
+        print(found_fine_history.dni_person, found_fine_history.fine,
+              found_fine_history.type_fine, found_fine_history.description_fine,
+              found_fine_history.paid)
     else:
-        print("Person not found")
+        print("Fine history not found")
