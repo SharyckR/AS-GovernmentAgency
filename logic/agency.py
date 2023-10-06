@@ -1,6 +1,4 @@
-from datetime import date
-from pydantic import BaseModel
-from logic.address import Address
+from logic.address import Address, address2
 
 
 class Agency(BaseModel):
@@ -48,3 +46,27 @@ class Agency(BaseModel):
         return 'Id Agency: {0}, Nit: {1}, Business Name: {2}, Contact (Phone or E-mail): {3}, Address: {4}, ' \
                'Date Actualization: {5} - {6} - {7}'.format(self.id_agency, self.nit, self.business_name, self.contact,
                                                             self.address, self.day, self.month, self.year)
+
+
+if __name__ == '__main__':
+    # Prueba Agency class
+
+    agency1 = Agency(id_agency=965816, nit=52173, business_name="Tiserium", contact="31459750", address=address2,
+                     day=5, month=10, year=2023)
+
+    agency2 = Agency(id_agency=965816, nit=52173, business_name="Tiserium", contact="31459750", address=address2,
+                     day=5, month=10, year=2023)
+
+    agency1_str = agency1.__str__()
+    print(f"Agency 1 Information \n {agency1_str}")
+    agency2_str = agency2.__str__()
+    print(f"Agency 2 Information \n {agency2_str}")
+
+    are_equal_agency = agency1.__eq__(agency2)
+    print(f"Are equals ? \n {are_equal_agency} \n\n")
+
+agency1 = Agency(id_agency=965816, nit=52173, business_name="Tiserium", contact="31459750", address=address2,
+                 day=5, month=10, year=2023)
+
+agency2 = Agency(id_agency=965816, nit=52173, business_name="Tiserium", contact="31459750", address=address2,
+                 day=5, month=10, year=2023)
