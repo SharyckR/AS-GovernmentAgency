@@ -57,3 +57,25 @@ class Address(BaseModel):
                     self.department == other.department and self.country == other.country)
         else:
             return False
+
+
+if __name__ == '__main__':
+    # Prueba Address class
+
+    address1 = Address(street='The cross', number=10, apartment=None, postal_code=1010, locality='Aqueous',
+                       department='Cundinamarca', country='Colombia')
+    address2 = Address(street='The cross', number=10, apartment=None, postal_code=1010, locality='Aqueous',
+                       department='Cundinamarca', country='Colombia')
+
+    address1_str = address1.__str__()
+    print(f"Address 1 Information \n {address1_str}")
+    address2_str = address2.__str__()
+    print(f"Address 2 Information \n {address2}")
+
+    are_equal_address = address1.__eq__(address2)
+    print(f"Are equals ? \n {are_equal_address} \n\n")
+
+address1 = Address(street='The cross', number=10, apartment=None, postal_code=1010, locality='Aqueous',
+                   department='Cundinamarca', country='Colombia')
+address2 = Address(street='The cross', number=10, apartment=None, postal_code=1010, locality='Aqueous',
+                   department='Cundinamarca', country='Colombia')
