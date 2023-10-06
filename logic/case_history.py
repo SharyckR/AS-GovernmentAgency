@@ -58,3 +58,28 @@ class CaseHistory(BaseModel):
         return 'Dni: {0}, Case: {1}, Arrested: {2}, Description of case: {3}, Jurisdiction: {4}, ' \
                'Date arrested: {5} - {6} - {7}'.format(self.dni_person, self.case, self.arrested, description_case_str,
                                                        jurisdiction_str, year_int, month_int, day_int)
+
+
+if __name__ == '__main__':
+    # Prueba Case History class
+
+    case_history1 = CaseHistory(dni_person=1043638720, case="Heist", arrested="Yes",
+                                description_case="Stole a necklace", jurisdiction="Disciplinary", day=15, year=2021,
+                                month=5)
+
+    case_history2 = CaseHistory(dni_person=45761873, case="Public disturbance", arrested="No", description_case=None,
+                                jurisdiction=None, day=None, year=None, month=None)
+
+    case_history1_str = case_history1.__str__()
+    print(f"Case History 1 Information \n {case_history1_str}")
+    case_history2_str = case_history2.__str__()
+    print(f"Case History 2 Information \n {case_history2_str}")
+
+    are_equal_case_history = case_history1.__eq__(case_history2)
+    print(f"Are equals ? \n {are_equal_case_history} \n\n")
+
+case_history1 = CaseHistory(dni_person=1043638720, case="Heist", arrested="Yes", description_case="Stole a necklace",
+                            jurisdiction="Disciplinary", day=15, year=2021,
+                            month=5)
+case_history2 = CaseHistory(dni_person=45761873, case="Public disturbance", arrested="No", description_case=None,
+                            jurisdiction=None, day=None, year=None, month=None)
