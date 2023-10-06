@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import Optional
 
 
 class FineHistory(BaseModel):
@@ -20,9 +21,9 @@ class FineHistory(BaseModel):
 
     dni_person: int = 0
     fine: str = "Yes or No"
-    type_fine: str = "Type of Fine"
-    description_fine: str = "Description of the Fine"
-    paid: str = "Yes or No"
+    type_fine: Optional[str] = "Type of Fine"
+    description_fine: Optional[str] = "Description of the Fine"
+    paid: Optional[str] = "Yes or No"
     mediator: object = None
 
     def __init__(self, mediator=None, **data):
@@ -41,6 +42,11 @@ class FineHistory(BaseModel):
         :returns: string fine history
         :rtype: str
         """
+
+        type_fine_str = str(self.type_fine) if self.type_fine is not None else "None"
+        description_fine_str = str(self.description_fine) if self.description_fine is not None else "None"
+        paid_str = str(self.paid) if self.paid is not None else "None"
+        
         return 'Dni: {0}, Has the person received a fine?: {1}, Type of the fine: {2}, Description of the fine: {3}, ' \
-               'Has the person paid a fine?: {4}'.format(self.dni_person, self.fine, self.type_fine,
-                                                         self.description_fine, self.paid)
+               'Has the person paid a fine?: {4}'.format(self.dni_person, self.fine, type_fine_str,
+                                                         description_fine_str, paid_str)
