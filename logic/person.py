@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from logic.address import Address
+from logic.address import Address, address1, address2
 from logic.case_history import CaseHistory
 from logic.education_history import EducationHistory
 from logic.fine_history import FineHistory
@@ -66,3 +66,25 @@ class Person(BaseModel):
             format(self.id_person, self.type_id, self.dni, self.name, self.last_name, self.phone, self.address,
                    self.education_history, self.fine_history, self.vehicle_history, self.case_history,
                    self.medical_history)
+
+
+if __name__ == '__main__':
+    # Prueba Person class
+
+    person1 = Person(id_person=5120167, type_id="C.C", dni=1043638720, name="Julio", last_name="Rodriguez",
+                     phone=3154528309, address=address1)
+    person2 = Person(id_person=1247913, type_id="C.C", dni=45761873, name="Luis", last_name="Castro",
+                     phone=3214464925, address=address2)
+
+    person1_str = person1.__str__()
+    print(f"Person 1 Information \n {person1_str}")
+    person2_str = person2.__str__()
+    print(f"Person 2 Information \n {person2_str}")
+
+    are_equal_person = person1.__eq__(person2)
+    print(f"Are equals ? \n {are_equal_person} \n\n")
+
+person1 = Person(id_person=5120167, type_id="C.C", dni=1043638720, name="Julio", last_name="Rodriguez",
+                 phone=3154528309, address=address1)
+person2 = Person(id_person=1247913, type_id="C.C", dni=45761873, name="Luis", last_name="Castro",
+                 phone=3214464925, address=address2)
