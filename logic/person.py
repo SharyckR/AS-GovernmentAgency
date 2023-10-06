@@ -1,6 +1,10 @@
 from pydantic import BaseModel
 from logic.address import Address
+from logic.case_history import CaseHistory
 from logic.education_history import EducationHistory
+from logic.fine_history import FineHistory
+from logic.medical_history import MedicalHistory
+from logic.vehicle_history import VehicleHistory
 
 
 class Person(BaseModel):
@@ -16,6 +20,10 @@ class Person(BaseModel):
             phone (int): Phone of person.
             address (object): Address of person.
             education_history (object): Educational history of the person.
+            fine_history (object): Fine history of the person.
+            case_history (object): Case history of the person.
+            medical_history (object): Medical history of the person.
+            vehicle_history (object): Vehicle history of the person.
             mediator (object): Mediator for managing interactions.
 
         Methods:
@@ -31,6 +39,10 @@ class Person(BaseModel):
     phone: int = 0
     address: object = Address
     education_history: object = EducationHistory
+    fine_history: object = FineHistory
+    vehicle_history: object = VehicleHistory
+    case_history: object = CaseHistory
+    medical_history: object = MedicalHistory
     mediator: object = None
 
     def __init__(self, mediator=None, **data):
@@ -49,6 +61,8 @@ class Person(BaseModel):
         :returns: string person
         :rtype: str
         """
-        return 'Id Person: {0}, Type Id: {1}, Dni: {2}, Full name: {3} {4}, Phone: {5}, Address: {6}, ' \
-               'Education History: {7}'.format(self.id_person, self.type_id, self.dni, self.name, self.last_name,
-                                               self.phone, self.address, self.education_history)
+        return 'Id Person: {0}, Type Id: {1}, Dni: {2}, Full name: {3} {4}, Phone: {5}, Address: {6}, Education ' \
+               'History: {7}, Fine History: {8}, Vehicle History: {9}, Case History: {10}, Medical History: {11}'.\
+            format(self.id_person, self.type_id, self.dni, self.name, self.last_name, self.phone, self.address,
+                   self.education_history, self.fine_history, self.vehicle_history, self.case_history,
+                   self.medical_history)
