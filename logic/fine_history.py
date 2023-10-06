@@ -46,7 +46,28 @@ class FineHistory(BaseModel):
         type_fine_str = str(self.type_fine) if self.type_fine is not None else "None"
         description_fine_str = str(self.description_fine) if self.description_fine is not None else "None"
         paid_str = str(self.paid) if self.paid is not None else "None"
-        
+
         return 'Dni: {0}, Has the person received a fine?: {1}, Type of the fine: {2}, Description of the fine: {3}, ' \
                'Has the person paid a fine?: {4}'.format(self.dni_person, self.fine, type_fine_str,
                                                          description_fine_str, paid_str)
+
+
+if __name__ == '__main__':
+    # Prueba Fine History class
+
+    fine_history1 = FineHistory(dni_person=1043638720, fine="Yes", type_fine="Fine for high speed",
+                                description_fine="The person was going more than 100k/h", paid="No")
+
+    fine_history2 = FineHistory(dni_person=45761873, fine="No", type_fine=None, description_fine=None, paid=None)
+
+    fine_history1_str = fine_history1.__str__()
+    print(f"Fine 1 Information \n {fine_history1_str}")
+    fine_history2_str = fine_history2.__str__()
+    print(f"Fine 2 Information \n {fine_history2_str}")
+
+    are_equal_fine_history = fine_history1.__eq__(fine_history2)
+    print(f"Are equals ? \n {are_equal_fine_history} \n\n")
+
+fine_history1 = FineHistory(dni_person=1043638720, fine="Yes", type_fine="Fine for high speed",
+                            description_fine="The person was going more than 100k/h", paid="No")
+fine_history2 = FineHistory(dni_person=45761873, fine="No", type_fine=None, description_fine=None, paid=None)
