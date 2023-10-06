@@ -1,6 +1,6 @@
 from datetime import date
 from pydantic import BaseModel
-from logic.address import Address
+from logic import address
 from typing import Optional
 
 
@@ -28,7 +28,7 @@ class EducationHistory(BaseModel):
     dni_person: int = 0
     education: Optional[str] = "Level of Education"
     name_institution: Optional[str] = "Institution Name"
-    location: Optional[object] = Address
+    location: Optional[object] = address.Address
     title_obtained: Optional[str] = "Title Obtained"
     day: Optional[int] = 1
     month: Optional[int] = 1
@@ -60,8 +60,31 @@ class EducationHistory(BaseModel):
         day_int = int(self.day) if self.day is not None else "None"
         month_int = int(self.month) if self.month is not None else "None"
         year_int = int(self.year) if self.year is not None else "None"
-        
+
         return 'Dni: {0}, Level of Education: {1}, Institution Name: {2}, Location: {3}, Title Obtained: {4}, ' \
                'Date Graduation: {5} - {6} - {7}'.format(self.dni_person, education_str, name_institution_str,
                                                          location_str, title_obtained_str, day_int,
                                                          month_int, year_int)
+
+
+if __name__ == '__main__':
+    # Prueba Educational History class
+
+    edu_history1 = EducationHistory(dni_person=1043638720, education="Secondary", name_institution="Collage",
+                                    location=address.address2, title_obtained="Graduated", day=13, month=10, year=2020)
+
+    edu_history2 = EducationHistory(dni_person=45761873, education=None, name_institution=None,
+                                    location=None, title_obtained=None, day=None, month=None, year=None)
+
+    edu_history1_str = edu_history1.__str__()
+    print(f"Education 1 Information \n {edu_history1_str}")
+    edu_history2_str = edu_history2.__str__()
+    print(f"Education 2 Information \n {edu_history2_str}")
+
+    are_equal_edu_history = edu_history1.__eq__(edu_history2)
+    print(f"Are equals ? \n {are_equal_edu_history} \n\n")
+
+edu_history1 = EducationHistory(dni_person=1043638720, education="Secondary", name_institution="Collage",
+                                location=address.address2, title_obtained="Graduated", day=13, month=10, year=2020)
+edu_history2 = EducationHistory(dni_person=45761873, education=None, name_institution=None, location=None,
+                                title_obtained=None, day=None, month=None, year=None)
