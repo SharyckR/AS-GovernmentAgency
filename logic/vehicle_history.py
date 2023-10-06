@@ -65,3 +65,26 @@ class VehicleHistory(BaseModel):
                     self.plate_vehicle == other.plate_vehicle)
         else:
             return False
+
+
+if __name__ == '__main__':
+    # Prueba Vehicle History class
+
+    vehicle_history1 = VehicleHistory(dni_person=1043638720, licence="Yes", type_licence="A2", vehicle="Yes",
+                                      type_vehicle="Car", description_vehicle="Mazda2", plate_vehicle="BJU-521")
+
+    vehicle_history2 = VehicleHistory(dni_person=45761873, licence="No", type_licence=None, vehicle="Yes",
+                                      type_vehicle="Motorcycle", description_vehicle="Honda", plate_vehicle="PLO-154")
+
+    vehicle1_history_str = vehicle_history1.__str__()
+    print(f"Vehicle History 1 Information \n {vehicle1_history_str}")
+    vehicle2_history_str = vehicle_history1.__str__()
+    print(f"Vehicle History 2 Information \n {vehicle2_history_str}")
+
+    are_equal_vehicle_history = vehicle_history1.__eq__(vehicle_history2)
+    print(f"Are equals ? \n {are_equal_vehicle_history} \n\n")
+
+vehicle_history1 = VehicleHistory(dni_person=1043638720, licence="Yes", type_licence="A2", vehicle="Yes",
+                                  type_vehicle="Car", description_vehicle="Mazda2", plate_vehicle="BJU-521")
+vehicle_history2 = VehicleHistory(dni_person=45761873, licence="No", type_licence=None, vehicle="Yes",
+                                  type_vehicle="Motorcycle", description_vehicle="Honda", plate_vehicle="PLO-154")
