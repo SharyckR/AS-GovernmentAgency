@@ -1,8 +1,9 @@
 from datetime import date
 from pydantic import BaseModel
+from logic.abstract_history import AbstractHistory
 
 
-class MedicalHistory(BaseModel):
+class MedicalHistory(AbstractHistory, BaseModel):
     """
      Class used to represent a Medical History
 

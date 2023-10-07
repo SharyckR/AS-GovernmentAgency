@@ -27,8 +27,8 @@ class EducationalAgency(Agency):
         :rtype: str
         """
         return 'Agency: {0}, Education History {1}, Academic achievements {2}'.format(
-            self.agency.__str__(),
-            self.education_history.__str__(),
+            self.agency,
+            self.education_history,
             self.academic_achievements
         )
 

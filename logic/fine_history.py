@@ -1,8 +1,9 @@
 from pydantic import BaseModel
 from typing import Optional
+from logic.abstract_history import AbstractHistory
 
 
-class FineHistory(BaseModel):
+class FineHistory(AbstractHistory, BaseModel):
     """
      Class used to represent a Fine History
 
@@ -20,7 +21,7 @@ class FineHistory(BaseModel):
     """
 
     dni_person: int = 1
-    fine: str = "Yes or No"
+    fine: Optional[str] = "Yes or No"
     type_fine: Optional[str] = "Type of Fine"
     description_fine: Optional[str] = "Description of the Fine"
     paid: Optional[str] = "Yes or No"

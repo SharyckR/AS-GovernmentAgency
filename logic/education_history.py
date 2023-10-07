@@ -1,10 +1,11 @@
 from datetime import date
 from pydantic import BaseModel
+from logic.abstract_history import AbstractHistory
 from logic.address import Address, address1, address2
 from typing import Optional
 
 
-class EducationHistory(BaseModel):
+class EducationHistory(AbstractHistory, BaseModel):
     """
      Class used to represent an Educational History
 

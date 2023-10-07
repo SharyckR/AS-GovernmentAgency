@@ -1,9 +1,10 @@
 from datetime import date
 from pydantic import BaseModel
 from typing import Optional
+from logic.abstract_history import AbstractHistory
 
 
-class CaseHistory(BaseModel):
+class CaseHistory(AbstractHistory, BaseModel):
     """
      Class used to represent a Medical History
 
@@ -64,11 +65,11 @@ class CaseHistory(BaseModel):
 if __name__ == '__main__':
     # Prueba Case History class
 
-    case_history1 = CaseHistory(information_person=102132323, case="Heist", arrested="Yes",
+    case_history1 = CaseHistory(dni_person=102132323, case="Heist", arrested="Yes",
                                 description_case="Stole a necklace", jurisdiction="Disciplinary", day=15, year=2021,
                                 month=5)
 
-    case_history2 = CaseHistory(information_person=231231313, case="Public disturbance", arrested="No",
+    case_history2 = CaseHistory(dni_person=231231313, case="Public disturbance", arrested="No",
                                 description_case=None, jurisdiction=None, day=None, year=None, month=None)
 
     case_history1_str = case_history1.__str__()
@@ -79,8 +80,8 @@ if __name__ == '__main__':
     are_equal_case_history = case_history1.__eq__(case_history2)
     print(f"Are equals ? \n {are_equal_case_history} \n\n")
 
-case_history1 = CaseHistory(information_person=102132323, case="Heist", arrested="Yes",
+case_history1 = CaseHistory(dni_person=102132323, case="Heist", arrested="Yes",
                             description_case="Stole a necklace", jurisdiction="Disciplinary", day=15, year=2021,
                             month=5)
-case_history2 = CaseHistory(information_person=231231313, case="Public disturbance", arrested="No",
+case_history2 = CaseHistory(dni_person=231231313, case="Public disturbance", arrested="No",
                             description_case=None, jurisdiction=None, day=None, year=None, month=None)

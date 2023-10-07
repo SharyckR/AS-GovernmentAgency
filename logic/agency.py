@@ -1,9 +1,10 @@
+from logic.abstract_agency import AbstractAgency
 from logic.address import Address, address2
 from logic.legal_entity import LegalEntity
 from datetime import date
 
 
-class Agency(LegalEntity):
+class Agency(AbstractAgency, LegalEntity):
     """
      Class used to represent an Agency
 
@@ -48,7 +49,8 @@ class Agency(LegalEntity):
         return 'Id Agency: {0}, Entity: {1}, Nit: {2}, Business Name: {3}, Contact (Phone or E-mail): {4}, ' \
                'Address: {5}, Date Actualization: {6} - {7} - {8}'.format(self.id_entity, self.entity.__str__(),
                                                                           self.nit, self.business_name, self.contact,
-                                                                          self.address.__str__(), self.day, self.month, self.year)
+                                                                          self.address.__str__(), self.day, self.month,
+                                                                          self.year)
 
 
 if __name__ == '__main__':

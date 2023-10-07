@@ -19,7 +19,7 @@ class TransportAgency(Agency):
         __eq__(other): Compares if two instances of TransportAgency are equal.
     """
     agency: object = Agency
-    licence: bool = False
+    licence: str = 'Yes or No'
     type_licence: str = 'A1, A2, B1, B2, B3, C1, C2, C3'
     information_vehicle: object = VehicleHistory
     information_fine: object = FineHistory
@@ -53,9 +53,9 @@ class TransportAgency(Agency):
 
 
 if __name__ == '__main__':
-    transport1 = TransportAgency(agency=agency1, licence=False, type_licence='A1',
+    transport1 = TransportAgency(agency=agency1, licence='Yes', type_licence='A1',
                                  information_vehicle=vehicle_history1, information_fine=fine_history1)
-    transport2 = TransportAgency(agency=agency2, licence=True, type_licence='B2',
+    transport2 = TransportAgency(agency=agency2, licence='No', type_licence='B2',
                                  information_vehicle=vehicle_history2, information_fine=fine_history2)
 
     print(f"Transport Agency 1 Information \n {transport1}")
@@ -64,7 +64,7 @@ if __name__ == '__main__':
     are_equal_transport_agency = transport1.__eq__(transport2)
     print(f"Are equals ? \n {are_equal_transport_agency} \n\n")
 
-transport1 = TransportAgency(agency=agency1, licence=False, type_licence='A1',
+transport1 = TransportAgency(agency=agency1, licence='Yes', type_licence='A1',
                              information_vehicle=vehicle_history1, information_fine=fine_history1)
-transport2 = TransportAgency(agency=agency2, licence=True, type_licence='B2',
+transport2 = TransportAgency(agency=agency2, licence='No', type_licence='B2',
                              information_vehicle=vehicle_history2, information_fine=fine_history2)

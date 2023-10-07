@@ -1,8 +1,9 @@
 from pydantic import BaseModel
 from typing import Optional
+from logic.abstract_history import AbstractHistory
 
 
-class VehicleHistory(BaseModel):
+class VehicleHistory(AbstractHistory, BaseModel):
     """
     Class to represent vehicle history.
 
@@ -21,9 +22,9 @@ class VehicleHistory(BaseModel):
     """
 
     dni_person: int = 0
-    licence: str = "Yes or No"
+    licence: Optional[str] = "Yes or No"
     type_licence: Optional[str] = "A1 or A2 or B1 or B2 or B3 or C1 or C2 or C3"
-    vehicle: str = "Yes or No"
+    vehicle: Optional[str] = "Yes or No"
     type_vehicle: Optional[str] = "Car or Motorcycle"
     description_vehicle: Optional[str] = "Description of the Vehicle"
     plate_vehicle: Optional[str] = "Plate of the vehicle"

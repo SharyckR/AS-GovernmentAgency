@@ -1,4 +1,4 @@
-from entity import Entity
+from logic.entity import Entity
 
 
 class LegalEntity(Entity):
