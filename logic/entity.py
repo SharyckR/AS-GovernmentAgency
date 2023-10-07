@@ -1,14 +1,10 @@
 from pydantic import BaseModel
+from abc import ABC, abstractmethod
 
 
-class EntityFactory(BaseModel):
-    id_entity: int
-    type: str
+class Entity(ABC, BaseModel):
+    type: str = None
 
-    def __str__(self):
-        return '({0},{1})'.format(self.id_entity, self.type)
-
-    def __eq__(self, other):
-        if isinstance(other,EntityFactory):
-            return self.id_entity == other.id_entity and self.type == other.type
-        return False
+    @abstractmethod
+    def kind_of_entity(self):
+        pass
