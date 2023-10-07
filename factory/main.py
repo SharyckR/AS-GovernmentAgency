@@ -8,11 +8,9 @@ from logic.agency import agency1, agency2
 from logic.case_history import case_history1
 from logic.education_history import edu_history1
 from logic.fine_history import fine_history1
-# from logic.fine_history import fine_history1
 from logic.medical_history import medical_history1
 from logic.vehicle_history import vehicle_history1
 
-# from logic.vehicle_history import vehicle_history1
 
 if __name__ == '__main__':
     educational_factory = EducationalFactory()
