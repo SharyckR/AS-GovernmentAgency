@@ -47,7 +47,7 @@ class Agency(AbstractAgency, LegalEntity):
         :rtype: str
         """
         return 'Id Agency: {0}, Entity: {1}, Nit: {2}, Business Name: {3}, Contact (Phone or E-mail): {4}, ' \
-               'Address: {5}, Date Actualization: {6} - {7} - {8}'.format(self.id_entity, self.entity.__str__(),
+               'Address: {5}, Date Actualization: {6} - {7} - {8}'.format(self.id_entity, self.entity,
                                                                           self.nit, self.business_name, self.contact,
                                                                           self.address.__str__(), self.day, self.month,
                                                                           self.year)
@@ -70,7 +70,7 @@ if __name__ == '__main__':
     are_equal_agency = agency1.__eq__(agency2)
     print(f"Are equals ? \n {are_equal_agency} \n\n")
 
-agency1 = Agency(id_entity=965816, entity=LegalEntity(), nit=52173, business_name="Business Name", contact="31459750",
+agency1 = Agency(id_entity=965816, entity=LegalEntity(), nit=52173, business_name="Tis er ium", contact="3145975012",
                  address=address2, day=5, month=10, year=2023)
 
 agency2 = Agency(id_entity=965816,  entity=LegalEntity(), nit=52173, business_name="Business Name", contact="31459750",

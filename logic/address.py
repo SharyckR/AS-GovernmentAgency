@@ -9,8 +9,8 @@ class Address(BaseModel):
     Attributes:
         street (str): Street name.
         number (int): Address number.
-        apartment (int): Apartment number.
-        postal_code (int): Postal code.
+        apartment (str): Apartment number.
+        postal_code (str): Postal code.
         locality (str): City or locality.
         department (str): Department or state.
         country (str): Country.
@@ -22,7 +22,7 @@ class Address(BaseModel):
     street: str
     number: int
     apartment: Optional[str]
-    postal_code: int
+    postal_code: str
     locality: str
     department: str
     country: str
@@ -61,9 +61,9 @@ class Address(BaseModel):
 if __name__ == '__main__':
     # Prueba Address class
 
-    address1 = Address(street='The cross', number=10, apartment=None, postal_code=1010, locality='Aqueous',
+    address1 = Address(street='The cross', number=10, apartment=None, postal_code='1010', locality='Aqueous',
                        department='Cundinamarca', country='Colombia')
-    address2 = Address(street='The cross', number=10, apartment=None, postal_code=1010, locality='Aqueous',
+    address2 = Address(street='The cross', number=10, apartment=None, postal_code='1010', locality='Aqueous',
                        department='Cundinamarca', country='Colombia')
 
     address1_str = address1.__str__()
@@ -74,7 +74,7 @@ if __name__ == '__main__':
     are_equal_address = address1.__eq__(address2)
     print(f"Are equals ? \n {are_equal_address} \n\n")
 
-address1 = Address(street='The cross', number=10, apartment=None, postal_code=1010, locality='Aqueous',
-                   department='Cundinamarca', country='Colombia')
-address2 = Address(street='The cross', number=10, apartment=None, postal_code=1010, locality='Aqueous',
+address1 = Address(street='123 Main St', number=5, apartment='Apt 3B', postal_code='1010', locality='City Ville',
+                   department='State Ville', country='Country Land')
+address2 = Address(street='The cross', number=10, apartment=None, postal_code='1010', locality='Aqueous',
                    department='Cundinamarca', country='Colombia')
