@@ -75,7 +75,7 @@ class AgencyFlyweightFactory:
         Display the list of available flyweights.
         """
         count = len(self._flyweights)
-        print(f"AgencyFlyweightFactory: I have {count} flyweights:")
+        print(f"AgencyFlyweightFactory: I have {count} flyweights: ")
         print("\n".join(self._flyweights.keys()), end="")
 
 
