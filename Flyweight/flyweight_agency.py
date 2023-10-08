@@ -43,7 +43,7 @@ class AgencyFlyweightFactory:
     Class representing a factory for agency flyweight objects.
     """
     _flyweights: Dict[str, AgencyFlyweight] = {}
-    
+
     def __init__(self, initial_flyweights: List[List[str]]) -> None:
         """
         Constructor for the AgencyFlyweightFactory class.
