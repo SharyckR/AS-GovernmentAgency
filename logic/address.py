@@ -1,16 +1,15 @@
-from pydantic import BaseModel
 from typing import Optional
 
 
-class Address(BaseModel):
+class Address:
     """
     Class to represent an address.
 
     Attributes:
         street (str): Street name.
-        number (int): Address number.
-        apartment (int): Apartment number.
-        postal_code (int): Postal code.
+        number (str): Address number.
+        apartment (str): Apartment number.
+        postal_code (str): Postal code.
         locality (str): City or locality.
         department (str): Department or state.
         country (str): Country.
@@ -19,13 +18,16 @@ class Address(BaseModel):
         __str__(): Returns a string representation of the address.
         __eq__(other): Compares two addresses to check if they are equal.
     """
-    street: str
-    number: int
-    apartment: Optional[str]
-    postal_code: int
-    locality: str
-    department: str
-    country: str
+
+    def __init__(self, street: str, number: Optional[int], apartment: Optional[int], postal_code: Optional[int],
+                 locality: str, department: str, country: str) -> None:
+        self.street = street
+        self.number = number
+        self.apartment = apartment
+        self.postal_code = postal_code
+        self.locality = locality
+        self.department = department
+        self.country = country
 
     def __str__(self):
         """
