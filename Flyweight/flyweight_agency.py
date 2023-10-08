@@ -43,7 +43,7 @@ class AgencyFlyweightFactory:
     Class representing a factory for agency flyweight objects.
     """
     _flyweights: Dict[str, AgencyFlyweight] = {}
-
+    
     def __init__(self, initial_flyweights: List[List[str]]) -> None:
         """
         Constructor for the AgencyFlyweightFactory class.
@@ -63,13 +63,11 @@ class AgencyFlyweightFactory:
             AgencyFlyweight: Flyweight object.
         """
         key = get_key(shared_state)
-
         if not self._flyweights.get(key):
             print("AgencyFlyweightFactory: Can't find a flyweight, creating a new one.")
             self._flyweights[key] = AgencyFlyweight(shared_state)
         else:
             print("AgencyFlyweightFactory: Reusing an existing flyweight.")
-
         return self._flyweights[key]
 
     def list_flyweights(self) -> None:
