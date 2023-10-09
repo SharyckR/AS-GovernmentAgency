@@ -1,9 +1,6 @@
 # AS-GovernmentAgency
 About this project
 
-Like
-0
-
 A government agency operates legacy systems for program benefits, public records,
 constituent engagement, and case management systems built up over decades. Data is
 fragmented across systems, limiting insights and overview of operations. Changing systems
