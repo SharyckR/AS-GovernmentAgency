@@ -1,14 +1,14 @@
-from logic.agency import Agency, agency1, agency2
+from logic.agency_factory import AgencyFactory, agency1, agency2
 from logic.fine_history import FineHistory, fine_history1, fine_history2
 from logic.vehicle_history import VehicleHistory, vehicle_history1, vehicle_history2
 
 
-class TransportAgency(Agency):
+class TransportAgency(AgencyFactory):
     """
     Represents a transport agency.
 
     Attributes:
-        agency (object): The associated agency.
+        agency (object): The associated agency factory.
         licence (bool): Indicates if the agency has a license.
         type_licence (str): The type of license held by the agency.
         information_vehicle (object): Information about vehicles.
@@ -18,7 +18,7 @@ class TransportAgency(Agency):
         __str__(): Returns a formatted string with transport agency information.
         __eq__(other): Compares if two instances of TransportAgency are equal.
     """
-    agency: object = Agency
+    agency: object = AgencyFactory
     licence: str = 'Yes or No'
     type_licence: str = 'A1, A2, B1, B2, B3, C1, C2, C3'
     information_vehicle: object = VehicleHistory

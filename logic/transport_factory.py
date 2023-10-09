@@ -1,9 +1,8 @@
 from typing import Tuple, Optional
-
 from logic.abstract_factory import AbstractFactory
 from logic.abstract_agency import AbstractAgency
 from logic.abstract_history import AbstractHistory
-from logic.agency import Agency
+from logic.agency_factory import AgencyFactory
 from logic.fine_history import FineHistory
 from logic.transport_agency import TransportAgency
 from logic.vehicle_history import VehicleHistory
@@ -28,14 +27,14 @@ class TransportFactory(AbstractFactory):
                        mediator: object = None) -> Tuple[AbstractHistory, AbstractHistory]:
             Create an instance of VehicleHistory and FineHistory as a tuple.
     """
-    def create_agency(self, agency: Agency = None, licence: str = None, type_licence: str = None,
+    def create_agency(self, agency: AgencyFactory = None, licence: str = None, type_licence: str = None,
                       information_vehicle: VehicleHistory = None, information_fine: FineHistory = None
                       ) -> AbstractAgency:
         """
         Create an instance of a TransportAgency.
 
         Args:
-            agency (Agency): The agency associated with the transport agency.
+            agency (AgencyFactory): The agency associated with the transport agency.
             licence (bool): Whether a licence is held or not.
             type_licence (str): Type of licence.
             information_vehicle (VehicleHistory): Information about the vehicle history.

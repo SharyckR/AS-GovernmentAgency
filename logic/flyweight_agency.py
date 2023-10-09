@@ -4,7 +4,7 @@ from typing import List, Dict, Union
 from pydantic import BaseModel
 
 from logic.address import Address
-from logic.agency import Agency
+from logic.agency_factory import AgencyFactory
 
 
 class AgencyFlyweight(BaseModel):
@@ -13,11 +13,11 @@ class AgencyFlyweight(BaseModel):
     """
     shared_state: List[Union[str, int]]
 
-    def operation(self, unique_state: Agency) -> None:
+    def operation(self, unique_state: AgencyFactory) -> None:
         """
         Performs an operation with the shared state and unique state.
         Args:
-            unique_state (Agency): Unique state of the agency.
+            unique_state (AgencyFactory): Unique state of the agency factory.
         """
         shared_state_str = ", ".join(self.shared_state)
         unique_state_str = str(unique_state)
@@ -95,8 +95,8 @@ def add_agency_to_database(
         date_actualization (date): Actualization date (default: today's date).
     """
     print("\n\nClient: Adding an agency to the database.")
-    agency = Agency(id_entity=id_entity, nit=nit, business_name=business_name, contact=contact, address=address,
-                    day=day, month=month, year=year, date_actualization=date_actualization)
+    agency = AgencyFactory(id_entity=id_entity, nit=nit, business_name=business_name, contact=contact, address=address,
+                           day=day, month=month, year=year, date_actualization=date_actualization)
     flyweight = factory_add.get_flyweight([id_entity, nit, business_name, contact, address.__str__(),
                                            day, month, year, date_actualization])
     flyweight.operation(agency)

@@ -4,7 +4,7 @@ from logic.legal_entity import LegalEntity
 from datetime import date
 
 
-class Agency(AbstractAgency, LegalEntity):
+class AgencyFactory(AbstractAgency, LegalEntity):
     """
      Class used to represent an Agency
 
@@ -56,11 +56,11 @@ class Agency(AbstractAgency, LegalEntity):
 if __name__ == '__main__':
     # Prueba Agency class
 
-    agency1 = Agency(id_entity=965816, entity=LegalEntity(), nit=52173, business_name="Business Name",
-                     contact="31459750", address=address2, day=5, month=10, year=2023)
+    agency1 = AgencyFactory(id_entity=965816, entity=LegalEntity(), nit=52173, business_name="Business Name",
+                            contact="31459750", address=address2, day=5, month=10, year=2023)
 
-    agency2 = Agency(id_entity=965816, entity=LegalEntity(), nit=52173, business_name="Business Name",
-                     contact="31459750", address=address2, day=5, month=10, year=2023)
+    agency2 = AgencyFactory(id_entity=965816, entity=LegalEntity(), nit=52173, business_name="Business Name",
+                            contact="31459750", address=address2, day=5, month=10, year=2023)
 
     agency1_str = agency1.__str__()
     print(f"Agency 1 Information \n {agency1_str}")
@@ -70,8 +70,8 @@ if __name__ == '__main__':
     are_equal_agency = agency1.__eq__(agency2)
     print(f"Are equals ? \n {are_equal_agency} \n\n")
 
-agency1 = Agency(id_entity=965816, entity=LegalEntity(), nit=52173, business_name="Tis er ium", contact="3145975012",
-                 address=address2, day=5, month=10, year=2023)
+agency1 = AgencyFactory(id_entity=965816, entity=LegalEntity(), nit=52173, business_name="Tis er ium",
+                        contact="3145975012", address=address2, day=5, month=10, year=2023)
 
-agency2 = Agency(id_entity=965816,  entity=LegalEntity(), nit=52173, business_name="Business Name", contact="31459750",
-                 address=address2, day=5, month=10, year=2023)
+agency2 = AgencyFactory(id_entity=965816,  entity=LegalEntity(), nit=52173, business_name="Business Name",
+                        contact="31459750", address=address2, day=5, month=10, year=2023)

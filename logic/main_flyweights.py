@@ -2,7 +2,7 @@ from datetime import date
 from logic.flyweight_address import AddressFlyweightFactory, add_address_to_database
 from logic.flyweight_agency import AgencyFlyweightFactory, add_agency_to_database
 from logic.address import address1, address2
-from logic.agency import agency1
+from logic.agency_factory import agency1
 
 if __name__ == "__main__":
     factory = AddressFlyweightFactory()

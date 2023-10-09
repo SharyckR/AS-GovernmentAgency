@@ -4,7 +4,7 @@ from logic.health_factory import HealthFactory
 from logic.legal_factory import LegalFactory
 from logic.transport_factory import TransportFactory
 from logic.address import address1
-from logic.agency import agency1, agency2
+from logic.agency_factory import agency1, agency2
 from logic.case_history import case_history1
 from logic.education_history import edu_history1
 from logic.fine_history import fine_history1

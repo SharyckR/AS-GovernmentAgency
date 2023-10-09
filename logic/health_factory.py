@@ -2,7 +2,7 @@ from datetime import date
 from logic.abstract_factory import AbstractFactory
 from logic.abstract_agency import AbstractAgency
 from logic.abstract_history import AbstractHistory
-from logic.agency import Agency
+from logic.agency_factory import AgencyFactory
 from logic.health_agency import HealthAgency
 from logic.medical_history import MedicalHistory
 
@@ -24,12 +24,12 @@ class HealthFactory(AbstractFactory):
                        ) -> AbstractHistory:
             Create an instance of a MedicalHistory.
     """
-    def create_agency(self, agency: Agency = None, medical_history: MedicalHistory = None) -> AbstractAgency:
+    def create_agency(self, agency: AgencyFactory = None, medical_history: MedicalHistory = None) -> AbstractAgency:
         """
         Create an instance of a HealthAgency.
 
         Args:
-            agency (Agency): The agency associated with the health agency.
+            agency (AgencyFactory): The agency associated with the health agency.
             medical_history (MedicalHistory): The medical history of the agency.
 
         Returns:
