@@ -1,54 +1,95 @@
-from typing import List, Dict
-from typing import Optional
-from logic.address import Address, address1
+import json
+from typing import List, Dict, Optional, Union
+from pydantic import BaseModel
+from logic.address import Address
 
 
-class AddressFlyweight:
-    def __init__(self, shared_state: List[str]) -> None:
-        self._shared_state = shared_state
+class AddressFlyweight(BaseModel):
+    """
+    Class representing a flyweight object for addresses.
+    """
+    shared_state: List[Union[str, int]]
 
     def operation(self, unique_state: Address) -> None:
-        shared_state_str = ", ".join(str(item) for item in self._shared_state)
-        unique_state_str = str(unique_state)
+        """
+        Performs an operation with the shared state and unique state.
+        Args:
+            unique_state (Address): Unique state of the address.
+        """
+        shared_state_str = json.dumps(self.shared_state)
+        unique_state_str = json.dumps(unique_state.__str__())
         print(f"AddressFlyweight: Displaying shared ({shared_state_str}) and unique ({unique_state_str}) state.",
               end="")
 
 
-def get_key(state: List[object]) -> str:
-    state_str = [str(item) for item in state]
-    return "_".join(state_str)
+def get_key(state: List[Union[str, int]]) -> str:
+    """
+    Get the key from the state.
+    Args:
+        state (List[Union[str, int]]): State.
+    Returns:
+        str: Generated key.
+    """
+    return "_".join(map(str, state))
 
 
-class AddressFlyweightFactory:
-    _flyweights: Dict[str, AddressFlyweight] = {}
+class AddressFlyweightFactory(BaseModel):
+    """
+    Class representing a factory for address flyweight objects.
+    """
+    flyweights: Dict[str, AddressFlyweight] = {}
 
-    def __init__(self, initial_flyweights: List[List[str]]) -> None:
+    def assign_flyweights(self, initial_flyweights: List[List[Union[str, int]]]) -> None:
+        """
+        Assign initial flyweights.
+        Args:
+            initial_flyweights (List[List[Union[str, int]]]): List of initial states.
+        """
         for state in initial_flyweights:
             key = get_key(state)
-            self._flyweights[key] = AddressFlyweight(state)
+            self.flyweights[key] = AddressFlyweight(shared_state=state)
 
-    def get_flyweight(self, shared_state: List[str]) -> AddressFlyweight:
+    def get_flyweight(self, shared_state: List[Union[str, int]]) -> AddressFlyweight:
+        """
+        Get a flyweight object based on the shared state.
+        Args:
+            shared_state (List[Union[str, int]]): Shared state.
+        Returns:
+            AddressFlyweight: Flyweight object.
+        """
         key = get_key(shared_state)
-
-        if not self._flyweights.get(key):
+        if not self.flyweights.get(key):
             print("AddressFlyweightFactory: Can't find a flyweight, creating a new one.")
-            self._flyweights[key] = AddressFlyweight(shared_state)
+            self.flyweights[key] = AddressFlyweight(shared_state=shared_state)
         else:
             print("AddressFlyweightFactory: Reusing an existing flyweight.")
-
-        return self._flyweights[key]
+        return self.flyweights[key]
 
     def list_flyweights(self) -> None:
-        count = len(self._flyweights)
+        """
+        Display the list of available flyweights.
+        """
+        count = len(self.flyweights)
         print(f"AddressFlyweightFactory: I have {count} flyweights:")
-        print("\n".join(self._flyweights.keys()), end="")
+        print("\n".join(self.flyweights.keys()), end="")
 
 
 def add_address_to_database(
-    factory_add: AddressFlyweightFactory, street: str, number: Optional[int], apartment: Optional[int],
-        postal_code: Optional[str], locality: str, department: str, country: str
+        factory_add: AddressFlyweightFactory, street: str, number: int, apartment: Optional[str], postal_code: str,
+        locality: str, department: str, country: str
 ) -> None:
-
+    """
+    Add an address to the database.
+    Args:
+        factory_add (AddressFlyweightFactory): Flyweight factory.
+        street (str): Street.
+        number (int): Number.
+        apartment (Optional[str]): Apartment (optional).
+        postal_code (str): Postal code.
+        locality (str): Locality.
+        department (str): Department.
+        country (str): Country.
+    """
     if apartment is None:
         apartment = "None"
     else:
@@ -57,26 +98,5 @@ def add_address_to_database(
     print("\n\nClient: Adding an address to the database.")
     address = Address(street=street, number=number, apartment=apartment, postal_code=postal_code, locality=locality,
                       department=department, country=country)
-    flyweight = factory_add.get_flyweight([street, number, apartment, postal_code, locality, department, country])
+    flyweight = factory_add.get_flyweight([street, str(number), apartment, postal_code, locality, department, country])
     flyweight.operation(address)
-
-
-if __name__ == "__main__":
-    factory = AddressFlyweightFactory([
-        ["123 Main St", "5", "Apt 3B", "1010", "City Ville", "State Ville", "Country Land"],
-        ["456 Elm St", "10", "None", "2020", "Towns Ville", "State Ville", "Country Land"],
-        ["789 Oak St", "15", "Apt 2C", "3030", "Villa Getan", "State Ville", "Country Land"],
-    ])
-
-    factory.list_flyweights()
-
-    add_address_to_database(
-        factory, address1.street, address1.number, address1.apartment, address1.postal_code, address1.locality,
-        address1.department, address1.country)
-
-    add_address_to_database(
-        factory, "456 Elm St", 10, None, '2020', "Towns Ville", "State Ville", "Country Land")
-
-    print("\n")
-
-    factory.list_flyweights()

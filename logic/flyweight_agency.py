@@ -1,20 +1,17 @@
 from datetime import date
 from typing import List, Dict, Union
+
+from pydantic import BaseModel
+
 from logic.address import Address
 from logic.agency import Agency
 
 
-class AgencyFlyweight:
+class AgencyFlyweight(BaseModel):
     """
     Class representing a flyweight object for agencies.
     """
-    def __init__(self, shared_state: List[Union[str, int]]) -> None:
-        """
-        Constructor for the AgencyFlyweight class.
-        Args:
-            shared_state (List[Union[str, int]]): List of shared state.
-        """
-        self._shared_state = shared_state
+    shared_state: List[Union[str, int]]
 
     def operation(self, unique_state: Agency) -> None:
         """
@@ -22,7 +19,7 @@ class AgencyFlyweight:
         Args:
             unique_state (Agency): Unique state of the agency.
         """
-        shared_state_str = ", ".join(self._shared_state)
+        shared_state_str = ", ".join(self.shared_state)
         unique_state_str = str(unique_state)
         print(f"AgencyFlyweight: Displaying shared ({shared_state_str}) and unique ({unique_state_str}) state.", end="")
 
@@ -42,17 +39,17 @@ class AgencyFlyweightFactory:
     """
     Class representing a factory for agency flyweight objects.
     """
-    _flyweights: Dict[str, AgencyFlyweight] = {}
+    flyweights: Dict[str, AgencyFlyweight] = {}
     
-    def __init__(self, initial_flyweights: List[List[str]]) -> None:
+    def assign_flyweights(self, initial_flyweights: List[List[str]]) -> None:
         """
-        Constructor for the AgencyFlyweightFactory class.
+        Assign initial flyweights.
         Args:
             initial_flyweights (List[List[str]]): List of initial states.
         """
         for state in initial_flyweights:
             key = get_key(state)
-            self._flyweights[key] = AgencyFlyweight(state)
+            self.flyweights[key] = AgencyFlyweight(shared_state=state)
 
     def get_flyweight(self, shared_state: List[Union[str, int]]) -> AgencyFlyweight:
         """
@@ -63,20 +60,20 @@ class AgencyFlyweightFactory:
             AgencyFlyweight: Flyweight object.
         """
         key = get_key(shared_state)
-        if not self._flyweights.get(key):
+        if not self.flyweights.get(key):
             print("AgencyFlyweightFactory: Can't find a flyweight, creating a new one.")
-            self._flyweights[key] = AgencyFlyweight(shared_state)
+            self.flyweights[key] = AgencyFlyweight(shared_state=shared_state)
         else:
             print("AgencyFlyweightFactory: Reusing an existing flyweight.")
-        return self._flyweights[key]
+        return self.flyweights[key]
 
     def list_flyweights(self) -> None:
         """
         Display the list of available flyweights.
         """
-        count = len(self._flyweights)
+        count = len(self.flyweights)
         print(f"AgencyFlyweightFactory: I have {count} flyweights:")
-        print("\n".join(self._flyweights.keys()), end="")
+        print("\n".join(self.flyweights.keys()), end="")
 
 
 def add_agency_to_database(

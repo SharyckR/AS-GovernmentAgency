@@ -1,7 +1,6 @@
 from datetime import date
 from typing import List, Optional
-
-from factory.abstract_factory import AbstractFactory
+from logic.abstract_factory import AbstractFactory
 from logic.abstract_agency import AbstractAgency
 from logic.abstract_history import AbstractHistory
 from logic.agency import Agency

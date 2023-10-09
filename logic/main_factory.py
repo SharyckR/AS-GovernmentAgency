@@ -1,8 +1,8 @@
 from datetime import date
-from factory.educational_factory import EducationalFactory
-from factory.health_factory import HealthFactory
-from factory.legal_factory import LegalFactory
-from factory.transport_factory import TransportFactory
+from logic.educational_factory import EducationalFactory
+from logic.health_factory import HealthFactory
+from logic.legal_factory import LegalFactory
+from logic.transport_factory import TransportFactory
 from logic.address import address1
 from logic.agency import agency1, agency2
 from logic.case_history import case_history1
@@ -59,5 +59,5 @@ if __name__ == '__main__':
     print(f'Info legal history agency: {legal_history.__str__()}')
 
     print(f'Info transport agency: {tr_agency.__str__()}\n\n')
-    print(f'Info vehicle history agency: {veh_history.__str__()}')
+    print(f'Info fine history agency: {fin_history.__str__()}')
     print(f'Info vehicle history agency: {fin_history.__str__()}')

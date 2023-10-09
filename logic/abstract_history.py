@@ -1,6 +1,9 @@
 from abc import ABC, abstractmethod
 
-class AbstractHistory(ABC):
+from pydantic import BaseModel
+
+
+class AbstractHistory(ABC, BaseModel):
     """
     Abstract base class for history objects.
 

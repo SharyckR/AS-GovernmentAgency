@@ -1,11 +1,12 @@
 from datetime import date
-from flyweight.flyweight_address import AddressFlyweightFactory, add_address_to_database
-from flyweight.flyweight_agency import AgencyFlyweightFactory, add_agency_to_database
+from logic.flyweight_address import AddressFlyweightFactory, add_address_to_database
+from logic.flyweight_agency import AgencyFlyweightFactory, add_agency_to_database
 from logic.address import address1, address2
 from logic.agency import agency1
 
 if __name__ == "__main__":
-    factory = AddressFlyweightFactory([
+    factory = AddressFlyweightFactory()
+    factory.assign_flyweights([
         ["123 Main St", 5, "Apt 3B", "1010", "City Ville", "State Ville", "Country Land"],
         ["456 Elm St", 10, "None", "2020", "Towns Ville", "State Ville", "Country Land"],
         ["789 Oak St", 15, "Apt 2C", "3030", "Villa Getan", "State Ville", "Country Land"],
@@ -20,10 +21,12 @@ if __name__ == "__main__":
     add_address_to_database(
         factory, "456 Elm St", 10, None, "2020", "Towns Ville", "State Ville", "Country Land")
 
-    print("\n")
+    print("\n\n")
 
     factory.list_flyweights()
-    factory = AgencyFlyweightFactory([
+    print('\n')
+    factory = AgencyFlyweightFactory()
+    factory.assign_flyweights([
             ["965816", "52173", "Tis er ium", "3145975012", address2.__str__(), "5", "10", "2023", str(date.today())],
             ["819911", "82910", "Bom Spit", "3004689813", address2.__str__(), "9", "11", "2022", str(date.today())],
             ["961812", "42173", "Dis er", "31459112312", address2.__str__(), "10", "1", "2021", str(date.today())],
