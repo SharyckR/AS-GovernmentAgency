@@ -46,7 +46,7 @@ class AddressFlyweightFactory:
 
 def add_address_to_database(
     factory_add: AddressFlyweightFactory, street: str, number: Optional[int], apartment: Optional[int],
-        postal_code: Optional[int], locality: str, department: str, country: str
+        postal_code: Optional[str], locality: str, department: str, country: str
 ) -> None:
 
     if apartment is None:
@@ -75,7 +75,7 @@ if __name__ == "__main__":
         address1.department, address1.country)
 
     add_address_to_database(
-        factory, "456 Elm St", 10, None, 2020, "Towns Ville", "State Ville", "Country Land")
+        factory, "456 Elm St", 10, None, '2020', "Towns Ville", "State Ville", "Country Land")
 
     print("\n")
 

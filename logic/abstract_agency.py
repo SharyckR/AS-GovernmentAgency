@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+
 class AbstractAgency(ABC):
     """
     Abstract base class for agency objects.

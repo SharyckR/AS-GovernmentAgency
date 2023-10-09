@@ -1,6 +1,6 @@
 import json
 from typing import List, Dict, Optional, Union
-from logic.address import Address, address1
+from logic.address import Address
 
 
 class AddressFlyweight:
