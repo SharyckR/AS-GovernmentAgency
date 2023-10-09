@@ -1,10 +1,9 @@
 from datetime import date
 from typing import Optional
-
 from logic.abstract_factory import AbstractFactory
 from logic.abstract_agency import AbstractAgency
 from logic.abstract_history import AbstractHistory
-from logic.agency import Agency
+from logic.agency_factory import AgencyFactory
 from logic.case_history import CaseHistory
 from logic.legal_agency import LegalAgency
 
@@ -26,12 +25,12 @@ class LegalFactory(AbstractFactory):
                        date_arrested: Optional[date] = None, mediator: object = None) -> AbstractHistory:
             Create an instance of a CaseHistory.
     """
-    def create_agency(self, agency: Agency = None, legal_history: CaseHistory = None) -> AbstractAgency:
+    def create_agency(self, agency: AgencyFactory = None, legal_history: CaseHistory = None) -> AbstractAgency:
         """
         Create an instance of a LegalAgency.
 
         Args:
-            agency (Agency): The agency associated with the legal agency.
+            agency (AgencyFactory): The agency associated with the legal agency.
             legal_history (CaseHistory): The legal history of the agency.
 
         Returns:

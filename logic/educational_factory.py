@@ -3,7 +3,7 @@ from typing import List, Optional
 from logic.abstract_factory import AbstractFactory
 from logic.abstract_agency import AbstractAgency
 from logic.abstract_history import AbstractHistory
-from logic.agency import Agency
+from logic.agency_factory import AgencyFactory
 from logic.education_history import EducationHistory
 from logic.educational_agency import EducationalAgency
 
@@ -16,7 +16,7 @@ class EducationalFactory(AbstractFactory):
         None
 
     Methods:
-        create_agency(agency: Agency = Agency, education_history: EducationHistory = None,
+        create_agency(agency: AgencyFactory = AgencyFactory, education_history: EducationHistory = None,
                       academic_achievements: List[str] = None) -> AbstractAgency:
             Create an instance of an EducationalAgency.
 
@@ -27,13 +27,13 @@ class EducationalFactory(AbstractFactory):
                        mediator: object = None) -> AbstractHistory:
             Create an instance of an EducationHistory.
     """
-    def create_agency(self, agency: Agency = Agency, education_history: EducationHistory = None,
+    def create_agency(self, agency: AgencyFactory = AgencyFactory, education_history: EducationHistory = None,
                       academic_achievements: List[str] = None) -> AbstractAgency:
         """
         Create an instance of an EducationalAgency.
 
         Args:
-            agency (Agency): The agency associated with the educational agency.
+            agency (AgencyFactory): The agency associated with the educational agency.
             education_history (EducationHistory): The education history of the agency.
             academic_achievements (List[str]): List of academic achievements.
 

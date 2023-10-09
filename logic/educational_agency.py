@@ -1,9 +1,9 @@
 from typing import List
-from logic.agency import Agency, agency1, agency2
+from logic.agency_factory import AgencyFactory, agency1, agency2
 from logic.education_history import EducationHistory, edu_history1, edu_history2
 
 
-class EducationalAgency(Agency):
+class EducationalAgency(AgencyFactory):
     """
     Represents an educational agency.
 
@@ -16,7 +16,7 @@ class EducationalAgency(Agency):
         __str__(): Returns a formatted string with educational agency information.
         __eq__(other): Compares if two instances of EducationalAgency are equal.
     """
-    agency: object = Agency
+    agency: object = AgencyFactory
     education_history: object = EducationHistory
     academic_achievements: List[str] = []
 

@@ -1,20 +1,20 @@
 from logic.medical_history import MedicalHistory, medical_history1, medical_history2
-from logic.agency import Agency, agency1, agency2
+from logic.agency_factory import AgencyFactory, agency1, agency2
 
 
-class HealthAgency(Agency):
+class HealthAgency(AgencyFactory):
     """
     Represents a health agency.
 
     Attributes:
-        agency (object): The associated agency.
+        agency (object): The associated agency factory.
         medical_history (object): The medical history.
 
     Methods:
         __str__(): Returns a formatted string with health agency information.
         __eq__(other): Compares if two instances of HealthAgency are equal.
     """
-    agency: object = Agency
+    agency: object = AgencyFactory
     medical_history: object = MedicalHistory
 
     def __eq__(self, other):

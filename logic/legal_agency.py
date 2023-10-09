@@ -1,21 +1,21 @@
 from pydantic import BaseModel
-from logic.agency import Agency, agency1, agency2
+from logic.agency_factory import AgencyFactory, agency1, agency2
 from logic.case_history import CaseHistory, case_history1, case_history2
 
 
-class LegalAgency(Agency, BaseModel):
+class LegalAgency(AgencyFactory, BaseModel):
     """
     Represents a legal agency.
 
     Attributes:
-        agency (object): The associated agency.
+        agency (object): The associated agency factory.
         legal_history (object): The legal history.
 
     Methods:
         __str__(): Returns a formatted string with legal agency information.
         __eq__(other): Compares if two instances of LegalAgency are equal.
     """
-    agency: object = Agency
+    agency: object = AgencyFactory
     legal_history: object = CaseHistory
 
     def __str__(self):
