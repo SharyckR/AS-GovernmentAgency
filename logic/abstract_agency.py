@@ -1,7 +1,8 @@
 from abc import ABC, abstractmethod
+from pydantic import BaseModel
 
 
-class AbstractAgency(ABC):
+class AbstractAgency(ABC, BaseModel):
     """
     Abstract base class for agency objects.
 
