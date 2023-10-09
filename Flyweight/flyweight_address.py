@@ -1,6 +1,6 @@
 import json
 from typing import List, Dict, Optional, Union
-from logic.address import Address, address1
+from logic.address import Address
 
 
 class AddressFlyweight:
@@ -103,5 +103,5 @@ def add_address_to_database(
     print("\n\nClient: Adding an address to the database.")
     address = Address(street=street, number=number, apartment=apartment, postal_code=postal_code, locality=locality,
                       department=department, country=country)
-    flyweight = factory_add.get_flyweight([street, str(number), apartment, postal_code, locality, department, country])
+    flyweight = factory_add.get_flyweight([street, number, apartment, postal_code, locality, department, country])
     flyweight.operation(address)

@@ -55,7 +55,8 @@ def add_address_to_database(
         apartment = apartment
 
     print("\n\nClient: Adding an address to the database.")
-    address = Address(street, number, apartment, postal_code, locality, department, country)
+    address = Address(street=street, number=number, apartment=apartment, postal_code=postal_code, locality=locality,
+                      department=department, country=country)
     flyweight = factory_add.get_flyweight([street, number, apartment, postal_code, locality, department, country])
     flyweight.operation(address)
 

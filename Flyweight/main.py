@@ -1,6 +1,6 @@
 from datetime import date
-from Flyweight.flyweight_address import AddressFlyweightFactory, add_address_to_database
-from Flyweight.flyweight_agency import AgencyFlyweightFactory, add_agency_to_database
+from flyweight.flyweight_address import AddressFlyweightFactory, add_address_to_database
+from flyweight.flyweight_agency import AgencyFlyweightFactory, add_agency_to_database
 from logic.address import address1, address2
 from logic.agency import agency1
 
