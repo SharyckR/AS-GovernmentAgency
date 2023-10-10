@@ -1,8 +1,6 @@
 from datetime import date
 from typing import List, Dict, Union
-
 from pydantic import BaseModel
-
 from logic.address import Address
 from logic.agency_factory import AgencyFactory
 
