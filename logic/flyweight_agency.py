@@ -38,7 +38,7 @@ class AgencyFlyweightFactory:
     Class representing a factory for agency flyweight objects.
     """
     flyweights: Dict[str, AgencyFlyweight] = {}
-    
+
     def assign_flyweights(self, initial_flyweights: List[List[str]]) -> None:
         """
         Assign initial flyweights.
@@ -75,8 +75,8 @@ class AgencyFlyweightFactory:
 
 
 def add_agency_to_database(
-    factory_add: AgencyFlyweightFactory, id_entity: int, nit: int, business_name: str, contact: str,
-    address: Address, day: int, month: int, year: int, date_actualization: date = date.today()
+        factory_add: AgencyFlyweightFactory, id_entity: int, nit: int, business_name: str, contact: str,
+        address: Address, day: int, month: int, year: int, date_actualization: date = date.today()
 ) -> None:
     """
     Add an agency to the database.

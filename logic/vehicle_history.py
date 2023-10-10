@@ -21,7 +21,7 @@ class VehicleHistory(AbstractHistory, BaseModel):
         __eq__(other): Compares two VehicleHistory objects to check if they are equal.
     """
 
-    dni_person: int = 1
+    dni_person: int = 0
     licence: Optional[str] = "Yes or No"
     type_licence: Optional[str] = "A1 or A2 or B1 or B2 or B3 or C1 or C2 or C3"
     vehicle: Optional[str] = "Yes or No"

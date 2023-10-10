@@ -6,6 +6,7 @@ class NaturalEntity(Entity):
     Represents a natural entity.
 
     Attributes:
+        id (int): The ID of the natural entity.
         type (str): The type of the entity, which is 'Natural Entity' in this case.
 
     Methods:
@@ -13,6 +14,7 @@ class NaturalEntity(Entity):
         __str__(): Returns a formatted string representing the natural entity.
 
     """
+    id: int = 1
     type: str = 'Natural Entity'
 
     def kind_of_entity(self):
