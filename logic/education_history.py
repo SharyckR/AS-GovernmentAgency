@@ -26,7 +26,7 @@ class EducationHistory(AbstractHistory, BaseModel):
             __eq__(other): Compares two objects educational history to check if they are equal.
     """
 
-    dni_person: int = 1
+    dni_person: int = 123456789
     education: Optional[str] = "Level of Education"
     name_institution: Optional[str] = "Institution Name"
     location: Optional[object] = Address
@@ -40,6 +40,25 @@ class EducationHistory(AbstractHistory, BaseModel):
     def __init__(self, mediator=None, **data):
         super().__init__(**data)
         self.mediator = mediator
+
+    def to_dict(self):
+        education_str = str(self.education) if self.education is not None else "None"
+        name_institution_str = str(self.name_institution) if self.name_institution is not None else "None"
+        location_str = str(self.location) if self.location is not None else "None"
+        title_obtained_str = str(self.title_obtained) if self.title_obtained is not None else "None"
+        day_int = int(self.day) if self.day is not None else "None"
+        month_int = int(self.month) if self.month is not None else "None"
+        year_int = int(self.year) if self.year is not None else "None"
+        return {
+            "DNI Person": self.dni_person,
+            "Level of Education": education_str,
+            "Institution Name": name_institution_str,
+            "Address": location_str,
+            "Title Obtained": title_obtained_str,
+            "Day of Graduation": day_int,
+            "Month of Graduation": month_int,
+            "Year of Graduation": year_int
+        }
 
     def __eq__(self, other):
         """ Returns bool of equality of history objects.
@@ -66,7 +85,7 @@ class EducationHistory(AbstractHistory, BaseModel):
         month_int = int(self.month) if self.month is not None else "None"
         year_int = int(self.year) if self.year is not None else "None"
 
-        return 'Information Person: {0}, Level of Education: {1}, Institution Name: {2}, Location: {3}, ' \
+        return 'DNI Person: {0}, Level of Education: {1}, Institution Name: {2}, Location: {3}, ' \
                'Title Obtained: {4}, Date Graduation: {5} - {6} - {7}'.format(self.dni_person,
                                                                               education_str, name_institution_str,
                                                                               location_str, title_obtained_str, day_int,
@@ -76,10 +95,10 @@ class EducationHistory(AbstractHistory, BaseModel):
 if __name__ == '__main__':
     # Prueba Educational History class
 
-    edu_history1 = EducationHistory(dni_person=5120167, education="Secondary", name_institution="Collage",
+    edu_history1 = EducationHistory(dni_person=1043638720, education="Secondary", name_institution="Collage",
                                     location=address1, title_obtained="Graduated", day=13, month=10, year=2020)
 
-    edu_history2 = EducationHistory(dni_person=1247913, education=None, name_institution=None,
+    edu_history2 = EducationHistory(dni_person=45761873, education=None, name_institution=None,
                                     location=address2, title_obtained=None, day=None, month=None, year=None)
 
     edu_history1_str = edu_history1.__str__()
@@ -90,7 +109,7 @@ if __name__ == '__main__':
     are_equal_edu_history = edu_history1.__eq__(edu_history2)
     print(f"Are equals ? \n {are_equal_edu_history} \n\n")
 
-edu_history1 = EducationHistory(information_person=5120167, education="Secondary", name_institution="Collage",
+edu_history1 = EducationHistory(dni_person=1043638720, education="Secondary", name_institution="Collage",
                                 location=address1, title_obtained="Graduated", day=13, month=10, year=2020)
-edu_history2 = EducationHistory(information_person=1247913, education=None, name_institution=None, location=address2,
+edu_history2 = EducationHistory(dni_person=45761873, education=None, name_institution=None, location=address2,
                                 title_obtained=None, day=None, month=None, year=None)
