@@ -27,6 +27,23 @@ class Address(BaseModel):
     locality: str
     department: str
     country: str
+    mediator: object = None
+
+    def __init__(self, mediator=None, **data):
+        super().__init__(**data)
+        self.mediator = mediator
+
+    def to_dict(self):
+        apartment_str = str(self.apartment) if self.apartment is not None else "None"
+        return {
+            "Street": self.street,
+            "Number": self.number,
+            "Apartment": apartment_str,
+            "Postal Code": self.postal_code,
+            "Locality": self.locality,
+            "Department": self.department,
+            "Country": self.country
+        }
 
     def __str__(self):
         """
