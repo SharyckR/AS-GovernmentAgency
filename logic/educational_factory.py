@@ -27,7 +27,8 @@ class EducationalFactory(AbstractFactory):
                        mediator: object = None) -> AbstractHistory:
             Create an instance of an EducationHistory.
     """
-    def create_agency(self, agency: AgencyFactory = AgencyFactory, education_history: EducationHistory = None,
+    def create_agency(self, agency: AgencyFactory = AgencyFactory(),
+                      education_history: EducationHistory = EducationHistory(),
                       academic_achievements: List[str] = None) -> AbstractAgency:
         """
         Create an instance of an EducationalAgency.

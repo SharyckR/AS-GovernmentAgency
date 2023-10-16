@@ -16,9 +16,16 @@ class EducationalAgency(AgencyFactory):
         __str__(): Returns a formatted string with educational agency information.
         __eq__(other): Compares if two instances of EducationalAgency are equal.
     """
-    agency: object = AgencyFactory
-    education_history: object = EducationHistory
+    agency: AgencyFactory = AgencyFactory()
+    education_history: EducationHistory = EducationHistory()
     academic_achievements: List[str] = []
+
+    def to_dict(self):
+        return {
+            "Agency": self.agency.to_dict(),
+            "Education History": self.education_history.to_dict(),
+            "Academic Achievements": self.academic_achievements
+        }
 
     def __str__(self):
         """
@@ -26,7 +33,7 @@ class EducationalAgency(AgencyFactory):
         :returns: string educational history
         :rtype: str
         """
-        return 'Agency: {0}, Education History {1}, Academic achievements {2}'.format(
+        return 'Agency: {0}, Education History: {1}, Academic achievements: {2}'.format(
             self.agency,
             self.education_history,
             self.academic_achievements

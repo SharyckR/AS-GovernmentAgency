@@ -24,15 +24,26 @@ class AgencyFactory(AbstractAgency, LegalEntity):
             __eq__(other): Compares two objects agency to check if they are equal.
     """
     id_entity: int = 1
-    entity: object = LegalEntity
+    entity: LegalEntity = LegalEntity()
     nit: int = 0
     business_name: str = "Business Name"
     contact: str = "Phone or E-mail"
-    address: object = Address
+    address: Address = Address()
     day: int = 1
     month: int = 1
     year: int = 1999
     date_actualization: date = date(year, month, day)
+
+    def to_dict(self):
+        return {
+            'ID Entity': self.id_entity,
+            'Entity': self.entity.type,
+            'NIT': self.nit,
+            'Business Name': self.business_name,
+            'Contact': self.contact,
+            'Address': self.address.to_dict(),
+            'Date Actualization': str(self.date_actualization)
+        }
 
     def __eq__(self, another_agency):
         """ Returns bool of equality of agency objects.
@@ -49,7 +60,7 @@ class AgencyFactory(AbstractAgency, LegalEntity):
         return 'Id Agency: {0}, Entity: {1}, Nit: {2}, Business Name: {3}, Contact (Phone or E-mail): {4}, ' \
                'Address: {5}, Date Actualization: {6} - {7} - {8}'.format(self.id_entity, self.entity,
                                                                           self.nit, self.business_name, self.contact,
-                                                                          self.address.__str__(), self.day, self.month,
+                                                                          self.address, self.day, self.month,
                                                                           self.year)
 
 
@@ -73,5 +84,5 @@ if __name__ == '__main__':
 agency1 = AgencyFactory(id_entity=965816, entity=LegalEntity(), nit=52173, business_name="Tis er ium",
                         contact="3145975012", address=address2, day=5, month=10, year=2023)
 
-agency2 = AgencyFactory(id_entity=965816,  entity=LegalEntity(), nit=52173, business_name="Business Name",
+agency2 = AgencyFactory(id_entity=10290294,  entity=LegalEntity(), nit=4224, business_name="Business Name",
                         contact="31459750", address=address2, day=5, month=10, year=2023)

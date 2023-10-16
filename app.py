@@ -1,11 +1,13 @@
 from fastapi import FastAPI, HTTPException, status
 from controller.address_controller import AddressController
 from controller.mediator import *
+from controller.educational_factory_controller import *
 from logic.person import Person
 
 
 address_controller = AddressController()
 mediator_controller = Mediator()
+educational_factory_controller = EducationalFactoryController()
 app = FastAPI()
 
 
@@ -17,9 +19,9 @@ async def root():
 @app.get('/persons')
 async def get_address():
     data = []
-    if my_col.count_documents({}) == 0:
+    if person_db.count_documents({}) == 0:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='No data yet')
-    for c in my_col.find():
+    for c in person_db.find():
         if '_id' in c:
             del c['_id']
         data.append(c)
@@ -35,3 +37,9 @@ async def add_person(person: Person):
     if '_id' in person_added:
         del person_added['_id']
     return person_added
+
+
+@app.get('/agencies')
+async def get_educational_agencies():
+    agencies = educational_factory_controller.get_agencies()
+    return {'Educational Agencies': agencies}

@@ -1,0 +1,36 @@
+{
+    "educational_agencies": [
+        {
+            "Agency": {
+                "ID Entity": 10290294,
+                "Entity": "Legal entity",
+                "NIT": 4224,
+                "Business Name": "Business Name",
+                "Contact": "31459750",
+                "Address": {
+                    "Street": "The cross",
+                    "Number": 10,
+                    "Apartment": "None",
+                    "Postal Code": "1010",
+                    "Locality": "Aqueous",
+                    "Department": "Cundinamarca",
+                    "Country": "Colombia"
+                },
+                "Date Actualization": "1999-01-01"
+            },
+            "Education History": {
+                "DNI Person": 45761873,
+                "Level of Education": "University",
+                "Institution Name": "Name institution",
+                "Address": "(The cross, 10, None, 1010, Aqueous, Cundinamarca, Colombia)",
+                "Title Obtained": "Bachiller",
+                "Day of Graduation": 4,
+                "Month of Graduation": 3,
+                "Year of Graduation": 2022
+            },
+            "Academic Achievements": [
+                "First places"
+            ]
+        }
+    ]
+}

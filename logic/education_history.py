@@ -25,7 +25,7 @@ class EducationHistory(AbstractHistory, BaseModel):
             __str__(): Returns a string representation of an educational history.
             __eq__(other): Compares two objects educational history to check if they are equal.
     """
-
+    id_history: int = 1
     dni_person: int = 123456789
     education: Optional[str] = "Level of Education"
     name_institution: Optional[str] = "Institution Name"

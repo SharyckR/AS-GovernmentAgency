@@ -7,7 +7,7 @@ my_client = pymongo.MongoClient('mongodb://as-database:oHfA0NSURbklPgc5DVeLDnxDy
                                 'database@')
 
 my_db = my_client['Entity']
-my_col = my_db['Person']
+person_db = my_db['Person']
 
 
 def find_history_by_dni(history_list, dni):
@@ -29,7 +29,6 @@ def convert_object_id_to_str(person):
 
 class Mediator:
     def __init__(self):
-        self.load_data()
         self.education_histories = []
         self.fine_histories = []
         self.case_histories = []
@@ -58,7 +57,6 @@ class Mediator:
             self.persons = []
 
     def save_data(self):
-        # Convertir ObjectId a cadenas antes de guardar los datos
         data = {
             "education_histories": self.education_histories,
             "fine_histories": self.fine_histories,
