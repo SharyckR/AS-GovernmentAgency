@@ -1,4 +1,5 @@
 from datetime import date
+from typing import Optional
 from pydantic import BaseModel
 from logic.abstract_history import AbstractHistory
 
@@ -22,9 +23,9 @@ class MedicalHistory(AbstractHistory, BaseModel):
             __eq__(other): Compares two objects medical history to check if they are equal.
     """
 
-    dni_person: int = 1
+    dni_person: int = 123456789
     type_blood: str = "A+, B+, O+, AB+, A-, B-, O-, AB-"
-    pathologies: str = "Pathologies"
+    pathologies: Optional[str] = "Pathologies"
     description_treatment: str = "Treatment description"
     doctor_charge: str = "Name doctor"
     day: int = 1
@@ -37,12 +38,31 @@ class MedicalHistory(AbstractHistory, BaseModel):
         super().__init__(**data)
         self.mediator = mediator
 
-    def __eq__(self, another_history):
+    def to_dict(self):
+        return {
+            "DNI Person": self.dni_person,
+            "Type blood": self.type_blood,
+            "Pathologies": self.pathologies,
+            "Description Treatment": self.description_treatment,
+            "Doctor in Charge": self.doctor_charge,
+            "Day Treatment": self.day,
+            "Month Treatment": self.month,
+            "Year Treatment": self.year
+        }
+
+    def __eq__(self, other):
         """ Returns bool of equality of history objects.
         :returns: bool history
         :rtype: bool
         """
-        return another_history.dni_person == self.dni_person
+        if isinstance(other, MedicalHistory):
+            return (self.dni_person == other.dni_person and self.type_blood == other.type_blood and
+                    self.pathologies == other.pathologies and
+                    self.description_treatment == other.description_treatment and
+                    self.doctor_charge == other.doctor_charge and self.day == other.day and
+                    self.month == other.month and self.year == other.year and
+                    self.date_treatment == other.date_treatment)
+        return False
 
     def __str__(self):
         """ Returns str of medical history.

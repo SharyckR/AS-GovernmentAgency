@@ -20,7 +20,7 @@ class FineHistory(AbstractHistory, BaseModel):
             __eq__(other): Compares two objects fine history to check if they are equal.
     """
 
-    dni_person: int = 1
+    dni_person: int = 123456789
     fine: Optional[str] = "Yes or No"
     type_fine: Optional[str] = "Type of Fine"
     description_fine: Optional[str] = "Description of the Fine"
@@ -31,12 +31,29 @@ class FineHistory(AbstractHistory, BaseModel):
         super().__init__(**data)
         self.mediator = mediator
 
-    def __eq__(self, another_history):
+    def to_dict(self):
+        fine_str = str(self.type_fine) if self.type_fine is not None else "None"
+        type_fine_str = str(self.type_fine) if self.type_fine is not None else "None"
+        description_fine_str = str(self.description_fine) if self.description_fine is not None else "None"
+        paid_str = str(self.paid) if self.paid is not None else "None"
+        return {
+            "DNI Person": self.dni_person,
+            "Fine?": fine_str,
+            "Type of Fine": type_fine_str,
+            "Description Fine": description_fine_str,
+            "Paid?": paid_str
+        }
+
+    def __eq__(self, other):
         """ Returns bool of equality of history objects.
         :returns: bool history
         :rtype: bool
         """
-        return another_history.dni_person == self.dni_person
+        if isinstance(other, FineHistory):
+            return (self.dni_person == other.dni_person and self.fine == other.fine and
+                    self.type_fine == other.type_fine and self.description_fine == other.description_fine and
+                    self.paid == other.paid)
+        return False
 
     def __str__(self):
         """ Returns str of fine history.
@@ -44,12 +61,13 @@ class FineHistory(AbstractHistory, BaseModel):
         :rtype: str
         """
 
+        fine_str = str(self.type_fine) if self.type_fine is not None else "None"
         type_fine_str = str(self.type_fine) if self.type_fine is not None else "None"
         description_fine_str = str(self.description_fine) if self.description_fine is not None else "None"
         paid_str = str(self.paid) if self.paid is not None else "None"
 
         return 'Dni: {0}, Has the person received a fine?: {1}, Type of the fine: {2}, Description of the fine: {3}, ' \
-               'Has the person paid a fine?: {4}'.format(self.dni_person, self.fine, type_fine_str,
+               'Has the person paid a fine?: {4}'.format(self.dni_person, fine_str, type_fine_str,
                                                          description_fine_str, paid_str)
 
 

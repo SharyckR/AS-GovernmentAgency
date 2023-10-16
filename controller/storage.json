@@ -1,0 +1,292 @@
+{
+    "education_histories": [
+        {
+            "DNI Person": 1043638720,
+            "Level of Education": "Secondary",
+            "Institution Name": "Collage",
+            "Address": "(123 Main St, 5, Apt 3B, 1010, City Ville, State Ville, Country Land)",
+            "Title Obtained": "Graduated",
+            "Day of Graduation": 13,
+            "Month of Graduation": 10,
+            "Year of Graduation": 2020
+        },
+        {
+            "DNI Person": 45761873,
+            "Level of Education": "None",
+            "Institution Name": "None",
+            "Address": "(The cross, 10, None, 1010, Aqueous, Cundinamarca, Colombia)",
+            "Title Obtained": "None",
+            "Day of Graduation": "None",
+            "Month of Graduation": "None",
+            "Year of Graduation": "None"
+        }
+    ],
+    "fine_histories": [
+        {
+            "DNI Person": 1043638720,
+            "Fine?": "Fine for high speed",
+            "Type of Fine": "Fine for high speed",
+            "Description Fine": "The person was going more than 100k/h",
+            "Paid?": "No"
+        },
+        {
+            "DNI Person": 45761873,
+            "Fine?": "None",
+            "Type of Fine": "None",
+            "Description Fine": "None",
+            "Paid?": "None"
+        }
+    ],
+    "case_histories": [
+        {
+            "DNI Person": 1043638720,
+            "Case": "Heist",
+            "Arrested?": "Yes",
+            "Description of Case": "Stole a necklace",
+            "Jurisdiction": "Disciplinary",
+            "Day Arrested": 15,
+            "Month Arrested": 5,
+            "Year Arrested": 2021
+        },
+        {
+            "DNI Person": 45761873,
+            "Case": "Public disturbance",
+            "Arrested?": "No",
+            "Description of Case": "None",
+            "Jurisdiction": "None",
+            "Day Arrested": "None",
+            "Month Arrested": "None",
+            "Year Arrested": "None"
+        }
+    ],
+    "medical_histories": [
+        {
+            "DNI Person": 1043638720,
+            "Type blood": "O+",
+            "Pathologies": "None",
+            "Description Treatment": "Wound healing",
+            "Doctor in Charge": "Kevin Rodriguez",
+            "Day Treatment": 5,
+            "Month Treatment": 10,
+            "Year Treatment": 2023
+        },
+        {
+            "DNI Person": 45761873,
+            "Type blood": "A+",
+            "Pathologies": "Hypertension",
+            "Description Treatment": "Control",
+            "Doctor in Charge": "Tomas Antonio",
+            "Day Treatment": 31,
+            "Month Treatment": 7,
+            "Year Treatment": 2023
+        }
+    ],
+    "vehicle_histories": [
+        {
+            "DNI Person": 1043638720,
+            "License?": "Yes",
+            "Type of license": "A2",
+            "Vehicle?": "Yes",
+            "Type of vehicle": "Car",
+            "Description of the Vehicle": "Mazda2",
+            "Plate of the vehicle": "BJU-521"
+        },
+        {
+            "DNI Person": 45761873,
+            "License?": "No",
+            "Type of license": "None",
+            "Vehicle?": "Yes",
+            "Type of vehicle": "Motorcycle",
+            "Description of the Vehicle": "Honda",
+            "Plate of the vehicle": "PLO-154"
+        }
+    ],
+    "persons": [
+        {
+            "DNI Person": 1043638720,
+            "Type DNI": "C.C.",
+            "Name": "Julio",
+            "Last Name": "Rodriguez",
+            "Phone": 3154528309,
+            "Address": {
+                "Street": "123 Main St",
+                "Number": 5,
+                "Apartment": "Apt 3B",
+                "Postal Code": "1010",
+                "Locality": "City Ville",
+                "Department": "State Ville",
+                "Country": "Country Land"
+            },
+            "Education History": {
+                "DNI Person": 1043638720,
+                "Level of Education": "Secondary",
+                "Institution Name": "Collage",
+                "Address": "(123 Main St, 5, Apt 3B, 1010, City Ville, State Ville, Country Land)",
+                "Title Obtained": "Graduated",
+                "Day of Graduation": 13,
+                "Month of Graduation": 10,
+                "Year of Graduation": 2020
+            },
+            "Fine History": {
+                "DNI Person": 1043638720,
+                "Fine?": "Fine for high speed",
+                "Type of Fine": "Fine for high speed",
+                "Description Fine": "The person was going more than 100k/h",
+                "Paid?": "No"
+            },
+            "Vehicle History": {
+                "DNI Person": 1043638720,
+                "License?": "Yes",
+                "Type of license": "A2",
+                "Vehicle?": "Yes",
+                "Type of vehicle": "Car",
+                "Description of the Vehicle": "Mazda2",
+                "Plate of the vehicle": "BJU-521"
+            },
+            "Case History": {
+                "DNI Person": 1043638720,
+                "Case": "Heist",
+                "Arrested?": "Yes",
+                "Description of Case": "Stole a necklace",
+                "Jurisdiction": "Disciplinary",
+                "Day Arrested": 15,
+                "Month Arrested": 5,
+                "Year Arrested": 2021
+            },
+            "Medical History": {
+                "DNI Person": 1043638720,
+                "Type blood": "O+",
+                "Pathologies": "None",
+                "Description Treatment": "Wound healing",
+                "Doctor in Charge": "Kevin Rodriguez",
+                "Day Treatment": 5,
+                "Month Treatment": 10,
+                "Year Treatment": 2023
+            }
+        },
+        {
+            "DNI Person": 45761873,
+            "Type DNI": "C.E.",
+            "Name": "Luis",
+            "Last Name": "Castro",
+            "Phone": 3214464925,
+            "Address": {
+                "Street": "The cross",
+                "Number": 10,
+                "Apartment": "None",
+                "Postal Code": "1010",
+                "Locality": "Aqueous",
+                "Department": "Cundinamarca",
+                "Country": "Colombia"
+            },
+            "Education History": {
+                "DNI Person": 45761873,
+                "Level of Education": "University",
+                "Institution Name": "Name institution",
+                "Address": "(The cross, 10, None, 1010, Aqueous, Cundinamarca, Colombia)",
+                "Title Obtained": "Bachiller",
+                "Day of Graduation": 4,
+                "Month of Graduation": 3,
+                "Year of Graduation": 2022
+            },
+            "Fine History": {
+                "DNI Person": 45761873,
+                "Fine?": "None",
+                "Type of Fine": "None",
+                "Description Fine": "None",
+                "Paid?": "None"
+            },
+            "Vehicle History": {
+                "DNI Person": 45761873,
+                "License?": "No",
+                "Type of license": "None",
+                "Vehicle?": "Yes",
+                "Type of vehicle": "Motorcycle",
+                "Description of the Vehicle": "Honda",
+                "Plate of the vehicle": "PLO-154"
+            },
+            "Case History": {
+                "DNI Person": 45761873,
+                "Case": "Public disturbance",
+                "Arrested?": "No",
+                "Description of Case": "None",
+                "Jurisdiction": "None",
+                "Day Arrested": "None",
+                "Month Arrested": "None",
+                "Year Arrested": "None"
+            },
+            "Medical History": {
+                "DNI Person": 45761873,
+                "Type blood": "A+",
+                "Pathologies": "Hypertension",
+                "Description Treatment": "Control",
+                "Doctor in Charge": "Tomas Antonio",
+                "Day Treatment": 31,
+                "Month Treatment": 7,
+                "Year Treatment": 2023
+            }
+        },
+        {
+            "DNI Person": 1043638721,
+            "Type DNI": "C.C.",
+            "Name": "Julio",
+            "Last Name": "Rodriguez",
+            "Phone": 3154528309,
+            "Address": {
+                "Street": "123 Main St",
+                "Number": 5,
+                "Apartment": "Apt 3B",
+                "Postal Code": "1010",
+                "Locality": "City Ville",
+                "Department": "State Ville",
+                "Country": "Country Land"
+            },
+            "Education History": {
+                "DNI Person": 1043638720,
+                "Level of Education": "Secondary",
+                "Institution Name": "Collage",
+                "Address": "(123 Main St, 5, Apt 3B, 1010, City Ville, State Ville, Country Land)",
+                "Title Obtained": "Graduated",
+                "Day of Graduation": 13,
+                "Month of Graduation": 10,
+                "Year of Graduation": 2020
+            },
+            "Fine History": {
+                "DNI Person": 1043638720,
+                "Fine?": "Fine for high speed",
+                "Type of Fine": "Fine for high speed",
+                "Description Fine": "The person was going more than 100k/h",
+                "Paid?": "No"
+            },
+            "Vehicle History": {
+                "DNI Person": 1043638720,
+                "License?": "Yes",
+                "Type of license": "A2",
+                "Vehicle?": "Yes",
+                "Type of vehicle": "Car",
+                "Description of the Vehicle": "Mazda2",
+                "Plate of the vehicle": "BJU-521"
+            },
+            "Case History": {
+                "DNI Person": 1043638720,
+                "Case": "Heist",
+                "Arrested?": "Yes",
+                "Description of Case": "Stole a necklace",
+                "Jurisdiction": "Disciplinary",
+                "Day Arrested": 15,
+                "Month Arrested": 5,
+                "Year Arrested": 2021
+            },
+            "Medical History": {
+                "DNI Person": 1043638720,
+                "Type blood": "O+",
+                "Pathologies": "None",
+                "Description Treatment": "Wound healing",
+                "Doctor in Charge": "Kevin Rodriguez",
+                "Day Treatment": 5,
+                "Month Treatment": 10,
+                "Year Treatment": 2023
+            }
+        }
+    ]
+}

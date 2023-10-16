@@ -1,0 +1,505 @@
+{
+    "education_histories": [],
+    "fine_histories": [],
+    "case_histories": [],
+    "medical_histories": [],
+    "vehicle_histories": [],
+    "persons": [
+        {
+            "DNI Person": 123456789,
+            "Type DNI": "Type dni person",
+            "Name": "Name",
+            "Last Name": "LastName",
+            "Phone": 0,
+            "Address": {
+                "Street": "street",
+                "Number": 1,
+                "Apartment": "apartment",
+                "Postal Code": "postal code",
+                "Locality": "locality",
+                "Department": "department",
+                "Country": "country"
+            },
+            "Education History": {
+                "DNI Person": 123456789,
+                "Level of Education": "Level of Education",
+                "Institution Name": "Institution Name",
+                "Address": "<class 'logic.address.Address'>",
+                "Title Obtained": "Title Obtained",
+                "Day of Graduation": 1,
+                "Month of Graduation": 1,
+                "Year of Graduation": 1999
+            },
+            "Fine History": {
+                "DNI Person": 123456789,
+                "Fine?": "Type of Fine",
+                "Type of Fine": "Type of Fine",
+                "Description Fine": "Description of the Fine",
+                "Paid?": "Yes or No"
+            },
+            "Vehicle History": {
+                "DNI Person": 123456789,
+                "License?": "Yes or No",
+                "Type of license": "A1 or A2 or B1 or B2 or B3 or C1 or C2 or C3",
+                "Vehicle?": "Yes or No",
+                "Type of vehicle": "Car or Motorcycle",
+                "Description of the Vehicle": "Description of the Vehicle",
+                "Plate of the vehicle": "Plate of the vehicle"
+            },
+            "Case History": {
+                "DNI Person": 123456789,
+                "Case": "Name case",
+                "Arrested?": "Yes or No",
+                "Description of Case": "Description of case",
+                "Jurisdiction": "Jurisdiction of the case",
+                "Day Arrested": 1,
+                "Month Arrested": 1,
+                "Year Arrested": 1999
+            },
+            "Medical History": {
+                "DNI Person": 123456789,
+                "Type blood": "A+, B+, O+, AB+, A-, B-, O-, AB-",
+                "Pathologies": "Pathologies",
+                "Description Treatment": "Treatment description",
+                "Doctor in Charge": "Name doctor",
+                "Day Treatment": 1,
+                "Month Treatment": 1,
+                "Year Treatment": 1999
+            }
+        },
+        {
+            "DNI Person": 104234242423,
+            "Type DNI": "C.C.",
+            "Name": "Daniel",
+            "Last Name": "Carmargo",
+            "Phone": 3135885917,
+            "Address": {
+                "Street": "street",
+                "Number": 1,
+                "Apartment": "apartment",
+                "Postal Code": "postal code",
+                "Locality": "locality",
+                "Department": "department",
+                "Country": "country"
+            },
+            "Education History": {
+                "DNI Person": 123456789,
+                "Level of Education": "Level of Education",
+                "Institution Name": "Institution Name",
+                "Address": "<class 'logic.address.Address'>",
+                "Title Obtained": "Title Obtained",
+                "Day of Graduation": 1,
+                "Month of Graduation": 1,
+                "Year of Graduation": 1999
+            },
+            "Fine History": {
+                "DNI Person": 123456789,
+                "Fine?": "Type of Fine",
+                "Type of Fine": "Type of Fine",
+                "Description Fine": "Description of the Fine",
+                "Paid?": "Yes or No"
+            },
+            "Vehicle History": {
+                "DNI Person": 123456789,
+                "License?": "Yes or No",
+                "Type of license": "A1 or A2 or B1 or B2 or B3 or C1 or C2 or C3",
+                "Vehicle?": "Yes or No",
+                "Type of vehicle": "Car or Motorcycle",
+                "Description of the Vehicle": "Description of the Vehicle",
+                "Plate of the vehicle": "Plate of the vehicle"
+            },
+            "Case History": {
+                "DNI Person": 123456789,
+                "Case": "Name case",
+                "Arrested?": "Yes or No",
+                "Description of Case": "Description of case",
+                "Jurisdiction": "Jurisdiction of the case",
+                "Day Arrested": 1,
+                "Month Arrested": 1,
+                "Year Arrested": 1999
+            },
+            "Medical History": {
+                "DNI Person": 123456789,
+                "Type blood": "A+, B+, O+, AB+, A-, B-, O-, AB-",
+                "Pathologies": "Pathologies",
+                "Description Treatment": "Treatment description",
+                "Doctor in Charge": "Name doctor",
+                "Day Treatment": 1,
+                "Month Treatment": 1,
+                "Year Treatment": 1999
+            }
+        },
+        {
+            "DNI Person": 10239203390,
+            "Type DNI": "C.C.",
+            "Name": "Isabela",
+            "Last Name": "Carmargo",
+            "Phone": 313402020,
+            "Address": {
+                "Street": "123 Main St",
+                "Number": 5,
+                "Apartment": "Apt 3B",
+                "Postal Code": "1011",
+                "Locality": "City Ville",
+                "Department": "State Ville",
+                "Country": "Country Land"
+            },
+            "Education History": {
+                "DNI Person": 123456789,
+                "Level of Education": "Level of Education",
+                "Institution Name": "Institution Name",
+                "Address": "<class 'logic.address.Address'>",
+                "Title Obtained": "Title Obtained",
+                "Day of Graduation": 1,
+                "Month of Graduation": 1,
+                "Year of Graduation": 1999
+            },
+            "Fine History": {
+                "DNI Person": 123456789,
+                "Fine?": "Type of Fine",
+                "Type of Fine": "Type of Fine",
+                "Description Fine": "Description of the Fine",
+                "Paid?": "Yes or No"
+            },
+            "Vehicle History": {
+                "DNI Person": 123456789,
+                "License?": "Yes or No",
+                "Type of license": "A1 or A2 or B1 or B2 or B3 or C1 or C2 or C3",
+                "Vehicle?": "Yes or No",
+                "Type of vehicle": "Car or Motorcycle",
+                "Description of the Vehicle": "Description of the Vehicle",
+                "Plate of the vehicle": "Plate of the vehicle"
+            },
+            "Case History": {
+                "DNI Person": 123456789,
+                "Case": "Name case",
+                "Arrested?": "Yes or No",
+                "Description of Case": "Description of case",
+                "Jurisdiction": "Jurisdiction of the case",
+                "Day Arrested": 1,
+                "Month Arrested": 1,
+                "Year Arrested": 1999
+            },
+            "Medical History": {
+                "DNI Person": 123456789,
+                "Type blood": "A+, B+, O+, AB+, A-, B-, O-, AB-",
+                "Pathologies": "Pathologies",
+                "Description Treatment": "Treatment description",
+                "Doctor in Charge": "Name doctor",
+                "Day Treatment": 1,
+                "Month Treatment": 1,
+                "Year Treatment": 1999
+            }
+        },
+        {
+            "DNI Person": 12412421312313,
+            "Type DNI": "C.C.",
+            "Name": "Sof\u00eda",
+            "Last Name": "Carmargo",
+            "Phone": 31359293293,
+            "Address": {
+                "Street": "123 Main St",
+                "Number": 5,
+                "Apartment": "Apt 3B",
+                "Postal Code": "1011",
+                "Locality": "City Ville",
+                "Department": "State Ville",
+                "Country": "Country Land"
+            },
+            "Education History": {
+                "DNI Person": 123456789,
+                "Level of Education": "Level of Education",
+                "Institution Name": "Institution Name",
+                "Address": "<class 'logic.address.Address'>",
+                "Title Obtained": "Title Obtained",
+                "Day of Graduation": 1,
+                "Month of Graduation": 1,
+                "Year of Graduation": 1999
+            },
+            "Fine History": {
+                "DNI Person": 123456789,
+                "Fine?": "Type of Fine",
+                "Type of Fine": "Type of Fine",
+                "Description Fine": "Description of the Fine",
+                "Paid?": "Yes or No"
+            },
+            "Vehicle History": {
+                "DNI Person": 123456789,
+                "License?": "Yes or No",
+                "Type of license": "A1 or A2 or B1 or B2 or B3 or C1 or C2 or C3",
+                "Vehicle?": "Yes or No",
+                "Type of vehicle": "Car or Motorcycle",
+                "Description of the Vehicle": "Description of the Vehicle",
+                "Plate of the vehicle": "Plate of the vehicle"
+            },
+            "Case History": {
+                "DNI Person": 123456789,
+                "Case": "Name case",
+                "Arrested?": "Yes or No",
+                "Description of Case": "Description of case",
+                "Jurisdiction": "Jurisdiction of the case",
+                "Day Arrested": 1,
+                "Month Arrested": 1,
+                "Year Arrested": 1999
+            },
+            "Medical History": {
+                "DNI Person": 123456789,
+                "Type blood": "A+, B+, O+, AB+, A-, B-, O-, AB-",
+                "Pathologies": "Pathologies",
+                "Description Treatment": "Treatment description",
+                "Doctor in Charge": "Name doctor",
+                "Day Treatment": 1,
+                "Month Treatment": 1,
+                "Year Treatment": 1999
+            }
+        },
+        {
+            "DNI Person": 131284728478,
+            "Type DNI": "C.C.",
+            "Name": "Estefani",
+            "Last Name": "Carmargo",
+            "Phone": 313142323,
+            "Address": {
+                "Street": "123 Main St",
+                "Number": 5,
+                "Apartment": "Apt 3B",
+                "Postal Code": "1011",
+                "Locality": "City Ville",
+                "Department": "State Ville",
+                "Country": "Country Land"
+            },
+            "Education History": {
+                "DNI Person": 123456789,
+                "Level of Education": "Level of Education",
+                "Institution Name": "Institution Name",
+                "Address": "<class 'logic.address.Address'>",
+                "Title Obtained": "Title Obtained",
+                "Day of Graduation": 1,
+                "Month of Graduation": 1,
+                "Year of Graduation": 1999
+            },
+            "Fine History": {
+                "DNI Person": 123456789,
+                "Fine?": "Type of Fine",
+                "Type of Fine": "Type of Fine",
+                "Description Fine": "Description of the Fine",
+                "Paid?": "Yes or No"
+            },
+            "Vehicle History": {
+                "DNI Person": 123456789,
+                "License?": "Yes or No",
+                "Type of license": "A1 or A2 or B1 or B2 or B3 or C1 or C2 or C3",
+                "Vehicle?": "Yes or No",
+                "Type of vehicle": "Car or Motorcycle",
+                "Description of the Vehicle": "Description of the Vehicle",
+                "Plate of the vehicle": "Plate of the vehicle"
+            },
+            "Case History": {
+                "DNI Person": 123456789,
+                "Case": "Name case",
+                "Arrested?": "Yes or No",
+                "Description of Case": "Description of case",
+                "Jurisdiction": "Jurisdiction of the case",
+                "Day Arrested": 1,
+                "Month Arrested": 1,
+                "Year Arrested": 1999
+            },
+            "Medical History": {
+                "DNI Person": 123456789,
+                "Type blood": "A+, B+, O+, AB+, A-, B-, O-, AB-",
+                "Pathologies": "Pathologies",
+                "Description Treatment": "Treatment description",
+                "Doctor in Charge": "Name doctor",
+                "Day Treatment": 1,
+                "Month Treatment": 1,
+                "Year Treatment": 1999
+            }
+        },
+        {
+            "DNI Person": 13141413,
+            "Type DNI": "C.C.",
+            "Name": "Mar\u00eda",
+            "Last Name": "Torreglosa",
+            "Phone": 31352323,
+            "Address": {
+                "Street": "123 Main St",
+                "Number": 5,
+                "Apartment": "Apt 3B",
+                "Postal Code": "1011",
+                "Locality": "City Ville",
+                "Department": "State Ville",
+                "Country": "Country Land"
+            },
+            "Education History": {
+                "DNI Person": 123456789,
+                "Level of Education": "Level of Education",
+                "Institution Name": "Institution Name",
+                "Address": "<class 'logic.address.Address'>",
+                "Title Obtained": "Title Obtained",
+                "Day of Graduation": 1,
+                "Month of Graduation": 1,
+                "Year of Graduation": 1999
+            },
+            "Fine History": {
+                "DNI Person": 123456789,
+                "Fine?": "Type of Fine",
+                "Type of Fine": "Type of Fine",
+                "Description Fine": "Description of the Fine",
+                "Paid?": "Yes or No"
+            },
+            "Vehicle History": {
+                "DNI Person": 123456789,
+                "License?": "Yes or No",
+                "Type of license": "A1 or A2 or B1 or B2 or B3 or C1 or C2 or C3",
+                "Vehicle?": "Yes or No",
+                "Type of vehicle": "Car or Motorcycle",
+                "Description of the Vehicle": "Description of the Vehicle",
+                "Plate of the vehicle": "Plate of the vehicle"
+            },
+            "Case History": {
+                "DNI Person": 123456789,
+                "Case": "Name case",
+                "Arrested?": "Yes or No",
+                "Description of Case": "Description of case",
+                "Jurisdiction": "Jurisdiction of the case",
+                "Day Arrested": 1,
+                "Month Arrested": 1,
+                "Year Arrested": 1999
+            },
+            "Medical History": {
+                "DNI Person": 123456789,
+                "Type blood": "A+, B+, O+, AB+, A-, B-, O-, AB-",
+                "Pathologies": "Pathologies",
+                "Description Treatment": "Treatment description",
+                "Doctor in Charge": "Name doctor",
+                "Day Treatment": 1,
+                "Month Treatment": 1,
+                "Year Treatment": 1999
+            }
+        },
+        {
+            "DNI Person": 1312333,
+            "Type DNI": "C.C.",
+            "Name": "Mar\u00eda",
+            "Last Name": "P\u00e9rez",
+            "Phone": 313242323,
+            "Address": {
+                "Street": "123 Main St",
+                "Number": 5,
+                "Apartment": "Apt 3B",
+                "Postal Code": "1011",
+                "Locality": "City Ville",
+                "Department": "State Ville",
+                "Country": "Country Land"
+            },
+            "Education History": {
+                "DNI Person": 123456789,
+                "Level of Education": "Level of Education",
+                "Institution Name": "Institution Name",
+                "Address": "<class 'logic.address.Address'>",
+                "Title Obtained": "Title Obtained",
+                "Day of Graduation": 1,
+                "Month of Graduation": 1,
+                "Year of Graduation": 1999
+            },
+            "Fine History": {
+                "DNI Person": 123456789,
+                "Fine?": "Type of Fine",
+                "Type of Fine": "Type of Fine",
+                "Description Fine": "Description of the Fine",
+                "Paid?": "Yes or No"
+            },
+            "Vehicle History": {
+                "DNI Person": 123456789,
+                "License?": "Yes or No",
+                "Type of license": "A1 or A2 or B1 or B2 or B3 or C1 or C2 or C3",
+                "Vehicle?": "Yes or No",
+                "Type of vehicle": "Car or Motorcycle",
+                "Description of the Vehicle": "Description of the Vehicle",
+                "Plate of the vehicle": "Plate of the vehicle"
+            },
+            "Case History": {
+                "DNI Person": 123456789,
+                "Case": "Name case",
+                "Arrested?": "Yes or No",
+                "Description of Case": "Description of case",
+                "Jurisdiction": "Jurisdiction of the case",
+                "Day Arrested": 1,
+                "Month Arrested": 1,
+                "Year Arrested": 1999
+            },
+            "Medical History": {
+                "DNI Person": 123456789,
+                "Type blood": "A+, B+, O+, AB+, A-, B-, O-, AB-",
+                "Pathologies": "Pathologies",
+                "Description Treatment": "Treatment description",
+                "Doctor in Charge": "Name doctor",
+                "Day Treatment": 1,
+                "Month Treatment": 1,
+                "Year Treatment": 1999
+            }
+        },
+        {
+            "DNI Person": 12313142143,
+            "Type DNI": "C.C.",
+            "Name": "Mar\u00eda",
+            "Last Name": "Sarmiento",
+            "Phone": 313242323,
+            "Address": {
+                "Street": "123 Main St",
+                "Number": 5,
+                "Apartment": "Apt 3B",
+                "Postal Code": "1011",
+                "Locality": "City Ville",
+                "Department": "State Ville",
+                "Country": "Country Land"
+            },
+            "Education History": {
+                "DNI Person": 123456789,
+                "Level of Education": "Level of Education",
+                "Institution Name": "Institution Name",
+                "Address": "<class 'logic.address.Address'>",
+                "Title Obtained": "Title Obtained",
+                "Day of Graduation": 1,
+                "Month of Graduation": 1,
+                "Year of Graduation": 1999
+            },
+            "Fine History": {
+                "DNI Person": 123456789,
+                "Fine?": "Type of Fine",
+                "Type of Fine": "Type of Fine",
+                "Description Fine": "Description of the Fine",
+                "Paid?": "Yes or No"
+            },
+            "Vehicle History": {
+                "DNI Person": 123456789,
+                "License?": "Yes or No",
+                "Type of license": "A1 or A2 or B1 or B2 or B3 or C1 or C2 or C3",
+                "Vehicle?": "Yes or No",
+                "Type of vehicle": "Car or Motorcycle",
+                "Description of the Vehicle": "Description of the Vehicle",
+                "Plate of the vehicle": "Plate of the vehicle"
+            },
+            "Case History": {
+                "DNI Person": 123456789,
+                "Case": "Name case",
+                "Arrested?": "Yes or No",
+                "Description of Case": "Description of case",
+                "Jurisdiction": "Jurisdiction of the case",
+                "Day Arrested": 1,
+                "Month Arrested": 1,
+                "Year Arrested": 1999
+            },
+            "Medical History": {
+                "DNI Person": 123456789,
+                "Type blood": "A+, B+, O+, AB+, A-, B-, O-, AB-",
+                "Pathologies": "Pathologies",
+                "Description Treatment": "Treatment description",
+                "Doctor in Charge": "Name doctor",
+                "Day Treatment": 1,
+                "Month Treatment": 1,
+                "Year Treatment": 1999
+            }
+        }
+    ]
+}

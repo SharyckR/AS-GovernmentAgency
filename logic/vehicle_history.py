@@ -21,7 +21,7 @@ class VehicleHistory(AbstractHistory, BaseModel):
         __eq__(other): Compares two VehicleHistory objects to check if they are equal.
     """
 
-    dni_person: int = 0
+    dni_person: int = 123456789
     licence: Optional[str] = "Yes or No"
     type_licence: Optional[str] = "A1 or A2 or B1 or B2 or B3 or C1 or C2 or C3"
     vehicle: Optional[str] = "Yes or No"
@@ -33,6 +33,21 @@ class VehicleHistory(AbstractHistory, BaseModel):
     def __init__(self, mediator=None, **data):
         super().__init__(**data)
         self.mediator = mediator
+
+    def to_dict(self):
+        type_licence_str = str(self.type_licence) if self.type_licence is not None else "None"
+        type_vehicle_str = str(self.type_vehicle) if self.type_vehicle is not None else "None"
+        description_vehicle_str = str(self.description_vehicle) if self.description_vehicle is not None else "None"
+        plate_vehicle = str(self.plate_vehicle) if self.plate_vehicle is not None else "None"
+        return {
+            "DNI Person": self.dni_person,
+            "License?": self.licence,
+            "Type of license": type_licence_str,
+            "Vehicle?": self.vehicle,
+            "Type of vehicle": type_vehicle_str,
+            "Description of the Vehicle": description_vehicle_str,
+            "Plate of the vehicle": plate_vehicle
+        }
 
     def __str__(self) -> str:
         """
@@ -47,8 +62,8 @@ class VehicleHistory(AbstractHistory, BaseModel):
 
         return '(Dni: {0}, Does the person have a license?: {1}, Type of license: {2},' \
                'Does the person have a vehicle?: {3}, Type of vehicle: {4}, Description of the Vehicle: {5},' \
-               'Plate of the vehicle: {6})'.format(self.dni_person, self.licence, type_licence_str, self.vehicle,
-                                                   type_vehicle_str, description_vehicle_str, plate_vehicle)
+               ' Plate of the vehicle: {6})'.format(self.dni_person, self.licence, type_licence_str, self.vehicle,
+                                                    type_vehicle_str, description_vehicle_str, plate_vehicle)
 
     def __eq__(self, other) -> bool:
         """
@@ -91,3 +106,5 @@ vehicle_history1 = VehicleHistory(dni_person=1043638720, licence="Yes", type_lic
                                   type_vehicle="Car", description_vehicle="Mazda2", plate_vehicle="BJU-521")
 vehicle_history2 = VehicleHistory(dni_person=45761873, licence="No", type_licence=None, vehicle="Yes",
                                   type_vehicle="Motorcycle", description_vehicle="Honda", plate_vehicle="PLO-154")
+
+

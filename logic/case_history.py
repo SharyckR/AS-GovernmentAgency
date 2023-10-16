@@ -23,7 +23,7 @@ class CaseHistory(AbstractHistory, BaseModel):
             __eq__(other): Compares two objects case history to check if they are equal.
     """
 
-    dni_person: int = 1
+    dni_person: int = 123456789
     case: str = "Name case"
     arrested: str = "Yes or No"
     description_case: Optional[str] = "Description of case"
@@ -38,12 +38,34 @@ class CaseHistory(AbstractHistory, BaseModel):
         super().__init__(**data)
         self.mediator = mediator
 
-    def __eq__(self, another_history):
+    def to_dict(self):
+        description_case_str = str(self.description_case) if self.description_case is not None else "None"
+        jurisdiction_str = str(self.jurisdiction) if self.jurisdiction is not None else "None"
+        day_int = int(self.day) if self.day is not None else "None"
+        month_int = int(self.month) if self.month is not None else "None"
+        year_int = int(self.year) if self.year is not None else "None"
+        return {
+            "DNI Person": self.dni_person,
+            "Case": self.case,
+            "Arrested?": self.arrested,
+            "Description of Case": description_case_str,
+            "Jurisdiction": jurisdiction_str,
+            "Day Arrested": day_int,
+            "Month Arrested": month_int,
+            "Year Arrested": year_int
+        }
+
+    def __eq__(self, other):
         """ Returns bool of equality of history objects.
         :returns: bool history
         :rtype: bool
         """
-        return another_history.dni_person == self.dni_person
+        if isinstance(other, CaseHistory):
+            return (self.dni_person == other.dni_person and self.case == other.case and
+                    self.arrested == other.arrested and self.description_case == other.description_case and
+                    self.jurisdiction == other.jurisdiction and self.day == other.day and self.month == other.month and
+                    self.year == other.year and self.date_arrested == other.date_arrested)
+        return False
 
     def __str__(self):
         """ Returns str of case history.
@@ -65,11 +87,11 @@ class CaseHistory(AbstractHistory, BaseModel):
 if __name__ == '__main__':
     # Prueba Case History class
 
-    case_history1 = CaseHistory(dni_person=102132323, case="Heist", arrested="Yes",
+    case_history1 = CaseHistory(dni_person=1043638720, case="Heist", arrested="Yes",
                                 description_case="Stole a necklace", jurisdiction="Disciplinary", day=15, year=2021,
                                 month=5)
 
-    case_history2 = CaseHistory(dni_person=231231313, case="Public disturbance", arrested="No",
+    case_history2 = CaseHistory(dni_person=45761873, case="Public disturbance", arrested="No",
                                 description_case=None, jurisdiction=None, day=None, year=None, month=None)
 
     case_history1_str = case_history1.__str__()
@@ -80,8 +102,8 @@ if __name__ == '__main__':
     are_equal_case_history = case_history1.__eq__(case_history2)
     print(f"Are equals ? \n {are_equal_case_history} \n\n")
 
-case_history1 = CaseHistory(dni_person=102132323, case="Heist", arrested="Yes",
+case_history1 = CaseHistory(dni_person=1043638720, case="Heist", arrested="Yes",
                             description_case="Stole a necklace", jurisdiction="Disciplinary", day=15, year=2021,
                             month=5)
-case_history2 = CaseHistory(dni_person=231231313, case="Public disturbance", arrested="No",
+case_history2 = CaseHistory(dni_person=45761873, case="Public disturbance", arrested="No",
                             description_case=None, jurisdiction=None, day=None, year=None, month=None)
