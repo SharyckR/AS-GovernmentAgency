@@ -64,4 +64,4 @@ jobs:
         with:
           app-name: 'FastApi-AS-GovernmentAgency'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_2283038D6FD34F35AEEEEB2A1F694CD8 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0FD144857DEB4223AFA1F1D097B320E0 }}
