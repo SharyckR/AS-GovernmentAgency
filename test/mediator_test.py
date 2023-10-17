@@ -19,8 +19,13 @@ class TestMediator(unittest.TestCase):
                      "locality": "None", "department": "Cambridge", "country": "EE.UU."}
     address1 = Address(**address1_data)
 
+<<<<<<< HEAD
     person_data = {"id_entity": 652147963, "type_id_entity": "C.C.", "dni": 12345678, "type": "C.C.", "name": "Andrea",
                    "last_name": "Smith", "phone": 3165222657, "address": address}
+=======
+    person_data = {"dni": 12345678, "type": "C.C.", "name": "Andrea", "last_name": "Smith",
+                   "phone": 3165222657, "address": address}
+>>>>>>> a92ca7333fcb1be9ac5737376a81e1802a1c3ed0
     person = Person(**person_data)
 
     education_history_data = {"dni_person": 12345678, "education": "University",

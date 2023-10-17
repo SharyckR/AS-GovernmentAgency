@@ -1,6 +1,7 @@
 from datetime import date
 from typing import Optional
 from pydantic import BaseModel
+from typing import Optional
 from logic.abstract_history import AbstractHistory
 
 
@@ -69,8 +70,11 @@ class MedicalHistory(AbstractHistory, BaseModel):
         :returns: string medical history
         :rtype: str
         """
+
+        pathologies_str = str(self.pathologies) if self.pathologies is not None else "None"
+
         return 'Dni: {0}, Type blood: {1}, Pathologies: {2}, Description treatment: {3}, Doctor charge: {4}, ' \
-               'Date treatment: {5} - {6} - {7}'.format(self.dni_person, self.type_blood, self.pathologies,
+               'Date treatment: {5} - {6} - {7}'.format(self.dni_person, self.type_blood, pathologies_str,
                                                         self.description_treatment, self.doctor_charge, self.year,
                                                         self.month, self.day)
 

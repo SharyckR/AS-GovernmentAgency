@@ -25,7 +25,11 @@ class EducationHistory(AbstractHistory, BaseModel):
             __str__(): Returns a string representation of an educational history.
             __eq__(other): Compares two objects educational history to check if they are equal.
     """
+<<<<<<< HEAD
     id_history: int = 1
+=======
+
+>>>>>>> a92ca7333fcb1be9ac5737376a81e1802a1c3ed0
     dni_person: int = 123456789
     education: Optional[str] = "Level of Education"
     name_institution: Optional[str] = "Institution Name"
@@ -45,14 +49,30 @@ class EducationHistory(AbstractHistory, BaseModel):
     def to_dict(self):
         education_str = str(self.education) if self.education is not None else "None"
         name_institution_str = str(self.name_institution) if self.name_institution is not None else "None"
+<<<<<<< HEAD
         title_obtained_str = str(self.title_obtained) if self.title_obtained is not None else "None"
+=======
+        location_str = str(self.location) if self.location is not None else "None"
+        title_obtained_str = str(self.title_obtained) if self.title_obtained is not None else "None"
+        day_int = int(self.day) if self.day is not None else "None"
+        month_int = int(self.month) if self.month is not None else "None"
+        year_int = int(self.year) if self.year is not None else "None"
+>>>>>>> a92ca7333fcb1be9ac5737376a81e1802a1c3ed0
         return {
             "DNI Person": self.dni_person,
             "Level of Education": education_str,
             "Institution Name": name_institution_str,
+<<<<<<< HEAD
             "Address": self.location.to_dict(),
             "Title Obtained": title_obtained_str,
             "Date of graduation": str(self.date_graduation)
+=======
+            "Address": location_str,
+            "Title Obtained": title_obtained_str,
+            "Day of Graduation": day_int,
+            "Month of Graduation": month_int,
+            "Year of Graduation": year_int
+>>>>>>> a92ca7333fcb1be9ac5737376a81e1802a1c3ed0
         }
 
     def __eq__(self, other):
@@ -106,5 +126,10 @@ if __name__ == '__main__':
 
 edu_history1 = EducationHistory(dni_person=1043638720, education="Secondary", name_institution="Collage",
                                 location=address1, title_obtained="Graduated", day=13, month=10, year=2020)
+<<<<<<< HEAD
 edu_history2 = EducationHistory(dni_person=45761873, education='University', name_institution='Name institution',
                                 location=address2, title_obtained='Bachiller', day=4, month=3, year=2022)
+=======
+edu_history2 = EducationHistory(dni_person=45761873, education=None, name_institution=None, location=address2,
+                                title_obtained=None, day=None, month=None, year=None)
+>>>>>>> a92ca7333fcb1be9ac5737376a81e1802a1c3ed0

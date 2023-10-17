@@ -20,6 +20,7 @@ class Address(BaseModel):
         __str__(): Returns a string representation of the address.
         __eq__(other): Compares two addresses to check if they are equal.
     """
+<<<<<<< HEAD
     street: str = 'street'
     number: int = 1
     apartment: Optional[str] = 'apartment'
@@ -27,6 +28,15 @@ class Address(BaseModel):
     locality: str = 'locality'
     department: str = 'department'
     country: str = 'country'
+=======
+    street: str
+    number: int
+    apartment: Optional[str]
+    postal_code: str
+    locality: str
+    department: str
+    country: str
+>>>>>>> a92ca7333fcb1be9ac5737376a81e1802a1c3ed0
     mediator: object = None
 
     def __init__(self, mediator=None, **data):
