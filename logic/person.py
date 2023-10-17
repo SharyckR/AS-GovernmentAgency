@@ -33,13 +33,13 @@ class Person(NaturalEntity, BaseModel):
             __str__(): Returns a string representation of a person.
             __eq__(other): Compares two objects person to check if they are equal.
     """
-    id_entity: int
-    type_id_entity: str
-    dni: int
-    type: str
-    name: str
-    last_name: str
-    phone: int
+    id_entity: int = 123456789
+    type_id_entity: str = "C.C."
+    dni: int = 123456789
+    type: str = "C.C."
+    name: str = "Name"
+    last_name: str = "Last Name"
+    phone: int = 12345678
     address: Address = Address()
     education_history: EducationHistory = EducationHistory()
     fine_history: FineHistory = FineHistory()

@@ -500,6 +500,74 @@
                 "Month Treatment": 1,
                 "Year Treatment": 1999
             }
+        },
+        {
+            "DNI Person": 12423242,
+            "Type DNI": "C.C.",
+            "Name": "Mar\u00eda",
+            "Last Name": "Sarmiento",
+            "Phone": 313242323,
+            "Address": {
+                "Street": "123 Main St",
+                "Number": 5,
+                "Apartment": "Apt 3B",
+                "Postal Code": "1011",
+                "Locality": "City Ville",
+                "Department": "State Ville",
+                "Country": "Country Land"
+            },
+            "Education History": {
+                "DNI Person": 123456789,
+                "Level of Education": "Level of Education",
+                "Institution Name": "Institution Name",
+                "Address": {
+                    "Street": "street",
+                    "Number": 1,
+                    "Apartment": "apartment",
+                    "Postal Code": "postal code",
+                    "Locality": "locality",
+                    "Department": "department",
+                    "Country": "country"
+                },
+                "Title Obtained": "Title Obtained",
+                "Date of graduation": "1999-01-01"
+            },
+            "Fine History": {
+                "DNI Person": 123456789,
+                "Fine?": "Type of Fine",
+                "Type of Fine": "Type of Fine",
+                "Description Fine": "Description of the Fine",
+                "Paid?": "Yes or No"
+            },
+            "Vehicle History": {
+                "DNI Person": 123456789,
+                "License?": "Yes or No",
+                "Type of license": "A1 or A2 or B1 or B2 or B3 or C1 or C2 or C3",
+                "Vehicle?": "Yes or No",
+                "Type of vehicle": "Car or Motorcycle",
+                "Description of the Vehicle": "Description of the Vehicle",
+                "Plate of the vehicle": "Plate of the vehicle"
+            },
+            "Case History": {
+                "DNI Person": 123456789,
+                "Case": "Name case",
+                "Arrested?": "Yes or No",
+                "Description of Case": "Description of case",
+                "Jurisdiction": "Jurisdiction of the case",
+                "Day Arrested": 1,
+                "Month Arrested": 1,
+                "Year Arrested": 1999
+            },
+            "Medical History": {
+                "DNI Person": 123456789,
+                "Type blood": "A+, B+, O+, AB+, A-, B-, O-, AB-",
+                "Pathologies": "Pathologies",
+                "Description Treatment": "Treatment description",
+                "Doctor in Charge": "Name doctor",
+                "Day Treatment": 1,
+                "Month Treatment": 1,
+                "Year Treatment": 1999
+            }
         }
     ]
 }

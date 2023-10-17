@@ -2,11 +2,11 @@
     "educational_agencies": [
         {
             "Agency": {
-                "ID Entity": 10290294,
+                "ID Entity": 965816,
                 "Entity": "Legal entity",
-                "NIT": 4224,
-                "Business Name": "Business Name",
-                "Contact": "31459750",
+                "NIT": 52173,
+                "Business Name": "Tis er ium",
+                "Contact": "3145975012",
                 "Address": {
                     "Street": "The cross",
                     "Number": 10,
@@ -19,17 +19,66 @@
                 "Date Actualization": "1999-01-01"
             },
             "Education History": {
-                "DNI Person": 45761873,
-                "Level of Education": "University",
-                "Institution Name": "Name institution",
-                "Address": "(The cross, 10, None, 1010, Aqueous, Cundinamarca, Colombia)",
-                "Title Obtained": "Bachiller",
-                "Day of Graduation": 4,
-                "Month of Graduation": 3,
-                "Year of Graduation": 2022
+                "DNI Person": 123456789,
+                "Level of Education": "Level of Education",
+                "Institution Name": "Institution Name",
+                "Address": {
+                    "Street": "street",
+                    "Number": 1,
+                    "Apartment": "apartment",
+                    "Postal Code": "postal code",
+                    "Locality": "locality",
+                    "Department": "department",
+                    "Country": "country"
+                },
+                "Title Obtained": "Title Obtained",
+                "Day of Graduation": 1,
+                "Month of Graduation": 1,
+                "Year of Graduation": 1999
             },
             "Academic Achievements": [
                 "First places"
+            ]
+        },
+        {
+            "Agency": {
+                "ID Entity": 1242142143,
+                "Entity": "Legal entity",
+                "NIT": 52173,
+                "Business Name": "Business Name",
+                "Contact": "31459750",
+                "Address": {
+                    "Street": "123 Main St",
+                    "Number": 42,
+                    "Apartment": "Apt 101",
+                    "Postal Code": "12345",
+                    "Locality": "Cityville",
+                    "Department": "Stateville",
+                    "Country": "Countryland"
+                },
+                "Date Actualization": "1999-01-01"
+            },
+            "Education History": {
+                "DNI Person": 45761873,
+                "Level of Education": "University",
+                "Institution Name": "Name institution",
+                "Address": {
+                    "Street": "The cross",
+                    "Number": 10,
+                    "Apartment": "Bolivar",
+                    "Postal Code": "1010",
+                    "Locality": "Aqueous",
+                    "Department": "Cundinamarca",
+                    "Country": "Colombia"
+                },
+                "Title Obtained": "Bachiller",
+                "Day of Graduation": 4,
+                "Month of Graduation": 3,
+                "Year of Graduation": 2016
+            },
+            "Academic Achievements": [
+                "Good students",
+                "Great place"
             ]
         }
     ]

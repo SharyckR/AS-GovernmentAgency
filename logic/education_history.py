@@ -29,35 +29,30 @@ class EducationHistory(AbstractHistory, BaseModel):
     dni_person: int = 123456789
     education: Optional[str] = "Level of Education"
     name_institution: Optional[str] = "Institution Name"
-    location: Optional[object] = Address
+    location: Optional[Address] = Address()
     title_obtained: Optional[str] = "Title Obtained"
-    day: Optional[int] = 1
-    month: Optional[int] = 1
-    year: Optional[int] = 1999
+    day: int = 1
+    month: int = 1
+    year: int = 1999
     date_graduation: date = date(year, month, day)
     mediator: object = None
 
     def __init__(self, mediator=None, **data):
         super().__init__(**data)
+        self.date_graduation = date(year=self.year, month=self.month, day=self.day)
         self.mediator = mediator
 
     def to_dict(self):
         education_str = str(self.education) if self.education is not None else "None"
         name_institution_str = str(self.name_institution) if self.name_institution is not None else "None"
-        location_str = str(self.location) if self.location is not None else "None"
         title_obtained_str = str(self.title_obtained) if self.title_obtained is not None else "None"
-        day_int = int(self.day) if self.day is not None else "None"
-        month_int = int(self.month) if self.month is not None else "None"
-        year_int = int(self.year) if self.year is not None else "None"
         return {
             "DNI Person": self.dni_person,
             "Level of Education": education_str,
             "Institution Name": name_institution_str,
-            "Address": location_str,
+            "Address": self.location.to_dict(),
             "Title Obtained": title_obtained_str,
-            "Day of Graduation": day_int,
-            "Month of Graduation": month_int,
-            "Year of Graduation": year_int,
+            "Date of graduation": str(self.date_graduation)
         }
 
     def __eq__(self, other):
