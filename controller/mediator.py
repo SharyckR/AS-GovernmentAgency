@@ -118,6 +118,8 @@ class Mediator:
                 del person["_id"]
             self.persons.append(person)
         for educational_history in COL_EDUCATION_HISTORY.find():
+            if "_id" in educational_history:
+                del COL_EDUCATION_HISTORY["_id"]
             self.education_histories.append(educational_history)
         for fine_history in COL_FINE_HISTORY.find():
             self.fine_histories.append(fine_history)
@@ -194,3 +196,8 @@ class Mediator:
                 print(f"Linked medical history for DNI {medical_history.dni_person}")
                 return update
         raise Exception(f"No person found for DNI {dni_person}")
+
+    def get_persons(self):
+        if len(self.persons) == 0:
+            raise Exception('No data yet')
+        return self.persons

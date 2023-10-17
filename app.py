@@ -18,21 +18,18 @@ async def root():
 
 @app.get('/persons')
 async def get_person():
-    data = []
-    if COL_PERSON.count_documents({}) == 0:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='No data yet')
-    for c in COL_PERSON.find():
-        if '_id' in c:
-            del c['_id']
-        data.append(c)
-    return {'Data:': data}
+    try:
+        data = mediator_controller.get_persons()
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_204_NO_CONTENT, detail=str(e))
+    else:
+        return {'Persons:': data}
 
 
 @app.get('/persons/{dni_person}')
 async def get_person(dni_person: int):
     try:
         person_info = get_person_info(dni_person)
-
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
     else:
