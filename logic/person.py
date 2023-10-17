@@ -1,4 +1,3 @@
-
 from logic.case_history import *
 from logic.education_history import *
 from logic.fine_history import *

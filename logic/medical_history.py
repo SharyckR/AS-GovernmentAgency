@@ -1,5 +1,4 @@
 from datetime import date
-from typing import Optional
 from pydantic import BaseModel
 from typing import Optional
 from logic.abstract_history import AbstractHistory
