@@ -19,11 +19,11 @@ async def root():
 @app.get('/persons')
 async def get_person():
     try:
-        data = mediator_controller.get_persons()
+        persons = mediator_controller.get_persons()
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_204_NO_CONTENT, detail=str(e))
     else:
-        return {'Persons:': data}
+        return {'Persons:': persons}
 
 
 @app.get('/persons/{dni_person}')

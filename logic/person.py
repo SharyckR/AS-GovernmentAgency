@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 
-=======
->>>>>>> a92ca7333fcb1be9ac5737376a81e1802a1c3ed0
 from logic.case_history import *
 from logic.education_history import *
 from logic.fine_history import *
@@ -17,7 +14,7 @@ class Person(NaturalEntity, BaseModel):
      Class used to represent a Person
 
      Attributes:
-            id_entity (int): id_entity of person ( used in the database ).
+            id_entity (int): id_entity ( used in the database ).
             type_id_entity (str): Type id_entity.
             dni (int): DNI of person.
             type (str): Type id_entity of person.
@@ -36,7 +33,6 @@ class Person(NaturalEntity, BaseModel):
             __str__(): Returns a string representation of a person.
             __eq__(other): Compares two objects person to check if they are equal.
     """
-<<<<<<< HEAD
     id_entity: int = 123456789
     type_id_entity: str = "C.C."
     dni: int = 123456789
@@ -50,21 +46,6 @@ class Person(NaturalEntity, BaseModel):
     vehicle_history: VehicleHistory = VehicleHistory()
     case_history: CaseHistory = CaseHistory()
     medical_history: MedicalHistory = MedicalHistory()
-=======
-    id_entity: int = 00000000
-    type_id_entity: str = "Type id_entity"
-    dni: int = 123456789
-    type: str = "Type dni person"
-    name: str = "Name"
-    last_name: str = "LastName"
-    phone: int = 0
-    address: object = Address
-    education_history: object = EducationHistory()
-    fine_history: object = FineHistory()
-    vehicle_history: object = VehicleHistory()
-    case_history: object = CaseHistory()
-    medical_history: object = MedicalHistory()
->>>>>>> a92ca7333fcb1be9ac5737376a81e1802a1c3ed0
     mediator: object = None
 
     def __init__(self, mediator=None, **data):
@@ -73,6 +54,8 @@ class Person(NaturalEntity, BaseModel):
 
     def to_dict(self):
         return {
+            "ID Entity": self.id_entity,
+            "Type Id Entity": self.type_id_entity,
             "DNI Person": self.dni,
             "Type DNI": self.type,
             "Name": self.name,
@@ -116,8 +99,8 @@ class Person(NaturalEntity, BaseModel):
 if __name__ == '__main__':
     # Prueba Person class
 
-    person1 = Person(id_entity=5120167, type_id_entity="C.C", dni=1043638720, name="Julio", type="C.C.",
-                     last_name="Rodriguez", phone=3154528309, address=address1)
+    person1 = Person(id_entity=93016014, type_id_entity="C.E.", dni=93016014, name="Kelly", type="C.E.",
+                     last_name="Jones", phone=3004233041, address=address1)
     person2 = Person(id_entity=1247913, type_id_entity="C.C", dni=45761873, type="C.E.", name="Luis",
                      last_name="Castro", phone=3214464925, address=address2)
 
@@ -129,11 +112,7 @@ if __name__ == '__main__':
     are_equal_person = person1.__eq__(person2)
     print(f"Are equals ? \n {are_equal_person} \n\n")
 
-<<<<<<< HEAD
-person1 = Person(id_entity=5120167, type_id_entity="C.C", dni=1043638721, type="C.C.", name="Julio",
-=======
-person1 = Person(id_entity=5120167, type_id_entity="C.C", dni=1043638720, type="C.C.", name="Julio",
->>>>>>> a92ca7333fcb1be9ac5737376a81e1802a1c3ed0
-                 last_name="Rodriguez", phone=3154528309, address=address1)
+person1 = Person(id_entity=93016014, type_id_entity="C.E.", dni=93016014, name="Kelly", type="C.E.",
+                 last_name="Jones", phone=3004233041, address=address1)
 person2 = Person(id_entity=1247913, type_id_entity="C.C", dni=45761873, type="C.E.", name="Luis", last_name="Castro",
                  phone=3214464925, address=address2)
