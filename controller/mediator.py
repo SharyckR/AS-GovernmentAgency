@@ -130,16 +130,16 @@ class Mediator:
             self.__medical_histories.append(medical_history)
 
     # Create Person
-    def add_person(self, person: Person = Person()):
+    def add_person(self, person: Person):
         person_dict = person.to_dict()
-        print(self.__persons)
         if not any(p["DNI Person"] == person.dni for p in self.__persons):
             self.__persons.append(person_dict)
             person.mediator = self
             print(f"Added person: {person.name}")
             COL_PERSON.insert_one(person.to_dict())
+            return person_dict
         else:
-            print(f"Person with DNI {person.dni} already exists.")
+            raise Exception(f"Person with DNI {person.dni} already exists.")
 
     # Link histories with people
 
