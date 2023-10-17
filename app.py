@@ -38,13 +38,14 @@ async def get_person(dni_person: int):
 
 @app.post('/persons', status_code=status.HTTP_201_CREATED)
 async def add_person(person: Person):
-    person_added = mediator_controller.add_person(person)
-    if not person_added:
-        raise HTTPException(status_code=status.HTTP_409_CONFLICT,
-                            detail=f'Person with DNI {person.dni} already exists.')
-    if '_id' in person_added:
-        del person_added['_id']
-    return person_added
+    try:
+        person_added = mediator_controller.add_person(person)
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(e))
+    else:
+        if '_id' in person_added:
+            del person_added['_id']
+        return {'Person added': person_added}
 
 
 @app.get('/persons/educational-history/{dni_person}')
