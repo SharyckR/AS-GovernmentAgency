@@ -18,11 +18,20 @@ class TransportAgency(AgencyFactory):
         __str__(): Returns a formatted string with transport agency information.
         __eq__(other): Compares if two instances of TransportAgency are equal.
     """
-    agency: object = AgencyFactory
+    agency: AgencyFactory = AgencyFactory()
     licence: str = 'Yes or No'
     type_licence: str = 'A1, A2, B1, B2, B3, C1, C2, C3'
-    information_vehicle: object = VehicleHistory
-    information_fine: object = FineHistory
+    information_vehicle: VehicleHistory = VehicleHistory()
+    information_fine: FineHistory = FineHistory()
+
+    def to_dict(self):
+        return {
+            "Agency": self.agency.to_dict(),
+            "Licence": self.licence,
+            "Type of licence": self.type_licence,
+            "Information vehicle": self.information_vehicle.to_dict(),
+            "Information fine": self.information_fine.to_dict()
+        }
 
     def __str__(self):
         """
@@ -31,9 +40,9 @@ class TransportAgency(AgencyFactory):
         :returns: string transport agency
         :rtype: str
         """
-        return 'Agency: {0}, Licence: {1}, Type licence: {2}, Information vehicle: {3}, ' \
-               'Information fine {4}'.format(self.agency.__str__(), self.licence, self.type_licence,
-                                             self.information_vehicle.__str__(), self.information_fine)
+        return 'Agency: {0}, Licence: {1}, Type of licence: {2}, Information vehicle: {3}, ' \
+               'Information fine: {4}'.format(self.agency.__str__(), self.licence, self.type_licence,
+                                              self.information_vehicle.__str__(), self.information_fine)
 
     def __eq__(self, other):
         """

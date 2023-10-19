@@ -11,8 +11,8 @@ from logic.medical_history import MedicalHistory
 
 class TestMediator(unittest.TestCase):
 
-    address_data = {"street": "Santo Domingo", "number": 15, "apartment": "1", "postal_code": "14500",
-                    "locality": "None", "department": "Bolivar", "country": "Colombia"}
+    address_data = {"street": "123 Main St", "number": 5, "apartment": "Apt 3B", "postal_code": "1011",
+                    "locality": "City Ville", "department": "State Ville", "country": "Country Land"}
     address = Address(**address_data)
 
     address1_data = {"street": "Massachusetts Ave", "number": 77, "apartment": "None", "postal_code": "MA 02139",
@@ -38,8 +38,8 @@ class TestMediator(unittest.TestCase):
     vehicle_history = VehicleHistory(**vehicle_history_data)
 
     case_history_data = {"dni_person": 124230242, "case": "Fight", "arrested": "No",
-                         "description_case": "Fight in a bar", "jurisdiction": "Police", "day": None, "year": None,
-                         "month": None}
+                         "description_case": "Fight in a bar", "jurisdiction": "Police", "day": 15, "year": 2023,
+                         "month": 7}
     case_history = CaseHistory(**case_history_data)
 
     medical_history_data = {"dni_person": 124230242, "type_blood": "AB", "pathologies": None,
@@ -49,7 +49,7 @@ class TestMediator(unittest.TestCase):
 
     def test_add_person(self):
         mediator = Mediator()
-        persons = mediator._Mediator__persons
+        persons = mediator._persons
 
         mediator.add_person(TestMediator.person)
 
@@ -57,47 +57,62 @@ class TestMediator(unittest.TestCase):
 
     def test_link_education_history_to_person(self):
         mediator = Mediator()
-        education_histories = mediator._Mediator__education_histories
 
         mediator.link_education_history_to_person(TestMediator.person.dni, TestMediator.education_history)
 
-        self.assertEqual(education_histories[0]["DNI Person"], 124230242)
+        person_education = mediator._persons[0].get("Education History")
+        education_history_dict = TestMediator.education_history.to_dict()
+
+        self.assertIsInstance(person_education, dict)
+        self.assertEqual(person_education, education_history_dict)
 
     def test_link_fine_history_to_person(self):
         mediator = Mediator()
-        fine_histories = mediator._Mediator__fine_histories
 
         mediator.link_fine_history_to_person(TestMediator.person.dni, TestMediator.fine_history)
 
-        self.assertEqual(fine_histories[0]["DNI Person"], 124230242)
+        person_fine = mediator._persons[0].get("Fine History")
+        fine_history_dict = TestMediator.fine_history.to_dict()
+
+        self.assertIsInstance(person_fine, dict)
+        self.assertEqual(person_fine, fine_history_dict)
 
     def test_link_vehicle_history_to_person(self):
         mediator = Mediator()
-        vehicle_histories = mediator._Mediator__vehicle_histories
 
         mediator.link_vehicle_history_to_person(TestMediator.person.dni, TestMediator.vehicle_history)
 
-        self.assertEqual(vehicle_histories[0]["DNI Person"], 124230242)
+        person_vehicle = mediator._persons[0].get("Vehicle History")
+        vehicle_history_dict = TestMediator.vehicle_history.to_dict()
+
+        self.assertIsInstance(person_vehicle, dict)
+        self.assertEqual(person_vehicle, vehicle_history_dict)
 
     def test_link_case_history_to_person(self):
         mediator = Mediator()
-        case_histories = mediator._Mediator__case_histories
 
         mediator.link_case_history_to_person(TestMediator.person.dni, TestMediator.case_history)
 
-        self.assertEqual(case_histories[0]["DNI Person"], 124230242)
+        person_case = mediator._persons[0].get("Case History")
+        case_history_dict = TestMediator.case_history.to_dict()
+
+        self.assertIsInstance(person_case, dict)
+        self.assertEqual(person_case, case_history_dict)
 
     def test_link_medical_history_to_person(self):
         mediator = Mediator()
-        medical_histories = mediator._Mediator__medical_histories
 
         mediator.link_medical_history_to_person(TestMediator.person.dni, TestMediator.medical_history)
 
-        self.assertEqual(medical_histories[0]["DNI Person"], 124230242)
+        medical_education = mediator._persons[0].get("Medical History")
+        medical_history_dict = TestMediator.medical_history.to_dict()
+
+        self.assertIsInstance(medical_education, dict)
+        self.assertEqual(medical_education, medical_history_dict)
 
     def test_get_person_info(self):
         mediator = Mediator()
-        persons = mediator._Mediator__persons
+        persons = mediator._persons
 
         get_person_info(TestMediator.person.dni)
 
@@ -105,43 +120,43 @@ class TestMediator(unittest.TestCase):
 
     def test_get_educational_history(self):
         mediator = Mediator()
-        education_histories = mediator._Mediator__education_histories
 
-        get_educational_history(TestMediator.person.dni)
+        education_histories = mediator._persons[0].get("Education History")
+        education_data = get_educational_history(TestMediator.person.dni)
 
-        self.assertEqual(education_histories[0]["DNI Person"], 124230242)
+        self.assertEqual(education_histories, education_data)
 
     def test_get_fine_history(self):
         mediator = Mediator()
-        fine_histories = mediator._Mediator__fine_histories
 
-        get_fine_history(TestMediator.person.dni)
+        fine_histories = mediator._persons[0].get("Fine History")
+        fine_data = get_fine_history(TestMediator.person.dni)
 
-        self.assertEqual(fine_histories[0]["DNI Person"], 124230242)
+        self.assertEqual(fine_histories, fine_data)
 
     def test_get_vehicle_history(self):
         mediator = Mediator()
-        vehicle_histories = mediator._Mediator__vehicle_histories
 
-        get_vehicle_history(TestMediator.person.dni)
+        vehicle_histories = mediator._persons[0].get("Vehicle History")
+        vehicle_data = get_vehicle_history(TestMediator.person.dni)
 
-        self.assertEqual(vehicle_histories[0]["DNI Person"], 124230242)
+        self.assertEqual(vehicle_histories, vehicle_data)
 
     def test_get_case_history(self):
         mediator = Mediator()
-        case_histories = mediator._Mediator__case_histories
 
-        get_case_history(TestMediator.person.dni)
+        case_histories = mediator._persons[0].get("Case History")
+        case_data = get_case_history(TestMediator.person.dni)
 
-        self.assertEqual(case_histories[0]["DNI Person"], 124230242)
+        self.assertEqual(case_histories, case_data)
 
-    def get_medical_history(self):
+    def test_get_medical_history(self):
         mediator = Mediator()
-        medical_histories = mediator._Mediator__medical_histories
 
-        get_medical_history(TestMediator.person.dni)
+        medical_histories = mediator._persons[0].get("Medical History")
+        medical_data = get_medical_history(TestMediator.person.dni)
 
-        self.assertEqual(medical_histories[0]["DNI Person"], 124230242)
+        self.assertEqual(medical_histories, medical_data)
 
 
 if __name__ == '__main__':

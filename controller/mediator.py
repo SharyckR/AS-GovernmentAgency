@@ -105,48 +105,47 @@ def get_medical_history(dni_person: int):
 
 class Mediator:
     def __init__(self):
-        self.__education_histories = []
-        self.__fine_histories = []
-        self.__case_histories = []
-        self.__medical_histories = []
-        self.__vehicle_histories = []
-        self.__persons = []
+        self._education_histories = []
+        self._fine_histories = []
+        self._case_histories = []
+        self._medical_histories = []
+        self._vehicle_histories = []
+        self._persons = []
         self.load_data()
 
     def load_data(self):
         for person in COL_PERSON.find():
             if "_id" in person:
                 del person["_id"]
-            self.__persons.append(person)
+            self._persons.append(person)
         for educational_history in COL_EDUCATION_HISTORY.find():
-            self.__education_histories.append(educational_history)
+            self._education_histories.append(educational_history)
         for fine_history in COL_FINE_HISTORY.find():
-            self.__fine_histories.append(fine_history)
+            self._fine_histories.append(fine_history)
         for vehicle_history in COL_VEHICLE_HISTORY.find():
-            self.__vehicle_histories.append(vehicle_history)
+            self._vehicle_histories.append(vehicle_history)
         for case_history in COL_CASE_HISTORY.find():
-            self.__case_histories.append(case_history)
+            self._case_histories.append(case_history)
         for medical_history in COL_MEDICAL_HISTORY.find():
-            self.__medical_histories.append(medical_history)
+            self._medical_histories.append(medical_history)
 
     # Create Person
-    def add_person(self, person: Person):
+    def add_person(self, person: Person = Person()):
         person_dict = person.to_dict()
-        if not any(p["DNI Person"] == person.dni for p in self.__persons):
-            self.__persons.append(person_dict)
+        if not any(p["DNI Person"] == person.dni for p in self._persons):
+            self._persons.append(person_dict)
             person.mediator = self
             print(f"Added person: {person.name}")
             COL_PERSON.insert_one(person.to_dict())
-            return person_dict
         else:
-            raise Exception(f"Person with DNI {person.dni} already exists.")
+            print(f"Person with DNI {person.dni} already exists.")
 
     # Link histories with people
 
     def link_education_history_to_person(self, dni_person: int,
                                          education_history: EducationHistory = EducationHistory()):
         history_dic = education_history.to_dict()
-        for p in self.__persons:
+        for p in self._persons:
             if p["DNI Person"] == dni_person:
                 p["Education History"] = history_dic
                 COL_PERSON.update_one({"DNI Person": dni_person},
@@ -157,49 +156,49 @@ class Mediator:
 
     def link_fine_history_to_person(self, dni_person: int, fine_history: FineHistory = FineHistory()):
         history_dic = fine_history.to_dict()
-        for p in self.__persons:
+        for p in self._persons:
             if p["DNI Person"] == dni_person:
                 p["Fine History"] = history_dic
-                update = COL_PERSON.update_one({"DNI Person": dni_person},
-                                               {"$set": {"Fine History": history_dic}})
+                COL_PERSON.update_one({"DNI Person": dni_person},
+                                      {"$set": {"Fine History": history_dic}})
                 print(f"Linked fine history for DNI {fine_history.dni_person}")
-                return update
+                return history_dic
         raise Exception(f"No person found for DNI {dni_person}")
 
     def link_vehicle_history_to_person(self, dni_person: int, vehicle_history: VehicleHistory = VehicleHistory()):
         history_dic = vehicle_history.to_dict()
-        for p in self.__persons:
+        for p in self._persons:
             if p["DNI Person"] == dni_person:
                 p["Vehicle History"] = history_dic
-                update = COL_PERSON.update_one({"DNI Person": dni_person},
-                                               {"$set": {"Vehicle History": history_dic}})
+                COL_PERSON.update_one({"DNI Person": dni_person},
+                                      {"$set": {"Vehicle History": history_dic}})
                 print(f"Linked vehicle history for DNI {vehicle_history.dni_person}")
-                return update
+                return history_dic
         raise Exception(f"No person found for DNI {dni_person}")
 
     def link_case_history_to_person(self, dni_person: int, case_history: CaseHistory = CaseHistory()):
         history_dic = case_history.to_dict()
-        for p in self.__persons:
+        for p in self._persons:
             if p["DNI Person"] == dni_person:
                 p["Case History"] = history_dic
-                update = COL_PERSON.update_one({"DNI Person": dni_person},
-                                               {"$set": {"Case History": history_dic}})
+                COL_PERSON.update_one({"DNI Person": dni_person},
+                                      {"$set": {"Case History": history_dic}})
                 print(f"Linked case history for DNI {case_history.dni_person}")
-                return update
+                return history_dic
         raise Exception(f"No person found for DNI {dni_person}")
 
     def link_medical_history_to_person(self, dni_person: int, medical_history: MedicalHistory = MedicalHistory()):
         history_dic = medical_history.to_dict()
-        for p in self.__persons:
+        for p in self._persons:
             if p["DNI Person"] == dni_person:
                 p["Medical History"] = history_dic
-                update = COL_PERSON.update_one({"DNI Person": dni_person},
-                                               {"$set": {"Medical History": history_dic}})
+                COL_PERSON.update_one({"DNI Person": dni_person},
+                                      {"$set": {"Medical History": history_dic}})
                 print(f"Linked medical history for DNI {medical_history.dni_person}")
-                return update
+                return history_dic
         raise Exception(f"No person found for DNI {dni_person}")
 
     def get_persons(self):
-        if len(self.__persons) == 0:
+        if len(self._persons) == 0:
             raise Exception('No data yet')
-        return self.__persons
+        return self._persons

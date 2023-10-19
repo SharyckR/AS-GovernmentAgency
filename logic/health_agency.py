@@ -14,8 +14,14 @@ class HealthAgency(AgencyFactory):
         __str__(): Returns a formatted string with health agency information.
         __eq__(other): Compares if two instances of HealthAgency are equal.
     """
-    agency: object = AgencyFactory
-    medical_history: object = MedicalHistory
+    agency: AgencyFactory = AgencyFactory()
+    medical_history: MedicalHistory = MedicalHistory()
+
+    def to_dict(self):
+        return {
+            "Agency": self.agency.to_dict(),
+            "Medical History": self.medical_history.to_dict()
+               }
 
     def __eq__(self, other):
         """

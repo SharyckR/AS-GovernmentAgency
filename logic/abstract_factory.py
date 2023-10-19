@@ -1,7 +1,5 @@
 from abc import ABC, abstractmethod
-
 from pydantic import BaseModel
-
 from logic.abstract_agency import AbstractAgency
 from logic.abstract_history import AbstractHistory
 

@@ -79,9 +79,9 @@ class Address(BaseModel):
 if __name__ == '__main__':
     # Prueba Address class
 
-    address1 = Address(street='The cross', number=10, apartment=None, postal_code='1010', locality='Aqueous',
+    address1 = Address(street='The cross', number=10, apartment='Apt 3B', postal_code='1010', locality='Aqueous',
                        department='Cundinamarca', country='Colombia')
-    address2 = Address(street='The cross', number=10, apartment=None, postal_code='1010', locality='Aqueous',
+    address2 = Address(street='The cross', number=10, apartment='Apt 5C', postal_code='1010', locality='Aqueous',
                        department='Cundinamarca', country='Colombia')
 
     address1_str = address1.__str__()
@@ -94,5 +94,5 @@ if __name__ == '__main__':
 
 address1 = Address(street='123 Main St', number=5, apartment='Apt 3B', postal_code='1010', locality='City Ville',
                    department='State Ville', country='Country Land')
-address2 = Address(street='The cross', number=10, apartment=None, postal_code='1010', locality='Aqueous',
+address2 = Address(street='The cross', number=10, apartment='Apt 5C', postal_code='1010', locality='Aqueous',
                    department='Cundinamarca', country='Colombia')

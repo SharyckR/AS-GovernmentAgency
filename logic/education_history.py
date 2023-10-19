@@ -34,13 +34,13 @@ class EducationHistory(AbstractHistory, BaseModel):
     day: int = 1
     month: int = 1
     year: int = 1999
-    date_graduation: date = date(year, month, day)
+    date_graduation: Optional[date] = date(year, month, day)
     mediator: object = None
 
     def __init__(self, mediator=None, **data):
         super().__init__(**data)
-        self.date_graduation = date(year=self.year, month=self.month, day=self.day)
         self.mediator = mediator
+        self.date_graduation = date(year=self.year, month=self.month, day=self.day)
 
     def to_dict(self):
         education_str = str(self.education) if self.education is not None else "None"
@@ -93,8 +93,8 @@ if __name__ == '__main__':
     edu_history1 = EducationHistory(dni_person=1043638720, education="Secondary", name_institution="Collage",
                                     location=address1, title_obtained="Graduated", day=13, month=10, year=2020)
 
-    edu_history2 = EducationHistory(dni_person=45761873, education=None, name_institution=None,
-                                    location=address2, title_obtained=None, day=None, month=None, year=None)
+    edu_history2 = EducationHistory(dni_person=45761873, education='Bachiller', name_institution='Institution Free',
+                                    location=address2, title_obtained='Graduated', day=15, month=12, year=2019)
 
     edu_history1_str = edu_history1.__str__()
     print(f"Education 1 Information \n {edu_history1_str}")

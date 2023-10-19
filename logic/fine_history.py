@@ -32,7 +32,7 @@ class FineHistory(AbstractHistory, BaseModel):
         self.mediator = mediator
 
     def to_dict(self):
-        fine_str = str(self.type_fine) if self.type_fine is not None else "None"
+        fine_str = str(self.fine) if self.fine is not None else "None"
         type_fine_str = str(self.type_fine) if self.type_fine is not None else "None"
         description_fine_str = str(self.description_fine) if self.description_fine is not None else "None"
         paid_str = str(self.paid) if self.paid is not None else "None"
@@ -61,7 +61,7 @@ class FineHistory(AbstractHistory, BaseModel):
         :rtype: str
         """
 
-        fine_str = str(self.type_fine) if self.type_fine is not None else "None"
+        fine_str = str(self.fine) if self.fine is not None else "None"
         type_fine_str = str(self.type_fine) if self.type_fine is not None else "None"
         description_fine_str = str(self.description_fine) if self.description_fine is not None else "None"
         paid_str = str(self.paid) if self.paid is not None else "None"

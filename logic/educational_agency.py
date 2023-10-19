@@ -25,7 +25,7 @@ class EducationalAgency(AgencyFactory):
             "Agency": self.agency.to_dict(),
             "Education History": self.education_history.to_dict(),
             "Academic Achievements": self.academic_achievements
-        }
+               }
 
     def __str__(self):
         """
@@ -71,6 +71,6 @@ if __name__ == '__main__':
     print(f"Are equals ? \n {are_equal_medical_agency} \n\n")
 
 educational1 = EducationalAgency(agency=agency1, education_history=edu_history1,
-                                 academic_achievements=['Good Students, Best in maths'])
+                                 academic_achievements=['Good Students', 'Best in maths'])
 educational2 = EducationalAgency(agency=agency2, education_history=edu_history2,
-                                 academic_achievements=['Best in sports, More speed'])
+                                 academic_achievements=['Best in sports', 'More speed'])

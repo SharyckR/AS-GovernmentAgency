@@ -3,6 +3,7 @@ from typing import List, Optional
 from logic.abstract_factory import AbstractFactory
 from logic.abstract_agency import AbstractAgency
 from logic.abstract_history import AbstractHistory
+from logic.address import Address
 from logic.agency_factory import AgencyFactory
 from logic.education_history import EducationHistory
 from logic.educational_agency import EducationalAgency
@@ -45,9 +46,9 @@ class EducationalFactory(AbstractFactory):
                                  academic_achievements=academic_achievements)
 
     def create_history(self, dni_person: int = None, education: Optional[str] = None,
-                       name_institution: Optional[str] = None, location: Optional[object] = None,
+                       name_institution: Optional[str] = None, location: Optional[Address] = Address(),
                        title_obtained: Optional[str] = None, day: Optional[int] = None,
-                       month: Optional[int] = None, year: Optional[int] = None, date_graduation: date = None,
+                       month: Optional[int] = None, year: Optional[int] = None, date_graduation: Optional[date] = None,
                        mediator: object = None) -> AbstractHistory:
         """
         Create an instance of an EducationHistory.

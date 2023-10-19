@@ -61,7 +61,7 @@ class VehicleHistory(AbstractHistory, BaseModel):
         plate_vehicle = str(self.plate_vehicle) if self.plate_vehicle is not None else "None"
 
         return '(Dni: {0}, Does the person have a license?: {1}, Type of license: {2},' \
-               'Does the person have a vehicle?: {3}, Type of vehicle: {4}, Description of the Vehicle: {5},' \
+               ' Does the person have a vehicle?: {3}, Type of vehicle: {4}, Description of the Vehicle: {5},' \
                ' Plate of the vehicle: {6})'.format(self.dni_person, self.licence, type_licence_str, self.vehicle,
                                                     type_vehicle_str, description_vehicle_str, plate_vehicle)
 

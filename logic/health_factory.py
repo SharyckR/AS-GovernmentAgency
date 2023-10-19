@@ -10,10 +10,6 @@ from logic.medical_history import MedicalHistory
 class HealthFactory(AbstractFactory):
     """
     Concrete factory for creating health agency and history objects.
-
-    Attributes:
-        None
-
     Methods:
         create_agency(agency: Agency = None, medical_history: MedicalHistory = None) -> AbstractAgency:
             Create an instance of a HealthAgency.

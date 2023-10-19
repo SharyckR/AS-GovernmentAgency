@@ -28,31 +28,27 @@ class CaseHistory(AbstractHistory, BaseModel):
     arrested: str = "Yes or No"
     description_case: Optional[str] = "Description of case"
     jurisdiction: Optional[str] = "Jurisdiction of the case"
-    day: Optional[int] = 1
-    month: Optional[int] = 1
-    year: Optional[int] = 1999
+    day: int = 1
+    month: int = 1
+    year: int = 1999
     date_arrested: Optional[date] = date(year, month, day)
     mediator: object = None
 
     def __init__(self, mediator=None, **data):
         super().__init__(**data)
         self.mediator = mediator
+        self.date_arrested = date(year=self.year, month=self.month, day=self.day)
 
     def to_dict(self):
         description_case_str = str(self.description_case) if self.description_case is not None else "None"
         jurisdiction_str = str(self.jurisdiction) if self.jurisdiction is not None else "None"
-        day_int = int(self.day) if self.day is not None else "None"
-        month_int = int(self.month) if self.month is not None else "None"
-        year_int = int(self.year) if self.year is not None else "None"
         return {
             "DNI Person": self.dni_person,
             "Case": self.case,
             "Arrested?": self.arrested,
             "Description of Case": description_case_str,
             "Jurisdiction": jurisdiction_str,
-            "Day Arrested": day_int,
-            "Month Arrested": month_int,
-            "Year Arrested": year_int
+            "Date arrested": str(self.date_arrested)
         }
 
     def __eq__(self, other):
@@ -78,7 +74,7 @@ class CaseHistory(AbstractHistory, BaseModel):
         month_int = int(self.month) if self.month is not None else "None"
         year_int = int(self.year) if self.year is not None else "None"
 
-        return 'Information Person: {0}, Case: {1}, Arrested: {2}, Description of case: {3}, Jurisdiction: {4}, ' \
+        return 'DNI Person: {0}, Case: {1}, Arrested: {2}, Description of case: {3}, Jurisdiction: {4}, ' \
                'Date arrested: {5} - {6} - {7}'.format(self.dni_person, self.case, self.arrested,
                                                        description_case_str, jurisdiction_str, year_int, month_int,
                                                        day_int)
@@ -92,7 +88,7 @@ if __name__ == '__main__':
                                 month=5)
 
     case_history2 = CaseHistory(dni_person=45761873, case="Public disturbance", arrested="No",
-                                description_case=None, jurisdiction=None, day=None, year=None, month=None)
+                                description_case=None, jurisdiction=None, day=4, month=10, year=2020)
 
     case_history1_str = case_history1.__str__()
     print(f"Case History 1 Information \n {case_history1_str}")
@@ -105,5 +101,6 @@ if __name__ == '__main__':
 case_history1 = CaseHistory(dni_person=1043638720, case="Heist", arrested="Yes",
                             description_case="Stole a necklace", jurisdiction="Disciplinary", day=15, year=2021,
                             month=5)
+
 case_history2 = CaseHistory(dni_person=45761873, case="Public disturbance", arrested="No",
-                            description_case=None, jurisdiction=None, day=None, year=None, month=None)
+                            description_case=None, jurisdiction=None, day=6, year=7, month=4)

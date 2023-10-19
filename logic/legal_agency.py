@@ -15,15 +15,21 @@ class LegalAgency(AgencyFactory, BaseModel):
         __str__(): Returns a formatted string with legal agency information.
         __eq__(other): Compares if two instances of LegalAgency are equal.
     """
-    agency: object = AgencyFactory
-    legal_history: object = CaseHistory
+    agency: AgencyFactory = AgencyFactory()
+    legal_history: CaseHistory = CaseHistory()
+
+    def to_dict(self):
+        return {
+            "Agency": self.agency.to_dict(),
+            "Case History": self.legal_history.to_dict()
+        }
 
     def __str__(self):
         """ Returns str of legal agency.
         :returns: string legal agency
         :rtype: str
         """
-        return '({0},{1}'.format(self.agency.__str__(), self.legal_history.__str__())
+        return '(Agency: {0}, Case History: {1})'.format(self.agency.__str__(), self.legal_history.__str__())
 
     def __eq__(self, other):
         """

@@ -22,7 +22,7 @@ class MedicalHistory(AbstractHistory, BaseModel):
             __str__(): Returns a string representation of a medical history.
             __eq__(other): Compares two objects medical history to check if they are equal.
     """
-
+    id_history: int = 1
     dni_person: int = 123456789
     type_blood: str = "A+, B+, O+, AB+, A-, B-, O-, AB-"
     pathologies: Optional[str] = "Pathologies"
@@ -31,11 +31,12 @@ class MedicalHistory(AbstractHistory, BaseModel):
     day: int = 1
     month: int = 1
     year: int = 1999
-    date_treatment: date = date(year, month, day)
+    date_treatment: Optional[date] = date(year, month, day)
     mediator: object = None
 
     def __init__(self, mediator=None, **data):
         super().__init__(**data)
+        self.date_treatment = date(year=self.year, month=self.month, day=self.day)
         self.mediator = mediator
 
     def to_dict(self):
@@ -45,9 +46,7 @@ class MedicalHistory(AbstractHistory, BaseModel):
             "Pathologies": self.pathologies,
             "Description Treatment": self.description_treatment,
             "Doctor in Charge": self.doctor_charge,
-            "Day Treatment": self.day,
-            "Month Treatment": self.month,
-            "Year Treatment": self.year
+            "Date treatment": str(self.date_treatment)
         }
 
     def __eq__(self, other):
@@ -83,11 +82,11 @@ if __name__ == '__main__':
 
     medical_history1 = MedicalHistory(dni_person=1043638720, type_blood="O+", pathologies="None",
                                       description_treatment="Wound healing", doctor_charge="Kevin Rodriguez",
-                                      day=5, month=10, year=2023, date_treatment=date(2023, 10, 5))
+                                      day=5, month=10, year=2023)
 
     medical_history2 = MedicalHistory(dni_person=45761873, type_blood="A+", pathologies="Hypertension",
                                       description_treatment="Control", doctor_charge="Tomas Antonio",
-                                      day=31, month=7, year=2023, date_treatment=date(2023, 7, 31))
+                                      day=31, month=7, year=2023)
 
     medical_history1_str = medical_history1.__str__()
     print(f"Medical History 1 Information \n {medical_history1_str}")
@@ -99,7 +98,7 @@ if __name__ == '__main__':
 
 medical_history1 = MedicalHistory(dni_person=1043638720, type_blood="O+", pathologies="None",
                                   description_treatment="Wound healing", doctor_charge="Kevin Rodriguez",
-                                  day=5, month=10, year=2023, date_treatment=date(2023, 10, 5))
+                                  day=5, month=10, year=2023)
 medical_history2 = MedicalHistory(dni_person=45761873, type_blood="A+", pathologies="Hypertension",
                                   description_treatment="Control", doctor_charge="Tomas Antonio",
-                                  day=31, month=7, year=2023, date_treatment=date(2023, 7, 31))
+                                  day=31, month=7, year=2023)
