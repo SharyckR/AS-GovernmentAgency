@@ -5,10 +5,6 @@ from pydantic import BaseModel
 class AbstractHistory(ABC, BaseModel):
     """
     Abstract base class for history objects.
-
-    Attributes:
-        None
-
     Methods:
         __str__(): Returns a string representation of the history.
         __eq__(other): Compares two history objects to check if they are equal.

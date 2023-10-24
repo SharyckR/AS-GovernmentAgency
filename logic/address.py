@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Union
 from pydantic import BaseModel
 
 
@@ -22,7 +22,7 @@ class Address(BaseModel):
     """
     street: str = 'street'
     number: int = 1
-    apartment: Optional[str] = 'apartment'
+    apartment: Union[str, None] = 'apartment'
     postal_code: str = 'postal code'
     locality: str = 'locality'
     department: str = 'department'
@@ -36,13 +36,13 @@ class Address(BaseModel):
     def to_dict(self):
         apartment_str = str(self.apartment) if self.apartment is not None else "None"
         return {
-            "Street": self.street,
-            "Number": self.number,
-            "Apartment": apartment_str,
-            "Postal Code": self.postal_code,
-            "Locality": self.locality,
-            "Department": self.department,
-            "Country": self.country
+            "street": self.street,
+            "number": self.number,
+            "apartment": apartment_str,
+            "postal_code": self.postal_code,
+            "locality": self.locality,
+            "department": self.department,
+            "country": self.country
         }
 
     def __str__(self):
@@ -51,11 +51,10 @@ class Address(BaseModel):
         """
         apartment_str = str(self.apartment) if self.apartment is not None else "None"
 
-        return '({0}, {1}, {2}, {3}, {4}, {5}, {6})'.format(
-            self.street, self.number, apartment_str,
-            self.postal_code, self.locality, self.department,
-            self.country
-        )
+        return ('(Street: {!r}, Number: {!r}, Apartment: {!r}, Postal Code: {!r}, '
+                'Locality: {!r}, Department: {!r}, Country: {!r})').format(self.street, self.number, apartment_str,
+                                                                           self.postal_code, self.locality,
+                                                                           apartment_str, self.country)
 
     def __eq__(self, other):
         """

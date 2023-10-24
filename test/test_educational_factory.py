@@ -10,8 +10,9 @@ class TestEducationalFactory(unittest.TestCase):
     educational_agency = educational_factory.create_agency(agency1, edu_history1,
                                                            ["Best students", "First places",
                                                             "More successful graduates"])
-    educational_history = educational_factory.create_history(
-        10, 'Professional', 'Sena', address1, 'Engineering', 15, 4, 2015)
+    data = {"id_history": 10, "dni_person": 14, "education": 'Professional', "name_institution": 'Sena',
+            "location": address1, "title_obtained": 'Engineering', "day": 15, "month": 4, "year": 2015}
+    educational_history = educational_factory.create_history(**data)
 
     def test_instance(self) -> None:
         self.assertIsInstance(self.educational_factory, EducationalFactory, 'It\'s instance!')

@@ -1,6 +1,5 @@
-from typing import List, Optional
+from typing import List
 from pymongo import MongoClient, UpdateOne
-from logic.address import Address
 from logic.agency_factory import AgencyFactory
 from logic.education_history import EducationHistory
 from logic.educational_factory import EducationalFactory
@@ -17,79 +16,78 @@ EDUCATIONAL_HISTORY_DB = HISTORIES['Educational History']
 
 class EducationalFactoryController:
     def __init__(self):
-        self.__educational_factory: EducationalFactory = EducationalFactory()
-        self.__educational_agencies: List = []
-        self.__educational_histories: List = []
+        self._educational_factory: EducationalFactory = EducationalFactory()
+        self._educational_agencies: List = []
+        self._educational_histories: List = []
         self.load_data_db()
 
     def load_data_db(self):
+        self._educational_histories = []
+        self._educational_agencies = []
         for educational_agency in EDUCATIONAL_AGENCY_DB.find():
             if '_id' in educational_agency:
                 del educational_agency['_id']
-            self.__educational_agencies.append(educational_agency)
+            self._educational_agencies.append(educational_agency)
         for educational_history in EDUCATIONAL_HISTORY_DB.find():
             if '_id' in educational_history:
                 del educational_history['_id']
-            self.__educational_histories.append(educational_history)
+            self._educational_histories.append(educational_history)
 
-    def add_agency(self, agency: AgencyFactory = AgencyFactory(),
-                   academic_achievements: List[str] = None):
+    def add_educational_agency(self, agency: AgencyFactory = AgencyFactory(), academic_achievements: List[str] = None):
+        self.load_data_db()
         if academic_achievements is None:
             academic_achievements = []
-        educational_agency = self.__educational_factory.create_agency(
+        educational_agency = self._educational_factory.create_agency(
             agency=agency, academic_achievements=academic_achievements)
-        educational_agency_dict = educational_agency.to_dict()
-        if not any(ea['Agency']['ID Entity'] == agency.id_entity
-                   for ea in self.__educational_agencies):
-            self.__educational_agencies.append(educational_agency_dict)
+        educational_agency.username = agency.id_entity
+        if not any(ea[f'{list(ea.keys())[0]}']['agency']['id_entity'] == agency.id_entity
+                   for ea in self._educational_agencies):
+            self._educational_agencies.append(educational_agency.to_dict())
             print(f'{educational_agency.__class__.__name__} Added\n')
-            EDUCATIONAL_AGENCY_DB.insert_one(educational_agency_dict)
-            if '_id' in educational_agency_dict:
-                del educational_agency_dict['_id']
-            return educational_agency_dict
+            EDUCATIONAL_AGENCY_DB.insert_one(educational_agency.to_dict())
+            return educational_agency.to_dict()
         else:
             raise Exception(f'Agency with ID ENTITY: {agency.id_entity} already exist')
 
-    def update_agency(self, id_entity: int,  agency: AgencyFactory = AgencyFactory(),
-                      academic_achievements: List[str] = None):
+    def update_educational_agency(
+            self, id_entity: int,  agency: AgencyFactory = AgencyFactory(), academic_achievements: List[str] = None):
+        self.load_data_db()
         if academic_achievements is None:
             academic_achievements = []
-        for ea in self.__educational_agencies:
-            if ea['Agency']['ID Entity'] == id_entity:
-                update_operation = UpdateOne({"Agency.ID Entity": agency.id_entity},
-                                             {"$set": {"Agency": agency.to_dict()}})
-                if academic_achievements is not None:
-                    update_operation["$set"]["Academic Achievements"] = academic_achievements
-                    ea['Academic Achievements'] = academic_achievements
+        for ea in self._educational_agencies:
+            if ea[f'{list(ea.keys())[0]}']['agency']['id_entity'] == id_entity:
+                update_dict = {"$set": {f"{id_entity}.agency": agency.to_dict()}}
+                if academic_achievements is not None and len(academic_achievements) != 0:
+                    update_dict["$set"]["academic_achievements"] = academic_achievements
+                    ea['academic_achievements'] = academic_achievements
+                update_operation = UpdateOne({f"{id_entity}.agency.id_entity": id_entity}, update_dict)
                 EDUCATIONAL_AGENCY_DB.bulk_write([update_operation])
-                ea['Agency'] = agency.to_dict()
+                ea['agency'] = agency.to_dict()
                 print(f'Agency with ID Entity: {agency.id_entity} updated')
                 return agency.to_dict(), academic_achievements
         raise Exception(f'Does n\'t exist an agency with ID Entity : {id_entity}')
 
-    def add_ed_history(self, dni_person: int, education: Optional[str], name_institution: Optional[str],
-                       location: Optional[Address], title_obtained: Optional[str], day: Optional[int],
-                       month: Optional[int], year: Optional[int]):
-        educational_history = self.__educational_factory.create_history(
-            dni_person=dni_person, education=education, name_institution=name_institution, location=location,
-            title_obtained=title_obtained, day=day, month=month, year=year)
-        educational_history_dict = educational_history.to_dict()
-        if not any(eh['DNI Person'] == educational_history.dni_person for eh in self.__educational_histories):
-            self.__educational_histories.append(educational_history_dict)
+    def add_ed_history(self, educational_history: dict):
+        self.load_data_db()
+        if not any(eh['id_history'] == educational_history["id_history"] for eh in self._educational_histories):
+            self._educational_histories.append(educational_history)
             print(f'{educational_history.__class__.__name__} added\n')
-            EDUCATIONAL_HISTORY_DB.insert_one(educational_history_dict)
-            return educational_history_dict
+            EDUCATIONAL_HISTORY_DB.insert_one(educational_history)
+            if '_id' in educational_history:
+                del educational_history['_id']
+            return educational_history
         else:
-            raise Exception(f'Educational History with ID HISTORY: {educational_history.dni_person} already exist')
+            raise Exception(f'Educational History with ID HISTORY: {educational_history["id_history"]} already exist')
 
     def link_agency_with_history(self, id_educational_agency: int,
                                  education_history: EducationHistory = EducationHistory()):
-        for ea in self.__educational_agencies:
-            if ea['Agency']['ID Entity'] == id_educational_agency:
+        self.load_data_db()
+        for ea in self._educational_agencies:
+            if ea[f'{list(ea.keys())[0]}']['agency']['id_entity'] == id_educational_agency:
                 update_operation = UpdateOne(
-                    {"Agency.ID Entity": id_educational_agency},
-                    {"$set": {"Education History": education_history.to_dict()}} )
-                ea['Education History'] = education_history.to_dict()
+                    {f"{id_educational_agency}.agency.id_entity": id_educational_agency},
+                    {"$set": {f"{id_educational_agency}.education_history": education_history.to_dict()}})
+                ea[f'{id_educational_agency}']['education_history'] = education_history.to_dict()
                 EDUCATIONAL_AGENCY_DB.bulk_write([update_operation])
                 print(f'Linked {education_history.__class__.__name__} with {id_educational_agency} '
                       f'of EducationalAgency')
@@ -97,11 +95,13 @@ class EducationalFactoryController:
         raise Exception(f'ID Entity: {id_educational_agency} not found.')
 
     def get_agencies(self):
-        if len(self.__educational_agencies) == 0:
+        self.load_data_db()
+        if len(self._educational_agencies) == 0:
             raise Exception('No data yet')
-        return self.__educational_agencies
+        return self._educational_agencies
 
     def get_histories(self):
-        if len(self.__educational_histories) == 0:
+        self.load_data_db()
+        if len(self._educational_histories) == 0:
             raise Exception('No data yet')
-        return self.__educational_histories
+        return self._educational_histories

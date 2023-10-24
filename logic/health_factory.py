@@ -1,4 +1,3 @@
-from datetime import date
 from logic.abstract_factory import AbstractFactory
 from logic.abstract_agency import AbstractAgency
 from logic.abstract_history import AbstractHistory
@@ -15,12 +14,12 @@ class HealthFactory(AbstractFactory):
             Create an instance of a HealthAgency.
 
         create_history(dni_person: int = None, type_blood: str = None, pathologies: str = None,
-                       description_treatment: str = None, doctor_charge: str = None, day: int = None,
-                       month: int = None, year: int = None, date_treatment: date = None, mediator: object = None
-                       ) -> AbstractHistory:
-            Create an instance of a MedicalHistory.
+        description_treatment: str = None, doctor_charge: str = None, day: int = None, month: int = None, year: int =
+        None, date_treatment: date = None, mediator: Union[object, None] = None ) -> AbstractHistory: Create an
+        instance of a MedicalHistory.
     """
-    def create_agency(self, agency: AgencyFactory = None, medical_history: MedicalHistory = None) -> AbstractAgency:
+    def create_agency(self, agency: AgencyFactory = AgencyFactory(),
+                      medical_history: MedicalHistory = MedicalHistory()) -> AbstractAgency:
         """
         Create an instance of a HealthAgency.
 
@@ -31,30 +30,16 @@ class HealthFactory(AbstractFactory):
         Returns:
             AbstractAgency: An instance of HealthAgency or its subclass.
         """
-        return HealthAgency(agency=agency, medical_history=medical_history)
+        return HealthAgency(username=agency.id_entity, agency=agency, medical_history=medical_history)
 
-    def create_history(self, dni_person: int = None, type_blood: str = None, pathologies: str = None,
-                       description_treatment: str = None, doctor_charge: str = None, day: int = None,
-                       month: int = None, year: int = None, date_treatment: date = None, mediator: object = None
-                       ) -> AbstractHistory:
+    def create_history(self, **data) -> AbstractHistory:
         """
-        Create an instance of a MedicalHistory.
+        Create an instance of an EducationHistory.
 
         Args:
-            dni_person (int): The DNI of the person with the medical history.
-            type_blood (str): Blood type information.
-            pathologies (str): Pathologies information.
-            description_treatment (str): Description of treatment.
-            doctor_charge (str): Doctor's charge.
-            day (int): Day of treatment.
-            month (int): Month of treatment.
-            year (int): Year of treatment.
-            date_treatment (date): Date of treatment.
-            mediator (object): Mediator object.
+            data (dict): A dictionary containing the data for creating an EducationHistory.
 
         Returns:
-            AbstractHistory: An instance of MedicalHistory or its subclass.
+            AbstractHistory: An instance of HealthHistory or its subclass.
         """
-        return MedicalHistory(dni_person=dni_person, type_blood=type_blood, pathologies=pathologies,
-                              description_treatment=description_treatment, doctor_charge=doctor_charge,
-                              day=day, month=month, year=year, date=date_treatment, mediator=mediator)
+        return MedicalHistory(**data)

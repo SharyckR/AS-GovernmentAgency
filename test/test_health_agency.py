@@ -11,34 +11,27 @@ class TestHealthAgency(unittest.TestCase):
         self.assertIsInstance(self.health_agency, HealthAgency)
 
     def test_to_dict(self):
-        self.assertEqual(self.health_agency.to_dict(), {
-            "Agency": {
-                'ID Entity': 965816,
-                'Entity': 'Legal entity',
-                'NIT': 52173,
-                'Business Name': 'Tis er ium',
-                'Contact': '3145975012',
-                'Address': {
-                    "Street": '123 Main St',
-                    "Number": 5,
-                    "Apartment": 'Apt 3B',
-                    "Postal Code": '1010',
-                    "Locality": 'City Ville',
-                    "Department": 'State Ville',
-                    "Country": 'Country Land'
-                },
-                'Date Actualization': '1999-01-01'
-            },
-            "Medical History":
-                {
-                    "DNI Person": 1043638720,
-                    "Type blood": "O+",
-                    "Pathologies": "None",
-                    "Description Treatment": "Wound healing",
-                    "Doctor in Charge": "Kevin Rodriguez",
-                    "Date treatment":  '2023-10-05',
-                }
-        }, 'They are equals!')
+        expected_dict = {'965816': {'agency': {'address': {'apartment': 'Apt 3B',
+                                                           'country': 'Country Land',
+                                                           'department': 'State Ville',
+                                                           'locality': 'City Ville',
+                                                           'number': 5,
+                                                           'postal_code': '1010',
+                                                           'street': '123 Main St'},
+                                               'business_name': 'Tis er ium',
+                                               'contact': '3145975012',
+                                               'date_actualization': '2023-10-05',
+                                               'entity': 'Legal entity',
+                                               'id_entity': 965816,
+                                               'nit': 52173},
+                                    'medical_history': {'date_treatment': '2023-10-05',
+                                                        'description_treatment': 'Wound healing',
+                                                        'dni_person': 1043638720,
+                                                        'doctor_charge': 'Kevin Rodriguez',
+                                                        'id_history': 13,
+                                                        'pathologies': 'None',
+                                                        'type_blood': 'O+'}}}
+        self.assertEqual(expected_dict, self.health_agency.to_dict(), 'They are equals!')
 
     def test__eq__(self):
         self.assertTrue(self.health_agency.__eq__(health1), 'They are equals')

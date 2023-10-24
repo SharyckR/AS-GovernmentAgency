@@ -1,5 +1,5 @@
 import json
-from typing import List, Dict, Optional, Union
+from typing import List, Dict, Union
 from pydantic import BaseModel
 from logic.address import Address
 
@@ -75,7 +75,7 @@ class AddressFlyweightFactory(BaseModel):
 
 
 def add_address_to_database(
-        factory_add: AddressFlyweightFactory, street: str, number: int, apartment: Optional[str], postal_code: str,
+        factory_add: AddressFlyweightFactory, street: str, number: int, apartment: Union[str, None], postal_code: str,
         locality: str, department: str, country: str
 ) -> None:
     """
@@ -84,7 +84,7 @@ def add_address_to_database(
         factory_add (AddressFlyweightFactory): Flyweight factory.
         street (str): Street.
         number (int): Number.
-        apartment (Optional[str]): Apartment (optional).
+        apartment (Union[str, None]): Apartment (Union).
         postal_code (str): Postal code.
         locality (str): Locality.
         department (str): Department.

@@ -18,10 +18,10 @@ class HealthAgency(AgencyFactory):
     medical_history: MedicalHistory = MedicalHistory()
 
     def to_dict(self):
-        return {
-            "Agency": self.agency.to_dict(),
-            "Medical History": self.medical_history.to_dict()
-               }
+        return {f"{self.agency.id_entity}": {
+            "agency": self.agency.to_dict(),
+            "medical_history": self.medical_history.to_dict()
+        }}
 
     def __eq__(self, other):
         """

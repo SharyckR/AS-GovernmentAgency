@@ -3,30 +3,30 @@ from logic.fine_history import *
 
 
 class TestFineHistory(unittest.TestCase):
+    fine_history = FineHistory(id_history=14, dni_person=1043638720, fine="Yes", type_fine="Fine for high speed",
+                               description_fine="The person was going more than 100k/h", paid="No")
 
     def test_instance(self):
-        self.assertIsInstance(fine_history1, FineHistory, 'It is an instance!')
+        self.assertIsInstance(self.fine_history, FineHistory, 'It is an instance!')
 
     def test_to_dict(self):
-        expected_dict = {
-            "DNI Person": 1043638720,
-            "Fine?": "Yes",
-            "Type of Fine": "Fine for high speed",
-            "Description Fine": "The person was going more than 100k/h",
-            "Paid?": "No"
-        }
-        self.assertEqual(fine_history1.to_dict(), expected_dict)
+        expected_dict = {'description_fine': 'The person was going more than 100k/h',
+                         'dni_person': 1043638720,
+                         'fine': 'Yes',
+                         'id_history': 14,
+                         'paid': 'No',
+                         'type_fine': 'Fine for high speed'}
+        self.assertEqual(expected_dict, self.fine_history.to_dict(), 'They are equals!')
 
-    def test_str(self):
-        expected_str = (f'Dni: {1043638720}, Has the person received a fine?: {"Yes"}, '
-                        f'Type of the fine: {"Fine for high speed"}, '
-                        f'Description of the fine: {"The person was going more than 100k/h"}, '
-                        f'Has the person paid a fine?: {"No"}')
-        self.assertEqual(str(fine_history1), expected_str)
+    def test__str__(self):
+        expected_str = ("ID History: 14, Dni: 1043638720, Has the person received a fine?: 'Yes', "
+                        "Type of the fine: 'Fine for high speed', Description of the fine: 'The "
+                        "person was going more than 100k/h', Has the person paid a fine?: 'No'")
+        self.assertEqual(expected_str, str(self.fine_history), 'They are equals!')
 
-    def test_eq(self):
-        self.assertEqual(fine_history1, fine_history1)
-        self.assertNotEqual(fine_history1, fine_history2)
+    def test__eq__(self):
+        self.assertTrue(self.fine_history.__eq__(fine_history1), 'They are equals!')
+        self.assertFalse(self.fine_history.__eq__(fine_history2), 'They are not equals!')
 
 
 if __name__ == '__main__':

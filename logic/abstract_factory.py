@@ -7,10 +7,6 @@ from logic.abstract_history import AbstractHistory
 class AbstractFactory(ABC, BaseModel):
     """
     Abstract Factory class for creating agency and history objects.
-
-    Attributes:
-        None
-
     Methods:
         create_agency(): Create an instance of an AbstractAgency.
         create_history(): Create an instance of an AbstractHistory.

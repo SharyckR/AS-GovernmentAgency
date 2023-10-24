@@ -8,9 +8,11 @@ from logic.medical_history import MedicalHistory
 class TestHealthFactory(unittest.TestCase):
     health_factory = HealthFactory()
     health_agency = health_factory.create_agency(agency=agency1, medical_history=medical_history1)
-    medical_history = health_factory.create_history(
-        dni_person=1043638720, type_blood="O+", pathologies="None", description_treatment="Wound healing",
-        doctor_charge="Kevin Rodriguez", day=5, month=10, year=2023)
+
+    data = {"dni_person": 1043638720, "type_blood": "O+", "pathologies": "None",
+            "description_treatment": "Wound healing", "doctor_charge": "Kevin Rodriguez", "day": 5, "month": 10,
+            "year": 2023}
+    medical_history = health_factory.create_history(**data)
 
     def test_instance(self):
         self.assertIsInstance(self.health_factory, HealthFactory, 'Its\'s a instance!')

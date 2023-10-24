@@ -15,7 +15,7 @@ class Person(NaturalEntity, BaseModel):
      Attributes:
             id_entity (int): id_entity ( used in the database ).
             type_id_entity (str): Type id_entity.
-            dni (int): DNI of person.
+            dni_person (int): DNI of person.
             type (str): Type id_entity of person.
             name (str): Name of person.
             last_name (str): Last name of person.
@@ -34,7 +34,7 @@ class Person(NaturalEntity, BaseModel):
     """
     id_entity: int = 123456789
     type_id_entity: str = "C.C."
-    dni: int = 123456789
+    dni_person: int = 123456789
     type: str = "C.C."
     name: str = "Name"
     last_name: str = "Last Name"
@@ -53,19 +53,21 @@ class Person(NaturalEntity, BaseModel):
 
     def to_dict(self):
         return {
-            "ID Entity": self.id_entity,
-            "Type Id Entity": self.type_id_entity,
-            "DNI Person": self.dni,
-            "Type DNI": self.type,
-            "Name": self.name,
-            "Last Name": self.last_name,
-            "Phone": self.phone,
-            "Address": self.address.to_dict(),
-            "Education History": self.education_history.to_dict(),
-            "Fine History": self.fine_history.to_dict(),
-            "Vehicle History": self.vehicle_history.to_dict(),
-            "Case History": self.case_history.to_dict(),
-            "Medical History": self.medical_history.to_dict()
+            str(self.username): {
+                 "id_entity": self.id_entity,
+                 "type_id_entity": self.type_id_entity,
+                 "dni_person": self.dni_person,
+                 "type": self.type,
+                 "name": self.name,
+                 "last_name": self.last_name,
+                 "phone": self.phone,
+                 "address": self.address.to_dict(),
+                 "education_history": self.education_history.to_dict(),
+                 "fine_history": self.fine_history.to_dict(),
+                 "vehicle_history": self.vehicle_history.to_dict(),
+                 "case_history": self.case_history.to_dict(),
+                 "medical_history": self.medical_history.to_dict()
+            }
         }
 
     def __eq__(self, other):
@@ -75,7 +77,7 @@ class Person(NaturalEntity, BaseModel):
         """
         if isinstance(other, Person):
             return (self.id_entity == other.id_entity, self.type_id_entity == other.type_id_entity,
-                    self.dni == other.dni and self.type == other.type and self.name == other.name and
+                    self.dni_person == other.dni_person and self.type == other.type and self.name == other.name and
                     self.last_name == other.last_name and self.phone == other.phone and
                     self.address == other.address and self.education_history == other.education_history and
                     self.fine_history == other.fine_history and self.vehicle_history == other.vehicle_history and
@@ -90,17 +92,17 @@ class Person(NaturalEntity, BaseModel):
         return 'ID entity: {0}, Type ID Entity: {1}, Dni Person: {2}, Type DNI: {3}, Full name: {4} {5}, Phone: {6}, ' \
                'Address: {7}, Education History: {8}, Fine History: {9}, Vehicle History: {10}, Case History: {11}, ' \
                'Medical History: {12}'.\
-            format(self.id_entity, self.type_id_entity, self.dni, self.type, self.name, self.last_name, self.phone,
-                   self.address, self.education_history, self.fine_history, self.vehicle_history, self.case_history,
-                   self.medical_history)
+            format(self.id_entity, self.type_id_entity, self.dni_person, self.type, self.name, self.last_name,
+                   self.phone, self.address, self.education_history, self.fine_history, self.vehicle_history,
+                   self.case_history, self.medical_history)
 
 
 if __name__ == '__main__':
     # Prueba Person class
 
-    person1 = Person(id_entity=93016014, type_id_entity="C.E.", dni=93016014, name="Kelly", type="C.E.",
+    person1 = Person(id_entity=93016014, type_id_entity="C.E.", dni_person=93016014, name="Kelly", type="C.E.",
                      last_name="Jones", phone=3004233041, address=address1)
-    person2 = Person(id_entity=1247913, type_id_entity="C.C", dni=45761873, type="C.E.", name="Luis",
+    person2 = Person(id_entity=1247913, type_id_entity="C.C", dni_person=45761873, type="C.E.", name="Luis",
                      last_name="Castro", phone=3214464925, address=address2)
 
     person1_str = person1.__str__()
@@ -111,7 +113,7 @@ if __name__ == '__main__':
     are_equal_person = person1.__eq__(person2)
     print(f"Are equals ? \n {are_equal_person} \n\n")
 
-person1 = Person(id_entity=93016014, type_id_entity="C.E.", dni=93016014, name="Kelly", type="C.E.",
-                 last_name="Jones", phone=3004233041, address=address1)
-person2 = Person(id_entity=1247913, type_id_entity="C.C", dni=45761873, type="C.E.", name="Luis", last_name="Castro",
-                 phone=3214464925, address=address2)
+person1 = Person(username=124230242, id_entity=2723723, type_id_entity="C.C.", dni_person=124230242, type="C.C.",
+                 name="María", last_name="Sarmiento", phone=313242323, address=address1)
+person2 = Person(username=45761873, id_entity=1247913, type_id_entity="C.C", dni_person=45761873, type="C.E.",
+                 name="Luis", last_name="Castro", phone=3214464925, address=address2)

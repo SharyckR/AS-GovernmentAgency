@@ -21,11 +21,11 @@ class EducationalAgency(AgencyFactory):
     academic_achievements: List[str] = []
 
     def to_dict(self):
-        return {
-            "Agency": self.agency.to_dict(),
-            "Education History": self.education_history.to_dict(),
-            "Academic Achievements": self.academic_achievements
-               }
+        return {f"{self.agency.id_entity}":  {
+            "agency": self.agency.to_dict(),
+            "education_history": self.education_history.to_dict(),
+            "academic_achievements": self.academic_achievements
+        }}
 
     def __str__(self):
         """

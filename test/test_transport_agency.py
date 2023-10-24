@@ -7,37 +7,38 @@ from logic.vehicle_history import vehicle_history1, vehicle_history2
 
 class TestTransportAgency(unittest.TestCase):
 
-    transport_agency = TransportAgency(agency=agency1, licence="No", type_licence="None",
-                                       information_vehicle=vehicle_history2, information_fine=fine_history2)
+    transport_agency = TransportAgency(agency=agency1, information_vehicle=vehicle_history2,
+                                       information_fine=fine_history2)
 
     def test_instance(self):
         self.assertIsInstance(self.transport_agency, TransportAgency, 'It is an instance!')
 
     def test_to_dict(self):
         expected_dict = {
-            "Agency": agency1.to_dict(),
-            "Licence": "No",
-            "Type of licence": "None",
-            "Information vehicle": vehicle_history2.to_dict(),
-            "Information fine": fine_history2.to_dict()
+            "965816": {
+                "agency": agency1.to_dict(),
+                "information_vehicle": vehicle_history2.to_dict(),
+                "information_fine": fine_history2.to_dict()}
         }
-        self.assertEqual(self.transport_agency.to_dict(), expected_dict)
+        self.assertEqual(expected_dict, self.transport_agency.to_dict(), 'They are equals!')
 
-    def test_str(self):
-        expected_str = (f'Agency: {agency1.__str__()}, Licence: {"No"}, Type of licence: {"None"}, '
-                        f'Information vehicle: {vehicle_history2}, Information fine: {fine_history2}')
-        self.assertEqual(str(self.transport_agency), expected_str)
+    def test__str__(self):
+        expected_str = (f'Agency: {str(agency1)}, Information Vehicle: {vehicle_history2.__str__()}, '
+                        f'Information Fine: {fine_history2.__str__()}')
+        print(expected_str)
+        print(self.transport_agency.__str__())
+        self.assertEqual(expected_str, self.transport_agency.__str__(), 'They are equals!')
 
-    def test_eq(self):
-        transport_agency1 = TransportAgency(agency=agency1, licence="No", type_licence="None",
+    def test__eq__(self):
+        transport_agency1 = TransportAgency(agency=agency1,
                                             information_vehicle=vehicle_history2, information_fine=fine_history2)
-        transport_agency2 = TransportAgency(agency=agency1, licence="No", type_licence="None",
+        transport_agency2 = TransportAgency(agency=agency1,
                                             information_vehicle=vehicle_history2, information_fine=fine_history2)
-        transport_agency3 = TransportAgency(agency=agency2, licence="Yes", type_licence="B1",
+        transport_agency3 = TransportAgency(agency=agency2,
                                             information_vehicle=vehicle_history1, information_fine=fine_history1)
 
-        self.assertEqual(transport_agency1, transport_agency2)
-        self.assertNotEqual(transport_agency1, transport_agency3)
+        self.assertTrue(transport_agency1.__eq__(transport_agency2), 'They are equals!')
+        self.assertFalse(transport_agency1.__eq__(transport_agency3), 'They are not equals!')
 
 
 if __name__ == '__main__':

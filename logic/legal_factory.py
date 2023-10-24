@@ -1,5 +1,3 @@
-from datetime import date
-from typing import Optional
 from logic.abstract_factory import AbstractFactory
 from logic.abstract_agency import AbstractAgency
 from logic.abstract_history import AbstractHistory
@@ -10,22 +8,17 @@ from logic.legal_agency import LegalAgency
 
 class LegalFactory(AbstractFactory):
     """
-    Concrete factory for creating legal agency and history objects.
+    Concrete factory for creating legal agency and history objects. Methods: create_agency(agency: AgencyFactory =
+    AgencyFactory(), legal_history: CaseHistory = CaseHistory()) -> AbstractAgency: Create an instance of a LegalAgency.
 
-    Attributes:
-        None
-
-    Methods:
-        create_agency(agency: Agency = None, legal_history: CaseHistory = None) -> AbstractAgency:
-            Create an instance of a LegalAgency.
-
-        create_history(dni_person: int = None, case: str = None, arrested: str = None,
-                       description_case: Optional[str] = None, jurisdiction: Optional[str] = None,
-                       day: Optional[int] = None, month: Optional[int] = None, year: Optional[int] = None,
-                       date_arrested: Optional[date] = None, mediator: object = None) -> AbstractHistory:
-            Create an instance of a CaseHistory.
+        create_history(id_history: int = 1, dni_person: int = 123456789, case: str = "Name case", arrested: str =
+        "Yes or No", description_case: Union[str, None] = "Description of case", jurisdiction: Union[str,
+        None] = "Jurisdiction of the case", day: int = 1, month: int = 1,
+        year: int = 1999, date_arrested: date = date(year, month, day), mediator: Union[object, None] = None) ->
+        AbstractHistory: Create an instance of a CaseHistory.
     """
-    def create_agency(self, agency: AgencyFactory = None, legal_history: CaseHistory = None) -> AbstractAgency:
+    def create_agency(self, agency: AgencyFactory = AgencyFactory(),
+                      legal_history: CaseHistory = CaseHistory()) -> AbstractAgency:
         """
         Create an instance of a LegalAgency.
 
@@ -36,30 +29,16 @@ class LegalFactory(AbstractFactory):
         Returns:
             AbstractAgency: An instance of LegalAgency or its subclass.
         """
-        return LegalAgency(agency=agency, legal_history=legal_history)
+        return LegalAgency(username=agency.id_entity, agency=agency, legal_history=legal_history)
 
-    def create_history(self, dni_person: int = None, case: str = None, arrested: str = None,
-                       description_case: Optional[str] = None, jurisdiction: Optional[str] = None,
-                       day: Optional[int] = None, month: Optional[int] = None, year: Optional[int] = None,
-                       date_arrested: Optional[date] = None, mediator: object = None) -> AbstractHistory:
+    def create_history(self, **data) -> AbstractHistory:
         """
-        Create an instance of a CaseHistory.
+        Create an instance of an EducationHistory.
 
         Args:
-            dni_person (int): The DNI of the person with the legal history.
-            case (str): Case information.
-            arrested (str): Arrested information.
-            description_case (str): Description of the case.
-            jurisdiction (str): Jurisdiction information.
-            day (int): Day of arrest.
-            month (int): Month of arrest.
-            year (int): Year of arrest.
-            date_arrested (date): Date of arrest.
-            mediator (object): Mediator object.
+            data (dict): A dictionary containing the data for creating an LegalHistory.
 
         Returns:
-            AbstractHistory: An instance of CaseHistory or its subclass.
+            AbstractHistory: An instance of EducationHistory or its subclass.
         """
-        return CaseHistory(dni_person=dni_person, case=case, arrested=arrested, description_case=description_case,
-                           jurisdiction=jurisdiction, day=day, month=month, year=year, date_arrested=date_arrested,
-                           mediator=mediator)
+        return CaseHistory(**data)

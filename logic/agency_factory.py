@@ -1,3 +1,4 @@
+from typing import Any
 from logic.abstract_agency import AbstractAgency
 from logic.address import Address, address2, address1
 from logic.legal_entity import LegalEntity
@@ -9,7 +10,7 @@ class AgencyFactory(AbstractAgency, LegalEntity):
      Class used to represent an Agency
 
      Attributes:
-            id_entity (int): Id of the agency ( Used in the database ).
+            id_entity (int): ID of the agency ( Used in the database ).
             nit (str): NIT of agency.
             business_name (str): Name of agency.
             contact (int): Contact of agency ( It could be a phone number or email ).
@@ -34,18 +35,19 @@ class AgencyFactory(AbstractAgency, LegalEntity):
     year: int = 1999
     date_actualization: date = date(year, month, day)
 
-    def actualization_date(self, day: int, month: int, year: int):
-        self.date_actualization = date(year=year, month=month, day=day)
+    def __init__(self, **data: Any):
+        super().__init__(**data)
+        self.date_actualization = date(year=self.year, month=self.month, day=self.day)
 
     def to_dict(self):
         return {
-            'ID Entity': self.id_entity,
-            'Entity': self.entity.type,
-            'NIT': self.nit,
-            'Business Name': self.business_name,
-            'Contact': self.contact,
-            'Address': self.address.to_dict(),
-            'Date Actualization': str(self.date_actualization)
+            'id_entity': self.id_entity,
+            'entity': self.entity.type,
+            'nit': self.nit,
+            'business_name': self.business_name,
+            'contact': self.contact,
+            'address': self.address.to_dict(),
+            'date_actualization': str(self.date_actualization)
         }
 
     def __eq__(self, another_agency):
@@ -60,21 +62,23 @@ class AgencyFactory(AbstractAgency, LegalEntity):
         :returns: string agency
         :rtype: str
         """
-        return 'Id Agency: {0}, Entity: Type: {1}, Nit: {2}, Business Name: {3}, Contact (Phone or E-mail): {4}, ' \
-               'Address: {5}, Date Actualization: {6} - {7} - {8}'.format(self.id_entity, self.entity.type,
-                                                                          self.nit, self.business_name, self.contact,
-                                                                          self.address.__str__(), self.day, self.month,
-                                                                          self.year)
+        return ('Id Agency: {0}, Entity: Type: {1}, Nit: {2}, Business Name: {3}, Contact (Phone or E-mail): {4}, '
+                'Address: {5}, Date Actualization: {6} - {7} - {8}').format(self.id_entity, self.entity.type,
+                                                                            self.nit, self.business_name, self.contact,
+                                                                            self.address.__str__(), self.day,
+                                                                            self.month, self.year)
 
 
 if __name__ == '__main__':
     # Prueba Agency class
 
-    agency1 = AgencyFactory(id_entity=965816, entity=LegalEntity(), nit=52173, business_name="Business Name",
-                            contact="31459750", address=address2, day=5, month=10, year=2023)
+    agency1 = AgencyFactory(
+        username=10290294, id_entity=965816, entity=LegalEntity(), nit=52173, business_name="Business Name",
+        contact="31459750", address=address2, day=5, month=10, year=2023)
 
-    agency2 = AgencyFactory(id_entity=965816, entity=LegalEntity(), nit=52173, business_name="Business Name",
-                            contact="31459750", address=address2, day=5, month=10, year=2023)
+    agency2 = AgencyFactory(
+        username=965816, id_entity=965816, entity=LegalEntity(), nit=52173, business_name="Business Name",
+        contact="31459750", address=address2, day=5, month=10, year=2023)
 
     agency1_str = agency1.__str__()
     print(f"Agency 1 Information \n {agency1_str}")
@@ -84,8 +88,9 @@ if __name__ == '__main__':
     are_equal_agency = agency1.__eq__(agency2)
     print(f"Are equals ? \n {are_equal_agency} \n\n")
 
-agency1 = AgencyFactory(id_entity=965816, entity=LegalEntity(), nit=52173, business_name="Tis er ium",
+agency1 = AgencyFactory(username=965816, id_entity=965816, entity=LegalEntity(), nit=52173, business_name="Tis er ium",
                         contact="3145975012", address=address1, day=5, month=10, year=2023)
 
-agency2 = AgencyFactory(id_entity=10290294,  entity=LegalEntity(), nit=4224, business_name="Business Name",
+agency2 = AgencyFactory(username=10290294, id_entity=10290294, entity=LegalEntity(), nit=4224,
+                        business_name="Business Name",
                         contact="31459750", address=address2, day=5, month=10, year=2023)

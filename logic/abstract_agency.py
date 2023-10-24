@@ -5,10 +5,6 @@ from pydantic import BaseModel
 class AbstractAgency(ABC, BaseModel):
     """
     Abstract base class for agency objects.
-
-    Attributes:
-        None
-
     Methods:
         __str__(): Returns a string representation of the agency.
         __eq__(other): Compares two agency objects to check if they are equal.

@@ -21,20 +21,10 @@ COL_CASE_HISTORY = HISTORIES['Case History']
 COL_MEDICAL_HISTORY = HISTORIES['Medical History']
 
 
-def find_history_by_dni(history_list, dni):
-    for history in history_list:
-        if history.get("DNI Person") == dni:
-            if history:
-                return history
-            else:
-                return f"History for DNI {dni} not found."
-    return None
-
-
 # Get information for DNI
 
 def get_person_info(dni_person: int):
-    person_data = COL_PERSON.find_one({"DNI Person": dni_person})
+    person_data = COL_PERSON.find_one({f"{dni_person}.dni_person": dni_person})
     if person_data:
         if "_id" in person_data:
             del person_data["_id"]
@@ -44,9 +34,9 @@ def get_person_info(dni_person: int):
 
 
 def get_educational_history(dni_person: int):
-    person_data = COL_PERSON.find_one({"DNI Person": dni_person})
+    person_data = COL_PERSON.find_one({str(dni_person): {"$exists": True}})
     if person_data:
-        education_data = person_data.get("Education History")
+        education_data = person_data.get(str(dni_person), {}).get("education_history")
         if education_data:
             return education_data
         else:
@@ -56,9 +46,9 @@ def get_educational_history(dni_person: int):
 
 
 def get_fine_history(dni_person: int):
-    person_data = COL_PERSON.find_one({"DNI Person": dni_person})
+    person_data = COL_PERSON.find_one({str(dni_person): {"$exists": True}})
     if person_data:
-        fine_data = person_data.get("Fine History")
+        fine_data = person_data.get(str(dni_person), {}).get("fine_history")
         if fine_data:
             return fine_data
         else:
@@ -68,9 +58,9 @@ def get_fine_history(dni_person: int):
 
 
 def get_vehicle_history(dni_person: int):
-    person_data = COL_PERSON.find_one({"DNI Person": dni_person})
+    person_data = COL_PERSON.find_one({str(dni_person): {"$exists": True}})
     if person_data:
-        vehicle_data = person_data.get("Vehicle History")
+        vehicle_data = person_data.get(str(dni_person), {}).get("vehicle_history")
         if vehicle_data:
             return vehicle_data
         else:
@@ -80,21 +70,21 @@ def get_vehicle_history(dni_person: int):
 
 
 def get_case_history(dni_person: int):
-    person_data = COL_PERSON.find_one({"DNI Person": dni_person})
+    person_data = COL_PERSON.find_one({str(dni_person): {"$exists": True}})
     if person_data:
-        medical_data = person_data.get("Case History")
-        if medical_data:
-            return medical_data
+        case_data = person_data.get(str(dni_person), {}).get("case_history")
+        if case_data:
+            return case_data
         else:
-            raise Exception(f"No medical history found for DNI {dni_person}")
+            raise Exception(f"No case history found for DNI {dni_person}")
     else:
         raise Exception(f"No person found for DNI {dni_person}")
 
 
 def get_medical_history(dni_person: int):
-    person_data = COL_PERSON.find_one({"DNI Person": dni_person})
+    person_data = COL_PERSON.find_one({str(dni_person): {"$exists": True}})
     if person_data:
-        medical_data = person_data.get("Medical History")
+        medical_data = person_data.get(str(dni_person), {}).get("medical_history")
         if medical_data:
             return medical_data
         else:
@@ -114,89 +104,110 @@ class Mediator:
         self.load_data()
 
     def load_data(self):
+        self._education_histories = []
+        self._fine_histories = []
+        self._case_histories = []
+        self._medical_histories = []
+        self._vehicle_histories = []
+        self._persons = []
+
         for person in COL_PERSON.find():
             if "_id" in person:
                 del person["_id"]
             self._persons.append(person)
         for educational_history in COL_EDUCATION_HISTORY.find():
+            if "_id" in educational_history:
+                del educational_history["_id"]
             self._education_histories.append(educational_history)
         for fine_history in COL_FINE_HISTORY.find():
+            if "_id" in fine_history:
+                del fine_history["_id"]
             self._fine_histories.append(fine_history)
         for vehicle_history in COL_VEHICLE_HISTORY.find():
+            if "_id" in vehicle_history:
+                del vehicle_history["_id"]
             self._vehicle_histories.append(vehicle_history)
         for case_history in COL_CASE_HISTORY.find():
+            if "_id" in case_history:
+                del case_history["_id"]
             self._case_histories.append(case_history)
         for medical_history in COL_MEDICAL_HISTORY.find():
+            if "_id" in medical_history:
+                del medical_history["_id"]
             self._medical_histories.append(medical_history)
 
     # Create Person
     def add_person(self, person: Person = Person()):
-        person_dict = person.to_dict()
-        if not any(p["DNI Person"] == person.dni for p in self._persons):
-            self._persons.append(person_dict)
+        if not any(p[f"{list(p.keys())[0]}"]["dni_person"] == person.dni_person for p in self._persons):
+            self._persons.append(person.to_dict())
             person.mediator = self
             print(f"Added person: {person.name}")
             COL_PERSON.insert_one(person.to_dict())
+            return person.to_dict()
         else:
-            print(f"Person with DNI {person.dni} already exists.")
+            raise Exception(f"Person with DNI {person.dni_person} already exists.")
 
     # Link histories with people
 
     def link_education_history_to_person(self, dni_person: int,
                                          education_history: EducationHistory = EducationHistory()):
-        history_dic = education_history.to_dict()
+        self.load_data()
         for p in self._persons:
-            if p["DNI Person"] == dni_person:
-                p["Education History"] = history_dic
-                COL_PERSON.update_one({"DNI Person": dni_person},
-                                      {"$set": {"Education History": history_dic}})
-                print(f"Linked educational history for DNI {education_history.dni_person}")
-                return history_dic
-        raise Exception(f"No person found for DNI {dni_person}")
+            if p[f"{list(p.keys())[0]}"]["dni_person"] == dni_person:
+                if education_history.dni_person == dni_person:
+                    p["education_history"] = education_history.to_dict()
+                    COL_PERSON.update_one({f"{dni_person}.dni_person": dni_person},
+                                          {"$set": {f"{dni_person}.education_history": education_history.to_dict()}})
+                    print(f"Linked educational history for DNI {education_history.dni_person}")
+                    return education_history.to_dict()
+        raise Exception(f"No person found for DNI {education_history.dni_person}")
 
     def link_fine_history_to_person(self, dni_person: int, fine_history: FineHistory = FineHistory()):
-        history_dic = fine_history.to_dict()
+        self.load_data()
         for p in self._persons:
-            if p["DNI Person"] == dni_person:
-                p["Fine History"] = history_dic
-                COL_PERSON.update_one({"DNI Person": dni_person},
-                                      {"$set": {"Fine History": history_dic}})
-                print(f"Linked fine history for DNI {fine_history.dni_person}")
-                return history_dic
-        raise Exception(f"No person found for DNI {dni_person}")
+            if p[f"{list(p.keys())[0]}"]["dni_person"] == dni_person:
+                if fine_history.dni_person == dni_person:
+                    p["fine_history"] = fine_history.to_dict()
+                    COL_PERSON.update_one({f"{dni_person}.dni_person": dni_person},
+                                          {"$set": {f"{dni_person}.fine_history": fine_history.to_dict()}})
+                    print(f"Linked fine history for DNI {fine_history.dni_person}")
+                    return fine_history.to_dict()
+        raise Exception(f"No person found for DNI {fine_history.dni_person}")
 
     def link_vehicle_history_to_person(self, dni_person: int, vehicle_history: VehicleHistory = VehicleHistory()):
         history_dic = vehicle_history.to_dict()
         for p in self._persons:
-            if p["DNI Person"] == dni_person:
-                p["Vehicle History"] = history_dic
-                COL_PERSON.update_one({"DNI Person": dni_person},
-                                      {"$set": {"Vehicle History": history_dic}})
-                print(f"Linked vehicle history for DNI {vehicle_history.dni_person}")
-                return history_dic
-        raise Exception(f"No person found for DNI {dni_person}")
+            if p[f"{list(p.keys())[0]}"]["dni_person"] == dni_person:
+                if vehicle_history.dni_person == dni_person:
+                    p["vehicle_history"] = history_dic
+                    COL_PERSON.update_one({f"{dni_person}.dni_person": dni_person},
+                                          {"$set": {f"{dni_person}.vehicle_history": history_dic}})
+                    print(f"Linked vehicle history for DNI {vehicle_history.dni_person}")
+                    return history_dic
+        raise Exception(f"No person found for DNI {vehicle_history.dni_person}")
 
     def link_case_history_to_person(self, dni_person: int, case_history: CaseHistory = CaseHistory()):
         history_dic = case_history.to_dict()
         for p in self._persons:
-            if p["DNI Person"] == dni_person:
-                p["Case History"] = history_dic
-                COL_PERSON.update_one({"DNI Person": dni_person},
-                                      {"$set": {"Case History": history_dic}})
-                print(f"Linked case history for DNI {case_history.dni_person}")
-                return history_dic
-        raise Exception(f"No person found for DNI {dni_person}")
+            if p[f"{list(p.keys())[0]}"]["dni_person"] == dni_person:
+                if case_history.dni_person == dni_person:
+                    p["case_history"] = history_dic
+                    COL_PERSON.update_one({f"{dni_person}.dni_person": dni_person},
+                                          {"$set": {f"{dni_person}.case_history": history_dic}})
+                    print(f"Linked case history for DNI {case_history.dni_person}")
+                    return history_dic
+        raise Exception(f"No person found for DNI {case_history.dni_person}")
 
     def link_medical_history_to_person(self, dni_person: int, medical_history: MedicalHistory = MedicalHistory()):
-        history_dic = medical_history.to_dict()
         for p in self._persons:
-            if p["DNI Person"] == dni_person:
-                p["Medical History"] = history_dic
-                COL_PERSON.update_one({"DNI Person": dni_person},
-                                      {"$set": {"Medical History": history_dic}})
-                print(f"Linked medical history for DNI {medical_history.dni_person}")
-                return history_dic
-        raise Exception(f"No person found for DNI {dni_person}")
+            if p[f"{list(p.keys())[0]}"]["dni_person"] == dni_person:
+                if medical_history.dni_person == dni_person:
+                    p["medical_history"] = medical_history.to_dict()
+                    COL_PERSON.update_one({f"{dni_person}.dni_person": dni_person},
+                                          {"$set": {f"{dni_person}.medical_history": medical_history.to_dict()}})
+                    print(f"Linked medical history for DNI {medical_history.dni_person}")
+                    return medical_history.to_dict()
+        raise Exception(f"No person found for DNI {medical_history.dni_person}")
 
     def get_persons(self):
         if len(self._persons) == 0:

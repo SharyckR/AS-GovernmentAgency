@@ -9,24 +9,28 @@ class TestCaseHistory(unittest.TestCase):
 
     def test_to_dict(self):
         expected_dict = {
-            "DNI Person": 1043638720,
-            "Case": "Heist",
-            "Arrested?": "Yes",
-            "Description of Case": "Stole a necklace",
-            "Jurisdiction": "Disciplinary",
-            "Date arrested": "2021-05-15"
+            "id_history": 13,
+            "dni_person": 1043638720,
+            "case": "Heist",
+            "arrested": "Yes",
+            "description_case": "Stole a necklace",
+            "jurisdiction": "Disciplinary",
+            "date_arrested": "2021-05-15"
         }
-        self.assertEqual(case_history1.to_dict(), expected_dict)
+        self.assertEqual(expected_dict, case_history1.to_dict(), 'They are equals!')
 
-    def test_str(self):
-        expected_str = (f'DNI Person: {1043638720}, Case: {"Heist"}, Arrested: {"Yes"}, '
-                        f'Description of case: {"Stole a necklace"}, Jurisdiction: {"Disciplinary"}, '
-                        f'Date arrested: {"2021 - 5 - 15"}')
-        self.assertEqual(str(case_history1), expected_str)
+    def test__str__(self):
+        expected_str = ("ID History: 13, DNI Person: 1043638720, Case: Heist, Arrested: Yes, Description of "
+                        "case: Stole a necklace, Jurisdiction: Disciplinary, Date arrested: 2021 - 5 - 15")
 
-    def test_eq(self):
-        self.assertEqual(case_history1, case_history1)
-        self.assertNotEqual(case_history1, case_history2)
+        self.assertEqual(expected_str, case_history1.__str__(), 'They are equals!')
+
+    def test__eq__(self):
+        case_history = CaseHistory(
+            id_history=13, dni_person=1043638720, case="Heist", arrested="Yes", description_case="Stole a necklace",
+            jurisdiction="Disciplinary", day=15, year=2021, month=5)
+        self.assertTrue(case_history1.__eq__(case_history), 'They are equals!')
+        self.assertFalse(case_history1.__eq__(case_history2), 'They are not equals!')
 
 
 if __name__ == '__main__':

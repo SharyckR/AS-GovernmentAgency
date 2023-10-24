@@ -3,31 +3,32 @@ from logic.vehicle_history import *
 
 
 class TestVehicleHistory(unittest.TestCase):
+    vehicle = VehicleHistory(id_history=13, dni_person=1043638720, licence="Yes", type_licence="A2", vehicle="Yes",
+                             type_vehicle="Car", description_vehicle="Mazda2", plate_vehicle="BJU-521")
 
     def test_instance(self):
         self.assertIsInstance(vehicle_history1, VehicleHistory, 'It is an instance!')
 
     def test_to_dict(self):
-        expected_dict = {
-            "DNI Person": 1043638720,
-            "License?": "Yes",
-            "Type of license": "A2",
-            "Vehicle?": "Yes",
-            "Type of vehicle": "Car",
-            "Description of the Vehicle": "Mazda2",
-            "Plate of the vehicle": "BJU-521"
-        }
-        self.assertEqual(vehicle_history1.to_dict(), expected_dict)
+        expected_dict = {'description_vehicle': 'Mazda2',
+                         'dni_person': 1043638720,
+                         'id_history': 13,
+                         'licence': 'Yes',
+                         'plate_vehicle': 'BJU-521',
+                         'type_licence': 'A2',
+                         'type_vehicle': 'Car',
+                         'vehicle': 'Yes'}
+        self.assertEqual(expected_dict, vehicle_history1.to_dict(), 'They are equals!')
 
-    def test_str(self):
-        expected_str = (f'(Dni: {1043638720}, Does the person have a license?: {"Yes"}, Type of license: {"A2"}, '
-                        f'Does the person have a vehicle?: {"Yes"}, Type of vehicle: {"Car"}, '
-                        f'Description of the Vehicle: {"Mazda2"}, Plate of the vehicle: {"BJU-521"})')
-        self.assertEqual(str(vehicle_history1), expected_str)
+    def test__str__(self):
+        expected_str = ("ID History: 13 Dni: 1043638720, Does the person have a license?: 'Yes', Type "
+                        "of license: 'A2', Does the person have a vehicle?: 'Yes', Type of vehicle: "
+                        "'Car', Description of the Vehicle: 'Mazda2', Plate of the vehicle: 'BJU-521'")
+        self.assertEqual(expected_str, self.vehicle.__str__(), 'They are equals!')
 
-    def test_eq(self):
-        self.assertEqual(vehicle_history1, vehicle_history1)
-        self.assertNotEqual(vehicle_history1, vehicle_history2)
+    def test__eq__(self):
+        self.assertTrue(self.vehicle.__eq__(vehicle_history1), 'They are equals!')
+        self.assertFalse(self.vehicle.__eq__(vehicle_history2), 'They are not equals!')
 
 
 if __name__ == '__main__':

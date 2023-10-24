@@ -1,6 +1,6 @@
 from datetime import date
 from pydantic import BaseModel
-from typing import Optional
+from typing import Union
 from logic.abstract_history import AbstractHistory
 
 
@@ -25,14 +25,14 @@ class MedicalHistory(AbstractHistory, BaseModel):
     id_history: int = 1
     dni_person: int = 123456789
     type_blood: str = "A+, B+, O+, AB+, A-, B-, O-, AB-"
-    pathologies: Optional[str] = "Pathologies"
+    pathologies: Union[str, None] = "Pathologies"
     description_treatment: str = "Treatment description"
     doctor_charge: str = "Name doctor"
     day: int = 1
     month: int = 1
     year: int = 1999
-    date_treatment: Optional[date] = date(year, month, day)
-    mediator: object = None
+    date_treatment: date = date(year, month, day)
+    mediator: Union[object, None] = None
 
     def __init__(self, mediator=None, **data):
         super().__init__(**data)
@@ -41,12 +41,13 @@ class MedicalHistory(AbstractHistory, BaseModel):
 
     def to_dict(self):
         return {
-            "DNI Person": self.dni_person,
-            "Type blood": self.type_blood,
-            "Pathologies": self.pathologies,
-            "Description Treatment": self.description_treatment,
-            "Doctor in Charge": self.doctor_charge,
-            "Date treatment": str(self.date_treatment)
+            "id_history": self.id_history,
+            "dni_person": self.dni_person,
+            "type_blood": self.type_blood,
+            "pathologies": self.pathologies,
+            "description_treatment": self.description_treatment,
+            "doctor_charge": self.doctor_charge,
+            "date_treatment": str(self.date_treatment)
         }
 
     def __eq__(self, other):
@@ -55,7 +56,8 @@ class MedicalHistory(AbstractHistory, BaseModel):
         :rtype: bool
         """
         if isinstance(other, MedicalHistory):
-            return (self.dni_person == other.dni_person and self.type_blood == other.type_blood and
+            return (self.id_history == other.id_history and self.dni_person == other.dni_person and
+                    self.type_blood == other.type_blood and
                     self.pathologies == other.pathologies and
                     self.description_treatment == other.description_treatment and
                     self.doctor_charge == other.doctor_charge and self.day == other.day and
@@ -71,20 +73,20 @@ class MedicalHistory(AbstractHistory, BaseModel):
 
         pathologies_str = str(self.pathologies) if self.pathologies is not None else "None"
 
-        return 'Dni: {0}, Type blood: {1}, Pathologies: {2}, Description treatment: {3}, Doctor charge: {4}, ' \
-               'Date treatment: {5} - {6} - {7}'.format(self.dni_person, self.type_blood, pathologies_str,
-                                                        self.description_treatment, self.doctor_charge, self.year,
-                                                        self.month, self.day)
+        return ('ID History: {!r} DNI Person: {!r}, Type blood: {!r}, Pathologies: {!r}, Description treatment: {!r}, '
+                'Doctor charge: {!r}, Date treatment: {!r} - {!r} - {!r}').format(
+                self.id_history, self.dni_person, self.type_blood, pathologies_str, self.description_treatment,
+                self.doctor_charge, self.year, self.month, self.day)
 
 
 if __name__ == '__main__':
     # Prueba Medical History class
 
-    medical_history1 = MedicalHistory(dni_person=1043638720, type_blood="O+", pathologies="None",
+    medical_history1 = MedicalHistory(id_history=13, dni_person=1043638720, type_blood="O+", pathologies="None",
                                       description_treatment="Wound healing", doctor_charge="Kevin Rodriguez",
                                       day=5, month=10, year=2023)
 
-    medical_history2 = MedicalHistory(dni_person=45761873, type_blood="A+", pathologies="Hypertension",
+    medical_history2 = MedicalHistory(id_history=14, dni_person=45761873, type_blood="A+", pathologies="Hypertension",
                                       description_treatment="Control", doctor_charge="Tomas Antonio",
                                       day=31, month=7, year=2023)
 
@@ -96,9 +98,9 @@ if __name__ == '__main__':
     are_equal_medical_history = medical_history1.__eq__(medical_history2)
     print(f"Are equals ? \n {are_equal_medical_history} \n\n")
 
-medical_history1 = MedicalHistory(dni_person=1043638720, type_blood="O+", pathologies="None",
-                                  description_treatment="Wound healing", doctor_charge="Kevin Rodriguez",
-                                  day=5, month=10, year=2023)
-medical_history2 = MedicalHistory(dni_person=45761873, type_blood="A+", pathologies="Hypertension",
-                                  description_treatment="Control", doctor_charge="Tomas Antonio",
-                                  day=31, month=7, year=2023)
+medical_history1 = MedicalHistory(
+    id_history=13, dni_person=1043638720, type_blood="O+", pathologies="None", description_treatment="Wound healing",
+    doctor_charge="Kevin Rodriguez", day=5, month=10, year=2023)
+medical_history2 = MedicalHistory(
+    id_history=14, dni_person=45761873, type_blood="A+", pathologies="Hypertension", description_treatment="Control",
+    doctor_charge="Tomas Antonio", day=31, month=7, year=2023)

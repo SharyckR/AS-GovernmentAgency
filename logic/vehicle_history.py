@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Union
 from logic.abstract_history import AbstractHistory
 
 
@@ -20,15 +20,15 @@ class VehicleHistory(AbstractHistory, BaseModel):
         __str__(): Returns a string representation of the VehicleHistory object.
         __eq__(other): Compares two VehicleHistory objects to check if they are equal.
     """
-
+    id_history: int = 1
     dni_person: int = 123456789
-    licence: Optional[str] = "Yes or No"
-    type_licence: Optional[str] = "A1 or A2 or B1 or B2 or B3 or C1 or C2 or C3"
-    vehicle: Optional[str] = "Yes or No"
-    type_vehicle: Optional[str] = "Car or Motorcycle"
-    description_vehicle: Optional[str] = "Description of the Vehicle"
-    plate_vehicle: Optional[str] = "Plate of the vehicle"
-    mediator: object = None
+    licence: Union[str, None] = "Yes or No"
+    type_licence: Union[str, None] = "A1 or A2 or B1 or B2 or B3 or C1 or C2 or C3"
+    vehicle: Union[str, None] = "Yes or No"
+    type_vehicle: Union[str, None] = "Car or Motorcycle"
+    description_vehicle: Union[str, None] = "Description of the Vehicle"
+    plate_vehicle: Union[str, None] = "Plate of the vehicle"
+    mediator: Union[object, None] = None
 
     def __init__(self, mediator=None, **data):
         super().__init__(**data)
@@ -40,13 +40,14 @@ class VehicleHistory(AbstractHistory, BaseModel):
         description_vehicle_str = str(self.description_vehicle) if self.description_vehicle is not None else "None"
         plate_vehicle = str(self.plate_vehicle) if self.plate_vehicle is not None else "None"
         return {
-            "DNI Person": self.dni_person,
-            "License?": self.licence,
-            "Type of license": type_licence_str,
-            "Vehicle?": self.vehicle,
-            "Type of vehicle": type_vehicle_str,
-            "Description of the Vehicle": description_vehicle_str,
-            "Plate of the vehicle": plate_vehicle
+            "id_history": self.id_history,
+            "dni_person": self.dni_person,
+            "licence": self.licence,
+            "type_licence": type_licence_str,
+            "vehicle": self.vehicle,
+            "type_vehicle": type_vehicle_str,
+            "description_vehicle": description_vehicle_str,
+            "plate_vehicle": plate_vehicle
         }
 
     def __str__(self) -> str:
@@ -60,10 +61,11 @@ class VehicleHistory(AbstractHistory, BaseModel):
         description_vehicle_str = str(self.description_vehicle) if self.description_vehicle is not None else "None"
         plate_vehicle = str(self.plate_vehicle) if self.plate_vehicle is not None else "None"
 
-        return '(Dni: {0}, Does the person have a license?: {1}, Type of license: {2},' \
-               ' Does the person have a vehicle?: {3}, Type of vehicle: {4}, Description of the Vehicle: {5},' \
-               ' Plate of the vehicle: {6})'.format(self.dni_person, self.licence, type_licence_str, self.vehicle,
-                                                    type_vehicle_str, description_vehicle_str, plate_vehicle)
+        return ('ID History: {!r} Dni: {!r}, Does the person have a license?: {!r}, Type of license: {!r},'
+                ' Does the person have a vehicle?: {!r}, Type of vehicle: {!r}, Description of the Vehicle: {!r},'
+                ' Plate of the vehicle: {!r}').format(
+                self.id_history, self.dni_person, self.licence, type_licence_str, self.vehicle, type_vehicle_str,
+                description_vehicle_str, plate_vehicle)
 
     def __eq__(self, other) -> bool:
         """
@@ -88,11 +90,13 @@ class VehicleHistory(AbstractHistory, BaseModel):
 if __name__ == '__main__':
     # Prueba Vehicle History class
 
-    vehicle_history1 = VehicleHistory(dni_person=1043638720, licence="Yes", type_licence="A2", vehicle="Yes",
-                                      type_vehicle="Car", description_vehicle="Mazda2", plate_vehicle="BJU-521")
+    vehicle_history1 = VehicleHistory(
+        id_history=13, dni_person=1043638720, licence="Yes", type_licence="A2", vehicle="Yes", type_vehicle="Car",
+        description_vehicle="Mazda2", plate_vehicle="BJU-521")
 
-    vehicle_history2 = VehicleHistory(dni_person=45761873, licence="No", type_licence=None, vehicle="Yes",
-                                      type_vehicle="Motorcycle", description_vehicle="Honda", plate_vehicle="PLO-154")
+    vehicle_history2 = VehicleHistory(
+        id_history=14, dni_person=45761873, licence="No", type_licence=None, vehicle="Yes", type_vehicle="Motorcycle",
+        description_vehicle="Honda", plate_vehicle="PLO-154")
 
     vehicle1_history_str = vehicle_history1.__str__()
     print(f"Vehicle History 1 Information \n {vehicle1_history_str}")
@@ -102,9 +106,9 @@ if __name__ == '__main__':
     are_equal_vehicle_history = vehicle_history1.__eq__(vehicle_history2)
     print(f"Are equals ? \n {are_equal_vehicle_history} \n\n")
 
-vehicle_history1 = VehicleHistory(dni_person=1043638720, licence="Yes", type_licence="A2", vehicle="Yes",
-                                  type_vehicle="Car", description_vehicle="Mazda2", plate_vehicle="BJU-521")
-vehicle_history2 = VehicleHistory(dni_person=45761873, licence="No", type_licence=None, vehicle="Yes",
-                                  type_vehicle="Motorcycle", description_vehicle="Honda", plate_vehicle="PLO-154")
-
-
+vehicle_history1 = VehicleHistory(
+    id_history=13, dni_person=1043638720, licence="Yes", type_licence="A2", vehicle="Yes", type_vehicle="Car",
+    description_vehicle="Mazda2", plate_vehicle="BJU-521")
+vehicle_history2 = VehicleHistory(
+    id_history=14, dni_person=45761873, licence="No", type_licence=None, vehicle="Yes", type_vehicle="Motorcycle",
+    description_vehicle="Honda", plate_vehicle="PLO-154")
