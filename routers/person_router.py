@@ -1,10 +1,12 @@
-from typing import Dict
-from fastapi import APIRouter, HTTPException, status
+from typing import Dict, Annotated
+from fastapi import APIRouter, HTTPException, status, Depends
 from controller.mediator import *
 from logic.case_history import CaseHistory
 from logic.medical_history import MedicalHistory
 from logic.person import Person
 from logic.vehicle_history import VehicleHistory
+from routers.auth import current_user, User
+
 router = APIRouter(prefix='/persons', tags=['person'],
                    responses={status.HTTP_404_NOT_FOUND: {'message': 'Not found'}})
 mediator_controller = Mediator()
@@ -17,14 +19,13 @@ async def get_person():
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_204_NO_CONTENT, detail=str(e))
     else:
-        print(type(persons))
         return {'Persons:': persons}
 
 
 @router.get('/{dni_person}', response_model=Dict)  # Tested
-async def get_person_by_id(dni_person: int):
+async def get_person_by_id(user: Annotated[User, Depends(current_user)]):
     try:
-        person_info = get_person_info(dni_person)
+        person_info = get_person_info(user.username)
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
     else:
@@ -34,7 +35,7 @@ async def get_person_by_id(dni_person: int):
 @router.post('', status_code=status.HTTP_201_CREATED, response_model=Dict)  # Tested
 async def add_person(person: Person):
     try:
-        person_added = mediator_controller.add_person(person.to_dict())
+        person_added = mediator_controller.add_person(person)
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(e))
     else:
@@ -42,9 +43,9 @@ async def add_person(person: Person):
 
 
 @router.get('/educational-history/{dni_person}', response_model=Dict)  # Tested
-async def get_histories_by_id(dni_person: int):
+async def get_histories_by_id(user: Annotated[User, Depends(current_user)]):
     try:
-        histories = get_educational_history(dni_person)
+        histories = get_educational_history(user.username)
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
     else:
@@ -52,9 +53,9 @@ async def get_histories_by_id(dni_person: int):
 
 
 @router.get('/fine-history/{dni_person}', response_model=Dict)  # Tested
-async def get_histories_by_id(dni_person: int):
+async def get_histories_by_id(user: Annotated[User, Depends(current_user)]):
     try:
-        histories = get_fine_history(dni_person)
+        histories = get_fine_history(user.username)
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
     else:
@@ -62,9 +63,9 @@ async def get_histories_by_id(dni_person: int):
 
 
 @router.get('/vehicle-history/{dni_person}', response_model=Dict)  # Tested
-async def get_histories_by_id(dni_person: int):
+async def get_histories_by_id(user: Annotated[User, Depends(current_user)]):
     try:
-        histories = get_vehicle_history(dni_person)
+        histories = get_vehicle_history(user.username)
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
     else:
@@ -72,9 +73,9 @@ async def get_histories_by_id(dni_person: int):
 
 
 @router.get('/case-history/{dni_person}', response_model=Dict)  # Tested
-async def get_histories_by_id(dni_person: int):
+async def get_histories_by_id(user: Annotated[User, Depends(current_user)]):
     try:
-        histories = get_case_history(dni_person)
+        histories = get_case_history(user.username)
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
     else:
@@ -82,9 +83,9 @@ async def get_histories_by_id(dni_person: int):
 
 
 @router.get('/medical-history/{dni_person}', response_model=Dict)  # Tested
-async def get_histories_by_id(dni_person: int):
+async def get_histories_by_id(user: Annotated[User, Depends(current_user)]):
     try:
-        histories = get_medical_history(dni_person)
+        histories = get_medical_history(user.username)
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
     else:
@@ -96,7 +97,7 @@ async def get_histories_by_id(dni_person: int):
 async def link_education_history_to_person(dni_person: int, education_history: EducationHistory = EducationHistory()):
     try:
         educational_history = mediator_controller.link_education_history_to_person(dni_person,
-                                                                                   education_history.to_dict())
+                                                                                   education_history)
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
     else:

@@ -10,8 +10,6 @@ class Entity(ABC, BaseModel):
         id_entity (int): The unique identifier for the entity.
         type (str): The type or category of the entity.
         username (int): The identifier for the entity
-        password (str): The password for the entity could access to the information
-
     Methods:
         kind_of_entity(): An abstract method that should be implemented by subclasses
                          to return the kind of entity.
@@ -19,7 +17,6 @@ class Entity(ABC, BaseModel):
     id_entity: int = 0
     type: str = None
     username: int = 1
-    password: str = "password"
 
     @abstractmethod
     def kind_of_entity(self):

@@ -1,8 +1,5 @@
-from datetime import date
 from typing import List, Dict, Union
-
 from pydantic import BaseModel
-
 from logic.address import Address
 from logic.agency_factory import AgencyFactory
 
@@ -11,17 +8,21 @@ class AgencyFlyweight(BaseModel):
     """
     Class representing a flyweight object for agencies.
     """
-    shared_state: List[Union[str, int]]
+    shared_state: List[Union[str, int]] = []
+    unique_state: Union[dict, None] = None
 
-    def operation(self, unique_state: AgencyFactory) -> None:
+    def __init__(self, **data):
+        super().__init__(**data)
+
+    def operation(self, unique_state: dict) -> None:
         """
         Performs an operation with the shared state and unique state.
         Args:
             unique_state (AgencyFactory): Unique state of the agency factory.
         """
-        shared_state_str = ", ".join(self.shared_state)
-        unique_state_str = str(unique_state)
-        print(f"AgencyFlyweight: Displaying shared ({shared_state_str}) and unique ({unique_state_str}) state.", end="")
+        shared_state_str = ", ".join(str(self.shared_state))
+        self.unique_state = unique_state
+        print(f"AgencyFlyweight: Displaying shared ({shared_state_str}) and unique ({list(self.unique_state.values())}) state.", end="")
 
 
 def get_key(state: List[str]) -> str:
@@ -40,8 +41,8 @@ class AgencyFlyweightFactory:
     Class representing a factory for agency flyweight objects.
     """
     flyweights: Dict[str, AgencyFlyweight] = {}
-    
-    def assign_flyweights(self, initial_flyweights: List[List[str]]) -> None:
+
+    def assign_flyweights(self, initial_flyweights: List[List[Union[str, int]]]) -> None:
         """
         Assign initial flyweights.
         Args:
@@ -49,7 +50,10 @@ class AgencyFlyweightFactory:
         """
         for state in initial_flyweights:
             key = get_key(state)
-            self.flyweights[key] = AgencyFlyweight(shared_state=state)
+            agency = AgencyFlyweight()
+            for data in state:
+                agency.shared_state.append(data)
+            self.flyweights[key] = agency
 
     def get_flyweight(self, shared_state: List[Union[str, int]]) -> AgencyFlyweight:
         """
@@ -77,9 +81,8 @@ class AgencyFlyweightFactory:
 
 
 def add_agency_to_database(
-    factory_add: AgencyFlyweightFactory, id_entity: int, nit: int, business_name: str, contact: str,
-    address: Address, day: int, month: int, year: int, date_actualization: date = date.today()
-) -> None:
+        factory_add: AgencyFlyweightFactory, id_entity: int, nit: int, business_name: str, contact: str,
+        address: Address, day: int, month: int, year: int) -> None:
     """
     Add an agency to the database.
     Args:
@@ -92,11 +95,10 @@ def add_agency_to_database(
         day (int): Day.
         month (int): Month.
         year (int): Year.
-        date_actualization (date): Actualization date (default: today's date).
     """
     print("\n\nClient: Adding an agency to the database.")
     agency = AgencyFactory(id_entity=id_entity, nit=nit, business_name=business_name, contact=contact, address=address,
-                           day=day, month=month, year=year, date_actualization=date_actualization)
+                           day=day, month=month, year=year)
     flyweight = factory_add.get_flyweight([id_entity, nit, business_name, contact, address.__str__(),
-                                           day, month, year, date_actualization])
-    flyweight.operation(agency)
+                                           day, month, year])
+    flyweight.operation(agency.to_dict())

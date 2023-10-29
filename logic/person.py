@@ -53,7 +53,7 @@ class Person(NaturalEntity, BaseModel):
 
     def to_dict(self):
         return {
-            str(self.username): {
+            str(self.dni_person): {
                  "id_entity": self.id_entity,
                  "type_id_entity": self.type_id_entity,
                  "dni_person": self.dni_person,

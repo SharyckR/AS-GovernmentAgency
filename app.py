@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from routers import (educational_agency_router, health_agency_router, legal_agency_router, person_router,
                      transport_agency_router, educational_history_router, health_history_router, case_history_router,
-                     fine_history_router, vehicle_history_router)
+                     fine_history_router, vehicle_history_router, auth)
 app = FastAPI()
 app.include_router(educational_agency_router.router)
 app.include_router(health_agency_router.router)
@@ -13,6 +13,7 @@ app.include_router(health_history_router.router)
 app.include_router(case_history_router.router)
 app.include_router(fine_history_router.router)
 app.include_router(vehicle_history_router.router)
+app.include_router(auth.router)
 
 
 @app.get('/', tags=['app'])  # Tested

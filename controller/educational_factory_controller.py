@@ -1,13 +1,13 @@
+from os import getenv
 from typing import List
+from dotenv import load_dotenv
 from pymongo import MongoClient, UpdateOne
 from logic.agency_factory import AgencyFactory
 from logic.education_history import EducationHistory
 from logic.educational_factory import EducationalFactory
 
-MY_CLIENT = MongoClient(
-    'mongodb://as-database:oHfA0NSURbklPgc5DVeLDnxDy1KaSHNJVrji28EMMT4FSrk4bandpHgx7qRYlgWRTx8g8wnr2rZ9ACDbpCZ30g'
-    '==@as-database.mongo.cosmos.azure.com:10255/?ssl=true&retrywrites=false&replicaSet=globaldb&maxIdleTimeMS=120000'
-    '&appName=@as-database@')
+load_dotenv()
+MY_CLIENT = MongoClient(getenv('MONGODB_CONNECTION_STRING'))
 MY_DB = MY_CLIENT['Entity']
 HISTORIES = MY_CLIENT['Histories']
 EDUCATIONAL_AGENCY_DB = MY_DB['Educational Agency']
@@ -33,8 +33,10 @@ class EducationalFactoryController:
                 del educational_history['_id']
             self._educational_histories.append(educational_history)
 
-    def add_educational_agency(self, agency: AgencyFactory = AgencyFactory(), academic_achievements: List[str] = None):
+    def add_educational_agency(self, agency: AgencyFactory = AgencyFactory(),
+                               academic_achievements: List[str] = None):
         self.load_data_db()
+        print('Address: ', agency.address)
         if academic_achievements is None:
             academic_achievements = []
         educational_agency = self._educational_factory.create_agency(

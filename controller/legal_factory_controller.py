@@ -1,13 +1,13 @@
+from os import getenv
 from typing import List
+from dotenv import load_dotenv
 from pymongo import MongoClient, UpdateOne
 from logic.agency_factory import AgencyFactory
 from logic.legal_factory import LegalFactory
 from logic.case_history import CaseHistory
 
-MY_CLIENT = MongoClient("mongodb://as-database:oHfA0NSURbklPgc5DVeLDnxDy1KaSHNJVrji28EMMT4FSrk"
-                        "4bandpHgx7qRYlgWRTx8g8wnr2rZ9ACDbpCZ30g==@as-database.mongo.cosmos.azure.com:10255"
-                        "/?ssl=true&retrywrites=false&replicaSet=globaldb&maxIdleTimeMS=120000&appName=@as-"
-                        "database@")
+load_dotenv()
+MY_CLIENT = MongoClient(getenv('MONGODB_CONNECTION_STRING'))
 MY_DB = MY_CLIENT["Entity"]
 LEGAL_AGENCY = MY_DB["Legal Agency"]
 HISTORIES = MY_CLIENT["Histories"]

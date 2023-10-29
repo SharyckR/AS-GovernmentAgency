@@ -1,19 +1,20 @@
-import pymongo
+from os import getenv
+from typing import Union
+from dotenv import load_dotenv
+from pymongo import MongoClient
 from logic.person import Person
 from logic.education_history import EducationHistory
 from logic.fine_history import FineHistory
 from logic.case_history import CaseHistory
 from logic.medical_history import MedicalHistory
 from logic.vehicle_history import VehicleHistory
+from routers.auth import USER
+load_dotenv()
+MY_CLIENT = MongoClient(getenv('MONGODB_CONNECTION_STRING'))
 
-my_client = pymongo.MongoClient('mongodb://as-database:oHfA0NSURbklPgc5DVeLDnxDy1KaSHNJVrji28EMMT4FSrk'
-                                '4bandpHgx7qRYlgWRTx8g8wnr2rZ9ACDbpCZ30g==@as-database.mongo.cosmos.azure.com:10255'
-                                '/?ssl=true&retrywrites=false&replicaSet=globaldb&maxIdleTimeMS=120000&appName=@as-'
-                                'database@')
-
-ENTITY = my_client['Entity']
+ENTITY = MY_CLIENT['Entity']
 COL_PERSON = ENTITY['Person']
-HISTORIES = my_client['Histories']
+HISTORIES = MY_CLIENT['Histories']
 COL_EDUCATION_HISTORY = HISTORIES['Education History']
 COL_FINE_HISTORY = HISTORIES['Fine History']
 COL_VEHICLE_HISTORY = HISTORIES['Vehicle History']
@@ -23,7 +24,7 @@ COL_MEDICAL_HISTORY = HISTORIES['Medical History']
 
 # Get information for DNI
 
-def get_person_info(dni_person: int):
+def get_person_info(dni_person: Union[str, int]):
     person_data = COL_PERSON.find_one({f"{dni_person}.dni_person": dni_person})
     if person_data:
         if "_id" in person_data:
@@ -33,7 +34,7 @@ def get_person_info(dni_person: int):
         raise Exception(f"No person found for DNI {dni_person}")
 
 
-def get_educational_history(dni_person: int):
+def get_educational_history(dni_person: Union[str, int]):
     person_data = COL_PERSON.find_one({str(dni_person): {"$exists": True}})
     if person_data:
         education_data = person_data.get(str(dni_person), {}).get("education_history")
@@ -45,7 +46,7 @@ def get_educational_history(dni_person: int):
         raise Exception(f"No person found for DNI {dni_person}")
 
 
-def get_fine_history(dni_person: int):
+def get_fine_history(dni_person: Union[str, int]):
     person_data = COL_PERSON.find_one({str(dni_person): {"$exists": True}})
     if person_data:
         fine_data = person_data.get(str(dni_person), {}).get("fine_history")
@@ -57,7 +58,7 @@ def get_fine_history(dni_person: int):
         raise Exception(f"No person found for DNI {dni_person}")
 
 
-def get_vehicle_history(dni_person: int):
+def get_vehicle_history(dni_person: Union[str, int]):
     person_data = COL_PERSON.find_one({str(dni_person): {"$exists": True}})
     if person_data:
         vehicle_data = person_data.get(str(dni_person), {}).get("vehicle_history")
@@ -69,7 +70,7 @@ def get_vehicle_history(dni_person: int):
         raise Exception(f"No person found for DNI {dni_person}")
 
 
-def get_case_history(dni_person: int):
+def get_case_history(dni_person: Union[str, int]):
     person_data = COL_PERSON.find_one({str(dni_person): {"$exists": True}})
     if person_data:
         case_data = person_data.get(str(dni_person), {}).get("case_history")
@@ -81,7 +82,7 @@ def get_case_history(dni_person: int):
         raise Exception(f"No person found for DNI {dni_person}")
 
 
-def get_medical_history(dni_person: int):
+def get_medical_history(dni_person: Union[str, int]):
     person_data = COL_PERSON.find_one({str(dni_person): {"$exists": True}})
     if person_data:
         medical_data = person_data.get(str(dni_person), {}).get("medical_history")
@@ -138,14 +139,19 @@ class Mediator:
 
     # Create Person
     def add_person(self, person: Person = Person()):
-        if not any(p[f"{list(p.keys())[0]}"]["dni_person"] == person.dni_person for p in self._persons):
-            self._persons.append(person.to_dict())
-            person.mediator = self
-            print(f"Added person: {person.name}")
-            COL_PERSON.insert_one(person.to_dict())
-            return person.to_dict()
-        else:
+        self.load_data()
+        print('Collection: ', USER.find())
+        if USER.find_one(f'{person.dni_person}'):
+            if not any(p[f"{list(p.keys())[0]}"]["dni_person"] == person.dni_person for p in self._persons):
+                self._persons.append(person.to_dict())
+                person.mediator = self
+                print(f"Added person: {person.name}")
+                COL_PERSON.insert_one(person.to_dict())
+                print(person.to_dict())
+                print('HOLA')
+                return person.to_dict()
             raise Exception(f"Person with DNI {person.dni_person} already exists.")
+        raise Exception(f"User with DNI {person.dni_person} does not exists.")
 
     # Link histories with people
 
@@ -175,6 +181,7 @@ class Mediator:
         raise Exception(f"No person found for DNI {fine_history.dni_person}")
 
     def link_vehicle_history_to_person(self, dni_person: int, vehicle_history: VehicleHistory = VehicleHistory()):
+        self.load_data()
         history_dic = vehicle_history.to_dict()
         for p in self._persons:
             if p[f"{list(p.keys())[0]}"]["dni_person"] == dni_person:
@@ -187,6 +194,7 @@ class Mediator:
         raise Exception(f"No person found for DNI {vehicle_history.dni_person}")
 
     def link_case_history_to_person(self, dni_person: int, case_history: CaseHistory = CaseHistory()):
+        self.load_data()
         history_dic = case_history.to_dict()
         for p in self._persons:
             if p[f"{list(p.keys())[0]}"]["dni_person"] == dni_person:
@@ -199,6 +207,7 @@ class Mediator:
         raise Exception(f"No person found for DNI {case_history.dni_person}")
 
     def link_medical_history_to_person(self, dni_person: int, medical_history: MedicalHistory = MedicalHistory()):
+        self.load_data()
         for p in self._persons:
             if p[f"{list(p.keys())[0]}"]["dni_person"] == dni_person:
                 if medical_history.dni_person == dni_person:
@@ -210,6 +219,7 @@ class Mediator:
         raise Exception(f"No person found for DNI {medical_history.dni_person}")
 
     def get_persons(self):
+        self.load_data()
         if len(self._persons) == 0:
             raise Exception('No data yet')
         return self._persons
