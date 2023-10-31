@@ -17,13 +17,16 @@ class Person(NaturalEntity, BaseModel):
             last_name (str): Last name of person.
             phone (int): Phone of person.
             address (object): Address of person.
+            day (int): Day of the birthday.
+            month (int): Month of the birthday.
+            year (int): Year of the birthday.
+            birthday (date): Date of birth of the person.
             education_history (object): Educational history of the person.
             fine_history (object): Fine history of the person.
             case_history (object): Case history of the person.
             medical_history (object): Medical history of the person.
             vehicle_history (object): Vehicle history of the person.
             mediator (object): Mediator for managing interactions.
-
         Methods:
             __str__(): Returns a string representation of a person.
             __eq__(other): Compares two objects person to check if they are equal.
