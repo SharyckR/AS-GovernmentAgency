@@ -9,6 +9,7 @@ class EducationHistory(AbstractHistory, BaseModel):
     """
      Class used to represent an Educational History
      Attributes:
+            id_history (int): The identifier for the educational history.
             dni_person (int): DNI of the person to whom the history refers.
             education (str): Educational level of the person.
             name_institution (str): Name of the institution where the person studied.

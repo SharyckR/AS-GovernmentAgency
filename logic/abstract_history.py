@@ -13,7 +13,6 @@ class AbstractHistory(ABC, BaseModel):
     def __str__(self):
         """
         Returns a string representation of the history.
-
         Returns:
             str: A string containing history information.
         """
@@ -23,7 +22,6 @@ class AbstractHistory(ABC, BaseModel):
     def __eq__(self, other):
         """
         Compares two history objects to check if they are equal.
-
         Args:
             other: Another history object to compare.
 

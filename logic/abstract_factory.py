@@ -15,7 +15,6 @@ class AbstractFactory(ABC, BaseModel):
     def create_agency(self) -> AbstractAgency:
         """
         Create an instance of an AbstractAgency.
-
         Returns:
             AbstractAgency: An instance of AbstractAgency or its subclass.
         """
@@ -25,7 +24,6 @@ class AbstractFactory(ABC, BaseModel):
     def create_history(self) -> AbstractHistory:
         """
         Create an instance of an AbstractHistory.
-
         Returns:
             AbstractHistory: An instance of AbstractHistory or its subclass.
         """

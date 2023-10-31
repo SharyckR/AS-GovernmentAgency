@@ -1,8 +1,9 @@
-# from datetime import date
-from logic.flyweight_address import AddressFlyweightFactory, add_address_to_database
-# from logic.flyweight_agency import AgencyFlyweightFactory, add_agency_to_database
+from datetime import date
 from logic.address import address1, address2
-# from logic.agency_factory import agency1
+from logic.agency_factory import agency1
+from logic.flyweight_address import AddressFlyweightFactory, add_address_to_database
+from logic.flyweight_agency import AgencyFlyweightFactory
+from logic.flyweight_agency import add_agency_to_database
 
 if __name__ == "__main__":
     factory = AddressFlyweightFactory()
@@ -28,7 +29,7 @@ if __name__ == "__main__":
                                                     'Ville_State Ville_Country Land'], '. . . ')
 
     print('\n\n\n')
-    """factory = AgencyFlyweightFactory()
+    factory = AgencyFlyweightFactory()
     factory.assign_flyweights([
             ["965816", "52173", "Tis er ium", "3145975012", address2.__str__(), "5", "10", "2023", str(date.today())],
             ["819911", "82910", "Bom Spit", "3004689813", address2.__str__(), "9", "11", "2022", str(date.today())],
@@ -44,4 +45,4 @@ if __name__ == "__main__":
                            year=2023)
     print("\n")
     factory.list_flyweights()
-"""
+

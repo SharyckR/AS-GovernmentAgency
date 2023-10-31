@@ -6,8 +6,8 @@ from logic.abstract_history import AbstractHistory
 class VehicleHistory(AbstractHistory, BaseModel):
     """
     Class to represent vehicle history.
-
     Attributes:
+        id_history (int): The identifier for the vehicle history.
         dni_person (object): DNI of the person associated with the vehicle.
         licence (str) : Does the person have a license?.
         type_licence : Type of license of the person ( if they have one ).
@@ -15,7 +15,6 @@ class VehicleHistory(AbstractHistory, BaseModel):
         type_vehicle (str): Type of vehicle of the person ( if they have one ).
         description_vehicle (str): A description or additional information about the vehicle.
         plate_vehicle (str): The license plate number of the vehicle.
-
     Methods:
         __str__(): Returns a string representation of the VehicleHistory object.
         __eq__(other): Compares two VehicleHistory objects to check if they are equal.

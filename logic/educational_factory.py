@@ -10,7 +10,6 @@ from logic.educational_agency import EducationalAgency
 class EducationalFactory(AbstractFactory):
     """
     Concrete factory for creating educational agency and history objects.
-
     Methods:
         create_agency(agency: AgencyFactory = AgencyFactory(), education_history: EducationHistory = None,
                       academic_achievements: List[str] = None) -> AbstractAgency:
@@ -27,22 +26,19 @@ class EducationalFactory(AbstractFactory):
                       academic_achievements: List[str] = None) -> AbstractAgency:
         """
         Create an instance of an EducationalAgency.
-
         Args:
             agency (AgencyFactory): The agency associated with the educational agency.
             education_history (EducationHistory): The education history of the agency.
             academic_achievements (List[str]): List of academic achievements.
-
         Returns:
             AbstractAgency: An instance of EducationalAgency or its subclass.
         """
-        return EducationalAgency(username=agency.id_entity, agency=agency, education_history=education_history,
+        return EducationalAgency(username=str(agency.id_entity), agency=agency, education_history=education_history,
                                  academic_achievements=academic_achievements)
 
     def create_history(self, **data) -> AbstractHistory:
         """
         Create an instance of an EducationHistory.
-
         Args:
             data (dict): A dictionary containing the data for creating an EducationHistory.
 

@@ -36,20 +36,18 @@ class EducationalFactoryController:
     def add_educational_agency(self, agency: AgencyFactory = AgencyFactory(),
                                academic_achievements: List[str] = None):
         self.load_data_db()
-        print('Address: ', agency.address)
         if academic_achievements is None:
             academic_achievements = []
         educational_agency = self._educational_factory.create_agency(
             agency=agency, academic_achievements=academic_achievements)
-        educational_agency.username = agency.id_entity
+        print('....')
         if not any(ea[f'{list(ea.keys())[0]}']['agency']['id_entity'] == agency.id_entity
                    for ea in self._educational_agencies):
             self._educational_agencies.append(educational_agency.to_dict())
             print(f'{educational_agency.__class__.__name__} Added\n')
             EDUCATIONAL_AGENCY_DB.insert_one(educational_agency.to_dict())
             return educational_agency.to_dict()
-        else:
-            raise Exception(f'Agency with ID ENTITY: {agency.id_entity} already exist')
+        raise Exception(f'Agency with ID ENTITY: {agency.id_entity} already exist')
 
     def update_educational_agency(
             self, id_entity: int,  agency: AgencyFactory = AgencyFactory(), academic_achievements: List[str] = None):
@@ -78,8 +76,7 @@ class EducationalFactoryController:
             if '_id' in educational_history:
                 del educational_history['_id']
             return educational_history
-        else:
-            raise Exception(f'Educational History with ID HISTORY: {educational_history["id_history"]} already exist')
+        raise Exception(f'Educational History with ID HISTORY: {educational_history["id_history"]} already exist')
 
     def link_agency_with_history(self, id_educational_agency: int,
                                  education_history: EducationHistory = EducationHistory()):

@@ -7,8 +7,8 @@ from logic.abstract_history import AbstractHistory
 class MedicalHistory(AbstractHistory, BaseModel):
     """
      Class used to represent a Medical History
-
      Attributes:
+            id_history (int): The identifier for the medical history.
             dni_person (int): DNI of the person to whom the history refers.
             type_blood (char): Attribute that is used to save the blood type of people's medical history.
             pathologies (string): Save the pathologies that people suffer from.

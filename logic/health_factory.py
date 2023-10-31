@@ -30,7 +30,7 @@ class HealthFactory(AbstractFactory):
         Returns:
             AbstractAgency: An instance of HealthAgency or its subclass.
         """
-        return HealthAgency(username=agency.id_entity, agency=agency, medical_history=medical_history)
+        return HealthAgency(username=str(agency.id_entity), agency=agency, medical_history=medical_history)
 
     def create_history(self, **data) -> AbstractHistory:
         """

@@ -34,26 +34,24 @@ class LegalFactoryController:
     def add_legal_agency(self, agency: AgencyFactory = AgencyFactory()):
         self.load_data()
         legal_agency = self._legal_factory.create_agency(agency=agency)
-        dict_legal_agency = legal_agency.to_dict()
         if not any(le[f"{list(le.keys())[0]}"]["agency"]["id_entity"] == agency.id_entity for le in
                    self._legal_agencies):
-            self._legal_agencies.append(dict_legal_agency)
+            self._legal_agencies.append(legal_agency.to_dict())
             print(f"{legal_agency.__class__.__name__} Added\n")
-            LEGAL_AGENCY.insert_one(dict_legal_agency)
-            return dict_legal_agency
+            LEGAL_AGENCY.insert_one(legal_agency.to_dict())
+            return legal_agency.to_dict()
         raise Exception(f"Agency with ID ENTITY: {agency.id_entity} already exist")
 
     def update_legal_agency(self, id_entity, agency):
         self.load_data()
-        dict_agency = agency.to_dict()
         for le in self._legal_agencies:
             if le[f"{list(le.keys())[0]}"]["agency"]["id_entity"] == id_entity:
                 update_operation = UpdateOne({f"{id_entity}.agency.id_entity": agency.id_entity},
-                                             {"$set": {f"{id_entity}.agency": dict_agency}})
+                                             {"$set": {f"{id_entity}.agency": agency.to_dict()}})
                 LEGAL_AGENCY.bulk_write([update_operation])
-                le["Agency"] = dict_agency
+                le["Agency"] = agency.to_dict()
                 print(f"Agency with ID Entity: {agency.id_entity} updated")
-                return dict_agency
+                return agency.to_dict()
         raise Exception(f"Does not exist an agency with ID Entity : {id_entity}")
 
     def add_case_history(self, case_history: dict):
@@ -70,16 +68,15 @@ class LegalFactoryController:
 
     def link_legal_agency_with_history(self, id_legal_agency: int, case_history: CaseHistory = CaseHistory()):
         self.load_data()
-        dict_case_history = case_history.to_dict()
         for le in self._legal_agencies:
             if le[f"{list(le.keys())[0]}"]["agency"]["id_entity"] == id_legal_agency:
                 update_operation = UpdateOne(
                     {f"{id_legal_agency}.agency.id_entity": id_legal_agency},
-                    {"$set": {f"{id_legal_agency}.case_history": dict_case_history}})
-                le[f"{id_legal_agency}"]["case_history"] = dict_case_history
+                    {"$set": {f"{id_legal_agency}.case_history": case_history.to_dict()}})
+                le[f"{id_legal_agency}"]["case_history"] = case_history.to_dict()
                 LEGAL_AGENCY.bulk_write([update_operation])
                 print(f"Linked {case_history.__class__.__name__} with {id_legal_agency} of Legal Agency")
-                return dict_case_history
+                return case_history.to_dict()
         raise Exception(f"ID Entity: {id_legal_agency} not found.")
 
     def get_legal_agencies(self):

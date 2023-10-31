@@ -44,26 +44,24 @@ class TransportFactoryController:
     def add_transport_agency(self, agency: AgencyFactory):
         self.load_data()
         transport_agency = self._transport_factory.create_agency(agency=agency)
-        dict_transport_agency = transport_agency.to_dict()
         if not any(le[f"{list(le.keys())[0]}"]["agency"]["id_entity"] == agency.id_entity for le in
                    self._transport_agencies):
-            self._transport_agencies.append(dict_transport_agency)
+            self._transport_agencies.append(transport_agency.to_dict())
             print(f"{transport_agency.__class__.__name__} Added\n")
-            TRANSPORT_AGENCY.insert_one(dict_transport_agency)
-            return dict_transport_agency
+            TRANSPORT_AGENCY.insert_one(transport_agency.to_dict())
+            return transport_agency.to_dict()
         raise Exception(f"Agency with ID ENTITY: {agency.id_entity} already exist")
 
     def update_transport_agency(self, id_entity, agency):
         self.load_data()
-        dict_agency = agency.to_dict()
         for ta in self._transport_agencies:
             if ta[f"{list(ta.keys())[0]}"]["agency"]["id_entity"] == id_entity:
                 update_operation = UpdateOne({f"{id_entity}.agency.id_entity": agency.id_entity},
-                                             {"$set": {f"{id_entity}.agency": dict_agency}})
+                                             {"$set": {f"{id_entity}.agency": agency.to_dict()}})
                 TRANSPORT_AGENCY.bulk_write([update_operation])
-                ta["Agency"] = dict_agency
+                ta["Agency"] = agency.to_dict()
                 print(f"Agency with ID Entity: {agency.id_entity} updated")
-                return dict_agency
+                return agency.to_dict()
         raise Exception(f"Does not exist an agency with ID Entity : {id_entity}")
 
     def add_fine_history(self, fine_history: dict):
@@ -93,31 +91,29 @@ class TransportFactoryController:
     def link_transport_agency_with_fine_history(self, id_transport_agency: int,
                                                 fine_history: FineHistory = FineHistory()):
         self.load_data()
-        dict_fine_history = fine_history.to_dict()
         for ta in self._transport_agencies:
             if ta[f"{list(ta.keys())[0]}"]["agency"]["id_entity"] == id_transport_agency:
                 update_operation = UpdateOne(
                     {f"{id_transport_agency}.agency.id_entity": id_transport_agency},
-                    {"$set": {f"{id_transport_agency}.information_fine": dict_fine_history}})
-                ta[f"{id_transport_agency}"]["fine_history"] = dict_fine_history
+                    {"$set": {f"{id_transport_agency}.information_fine": fine_history.to_dict()}})
+                ta[f"{id_transport_agency}"]["fine_history"] = fine_history.to_dict()
                 TRANSPORT_AGENCY.bulk_write([update_operation])
                 print(f"Linked {fine_history.__class__.__name__} with {id_transport_agency} of Transport Agency")
-                return dict_fine_history
+                return fine_history.to_dict()
         raise Exception(f"ID Entity: {id_transport_agency} not found.")
 
     def link_transport_agency_with_vehicle_history(self, id_transport_agency: int,
                                                    vehicle_history: VehicleHistory = VehicleHistory()):
         self.load_data()
-        dict_vehicle_history = vehicle_history.to_dict()
         for ta in self._transport_agencies:
             if ta[f"{list(ta.keys())[0]}"]["agency"]["id_entity"] == id_transport_agency:
                 update_operation = UpdateOne(
                     {f"{id_transport_agency}.agency.id_entity": id_transport_agency},
-                    {"$set": {f"{id_transport_agency}.information_vehicle": dict_vehicle_history}})
-                ta[f"{id_transport_agency}"]["vehicle_history"] = dict_vehicle_history
+                    {"$set": {f"{id_transport_agency}.information_vehicle": vehicle_history.to_dict()}})
+                ta[f"{id_transport_agency}"]["vehicle_history"] = vehicle_history.to_dict()
                 TRANSPORT_AGENCY.bulk_write([update_operation])
                 print(f"Linked {vehicle_history.__class__.__name__} with {id_transport_agency} of Transport Agency")
-                return dict_vehicle_history
+                return vehicle_history.to_dict()
         raise Exception(f"ID Entity: {id_transport_agency} not found.")
 
     def get_transport_agencies(self):

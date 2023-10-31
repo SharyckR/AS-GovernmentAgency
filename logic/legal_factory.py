@@ -21,23 +21,19 @@ class LegalFactory(AbstractFactory):
                       legal_history: CaseHistory = CaseHistory()) -> AbstractAgency:
         """
         Create an instance of a LegalAgency.
-
         Args:
             agency (AgencyFactory): The agency associated with the legal agency.
             legal_history (CaseHistory): The legal history of the agency.
-
         Returns:
             AbstractAgency: An instance of LegalAgency or its subclass.
         """
-        return LegalAgency(username=agency.id_entity, agency=agency, legal_history=legal_history)
+        return LegalAgency(username=str(agency.id_entity), agency=agency, legal_history=legal_history)
 
     def create_history(self, **data) -> AbstractHistory:
         """
         Create an instance of an EducationHistory.
-
         Args:
             data (dict): A dictionary containing the data for creating an LegalHistory.
-
         Returns:
             AbstractHistory: An instance of EducationHistory or its subclass.
         """

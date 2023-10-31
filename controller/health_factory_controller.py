@@ -80,8 +80,7 @@ class HealthFactoryController:
                 )
                 ha['medical_history'] = health_history_dict
                 HEALTH_AGENCY_DB.bulk_write([update_operation])
-                print(f'Linked {health_history.__class__.__name__} with {id_health_agency} '
-                      f'of Health Agency')
+                print(f'Linked {health_history.__class__.__name__} with {id_health_agency} of Health Agency')
                 if '_id' in health_history_dict:
                     del health_history_dict['_id']
                 return health_history_dict

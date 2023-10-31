@@ -6,15 +6,14 @@ from logic.abstract_history import AbstractHistory
 class FineHistory(AbstractHistory, BaseModel):
     """
      Class used to represent a Fine History
-
      Attributes:
+          id_history (int): The identifier for the fine history.
             dni_person (int): DNI of the person to whom the history refers.
             fine (str): Has the person received a fine?
             type_fine (str): Type of the fine ( It depends on the answer, it will be mandatory or not ).
             description_fine (str): Description of the fine ( It depends on the answer, it will be mandatory or not ).
             paid (str): Has the person paid a fine? ( It depends on the answer, it will be mandatory or not ).
             mediator (str): Mediator for managing interactions.
-
         Methods:
             __str__(): Returns a string representation of a fine history.
             __eq__(other): Compares two objects fine history to check if they are equal.

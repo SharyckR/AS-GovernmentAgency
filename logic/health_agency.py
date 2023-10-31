@@ -5,16 +5,15 @@ from logic.agency_factory import AgencyFactory, agency1, agency2
 class HealthAgency(AgencyFactory):
     """
     Represents a health agency.
-
     Attributes:
         agency (object): The associated agency factory.
         medical_history (object): The medical history.
-
     Methods:
         __str__(): Returns a formatted string with health agency information.
         __eq__(other): Compares if two instances of HealthAgency are equal.
     """
     agency: AgencyFactory = AgencyFactory()
+    agency.entity.subtype = "Health Agency"
     medical_history: MedicalHistory = MedicalHistory()
 
     def to_dict(self):
@@ -26,10 +25,8 @@ class HealthAgency(AgencyFactory):
     def __eq__(self, other):
         """
         Compares if two instances of HealthAgency are equal.
-
         Args:
             other (HealthAgency): The other instance to compare.
-
         Returns:
             bool: True if both instances are equal, otherwise False.
         """

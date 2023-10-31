@@ -6,17 +6,16 @@ from logic.vehicle_history import *
 class TransportAgency(AgencyFactory):
     """
     Represents a transport agency.
-
     Attributes:
         agency (object): The associated agency factory.
         information_vehicle (object): Information about vehicles.
         information_fine (object): Information about fines.
-
     Methods:
         __str__(): Returns a formatted string with transport agency information.
         __eq__(other): Compares if two instances of TransportAgency are equal.
     """
     agency: AgencyFactory = AgencyFactory()
+    agency.entity.subtype = "Transport Agency"
     information_vehicle: VehicleHistory = VehicleHistory()
     information_fine: FineHistory = FineHistory()
 

@@ -8,7 +8,6 @@ from datetime import date
 class AgencyFactory(AbstractAgency, LegalEntity):
     """
      Class used to represent an Agency
-
      Attributes:
             id_entity (int): ID of the agency ( Used in the database ).
             nit (str): NIT of agency.
@@ -19,7 +18,6 @@ class AgencyFactory(AbstractAgency, LegalEntity):
             month (int): Month component for date_actualization.
             year (int): Year component for date_actualization.
             date_actualization (object): Date on which the data is updated or displayed.
-
         Methods:
             __str__(): Returns a string representation of an agency.
             __eq__(other): Compares two objects agency to check if they are equal.
@@ -42,7 +40,7 @@ class AgencyFactory(AbstractAgency, LegalEntity):
     def to_dict(self):
         return {
             'id_entity': self.id_entity,
-            'entity': self.entity.type,
+            'entity': self.entity.to_dict(),
             'nit': self.nit,
             'business_name': self.business_name,
             'contact': self.contact,
@@ -73,13 +71,11 @@ if __name__ == '__main__':
     # Prueba Agency class
 
     agency1 = AgencyFactory(
-        username=10290294, id_entity=965816, entity=LegalEntity(), nit=52173, business_name="Business Name",
+        username='10290294', id_entity=965816, entity=LegalEntity(), nit=52173, business_name="Business Name",
         contact="31459750", address=address2, day=5, month=10, year=2023)
-
     agency2 = AgencyFactory(
-        username=965816, id_entity=965816, entity=LegalEntity(), nit=52173, business_name="Business Name",
+        username='965816', id_entity=965816, entity=LegalEntity(), nit=52173, business_name="Business Name",
         contact="31459750", address=address2, day=5, month=10, year=2023)
-
     agency1_str = agency1.__str__()
     print(f"Agency 1 Information \n {agency1_str}")
     agency2_str = agency2.__str__()
@@ -88,9 +84,9 @@ if __name__ == '__main__':
     are_equal_agency = agency1.__eq__(agency2)
     print(f"Are equals ? \n {are_equal_agency} \n\n")
 
-agency1 = AgencyFactory(username=965816, id_entity=965816, entity=LegalEntity(), nit=52173, business_name="Tis er ium",
-                        contact="3145975012", address=address1, day=5, month=10, year=2023)
+agency1 = AgencyFactory(username='965816', id_entity=965816, entity=LegalEntity(), nit=52173,
+                        business_name="Tis er ium", contact="3145975012", address=address1, day=5, month=10, year=2023)
 
-agency2 = AgencyFactory(username=10290294, id_entity=10290294, entity=LegalEntity(), nit=4224,
+agency2 = AgencyFactory(username='10290294', id_entity=10290294, entity=LegalEntity(), nit=4224,
                         business_name="Business Name",
                         contact="31459750", address=address2, day=5, month=10, year=2023)

@@ -6,21 +6,22 @@ from logic.abstract_history import AbstractHistory
 
 class CaseHistory(AbstractHistory, BaseModel):
     """
-     Class used to represent a Medical History
-
-     Attributes:
-            dni_person (int): DNI of the person to whom the history refers.
-            case (str): Attribute that stores the case name
-            arrested (char): Has the person ever been arrested?
-            description_case (str): Type a description of the person's case
-            jurisdiction (str): Attribute that saves the jurisdiction of the case
-            date_arrested (datatime):Enter the date the person was arrested
-
-            mediator (object): Mediator for managing interactions.
-
-        Methods:
-            __str__(): Returns a string representation of a case history.
-            __eq__(other): Compares two objects case history to check if they are equal.
+    Class used to represent a Medical History.
+    Attributes:
+        id_history (int): The identifier for the case history.
+        dni_person (int): DNI of the person to whom the history refers.
+        case (str): The name of the case.
+        arrested (str): Indicates whether the person has ever been arrested ("Yes" or "No").
+        description_case (Union[str, None]): A description of the person's case, can be None.
+        jurisdiction (Union[str, None]): The jurisdiction of the case, can be None.
+        day (int): The day of the date the person was arrested.
+        month (int): The month of the date the person was arrested.
+        year (int): The year of the date the person was arrested.
+        date_arrested (date): The date the person was arrested.
+        mediator (Union[object, None]): Mediator for managing interactions, can be None.
+    Methods:
+        __str__(): Returns a string representation of a case history.
+        __eq__(other): Compares two case history objects to check if they are equal.
     """
     id_history: int = 1
     dni_person: int = 123456789
@@ -53,10 +54,7 @@ class CaseHistory(AbstractHistory, BaseModel):
         }
 
     def __eq__(self, other):
-        """ Returns bool of equality of history objects.
-        :returns: bool history
-        :rtype: bool
-        """
+        """Returns bool of equality of history objects."""
         if isinstance(other, CaseHistory):
             return (self.id_history == other.id_history and self.dni_person == other.dni_person and
                     self.case == other.case and self.arrested == other.arrested and
@@ -66,10 +64,7 @@ class CaseHistory(AbstractHistory, BaseModel):
         return False
 
     def __str__(self):
-        """ Returns str of case history.
-        :returns: string case history
-        :rtype: str
-        """
+        """Returns str of case history."""
         description_case_str = str(self.description_case) if self.description_case is not None else "None"
         jurisdiction_str = str(self.jurisdiction) if self.jurisdiction is not None else "None"
         day_int = int(self.day) if self.day is not None else "None"
@@ -80,7 +75,6 @@ class CaseHistory(AbstractHistory, BaseModel):
                 'Jurisdiction: {5}, Date arrested: {6} - {7} - {8}').format(
             self.id_history, self.dni_person, self.case, self.arrested, description_case_str, jurisdiction_str,
             year_int, month_int, day_int)
-
 
 if __name__ == '__main__':
     # Prueba Case History class
@@ -98,7 +92,7 @@ if __name__ == '__main__':
     print(f"Case History 2 Information \n {case_history2_str}")
 
     are_equal_case_history = case_history1.__eq__(case_history2)
-    print(f"Are equals ? \n {are_equal_case_history} \n\n")
+    print(f"Are they equal? \n {are_equal_case_history} \n\n")
 
 case_history1 = CaseHistory(id_history=13, dni_person=1043638720, case="Heist", arrested="Yes",
                             description_case="Stole a necklace", jurisdiction="Disciplinary", day=15, year=2021,

@@ -5,16 +5,15 @@ from logic.case_history import *
 class LegalAgency(AgencyFactory):
     """
     Represents a legal agency.
-
     Attributes:
         agency (object): The associated agency factory.
         case_history (object): The legal history.
-
     Methods:
         __str__(): Returns a formatted string with legal agency information.
         __eq__(other): Compares if two instances of LegalAgency are equal.
     """
     agency: AgencyFactory = AgencyFactory()
+    agency.entity.subtype = "Legal Agency"
     case_history: CaseHistory = CaseHistory()
 
     def to_dict(self):

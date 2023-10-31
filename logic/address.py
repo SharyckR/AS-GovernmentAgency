@@ -5,7 +5,6 @@ from pydantic import BaseModel
 class Address(BaseModel):
     """
     Class to represent an address.
-
     Attributes:
         street (str): Street name.
         number (int): Address number.
@@ -15,7 +14,6 @@ class Address(BaseModel):
         locality (str): City or locality.
         department (str): Department or state.
         country (str): Country.
-
     Methods:
         __str__(): Returns a string representation of the address.
         __eq__(other): Compares two addresses to check if they are equal.
@@ -59,7 +57,6 @@ class Address(BaseModel):
     def __eq__(self, other):
         """
         Compares two addresses to check if they are equal.
-
         Args:
             other (Address): Another address to compare.
 
@@ -87,7 +84,6 @@ if __name__ == '__main__':
     print(f"Address 1 Information \n {address1_str}")
     address2_str = address2.__str__()
     print(f"Address 2 Information \n {address2}")
-
     are_equal_address = address1.__eq__(address2)
     print(f"Are equals ? \n {are_equal_address} \n\n")
 

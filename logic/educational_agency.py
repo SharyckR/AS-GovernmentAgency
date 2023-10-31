@@ -6,17 +6,16 @@ from logic.education_history import EducationHistory, edu_history1, edu_history2
 class EducationalAgency(AgencyFactory):
     """
     Represents an educational agency.
-
     Attributes:
         agency (object): The associated agency.
         education_history (object): The education history.
         academic_achievements (List[str]): List of academic achievements.
-
     Methods:
         __str__(): Returns a formatted string with educational agency information.
         __eq__(other): Compares if two instances of EducationalAgency are equal.
     """
     agency: AgencyFactory = AgencyFactory()
+    agency.entity.subtype = 'Educational Agency'
     education_history: EducationHistory = EducationHistory()
     academic_achievements: List[str] = []
 
@@ -42,10 +41,8 @@ class EducationalAgency(AgencyFactory):
     def __eq__(self, other):
         """
         Compares if two instances of EducationalAgency are equal.
-
         Args:
             other (EducationalAgency): The other instance to compare.
-
         Returns:
             bool: True if both instances are equal, otherwise False.
         """

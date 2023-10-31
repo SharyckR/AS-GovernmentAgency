@@ -1,10 +1,10 @@
+from typing import Union
 from logic.entity import Entity
 
 
 class LegalEntity(Entity):
     """
     Represents a legal entity.
-
     Attributes:
         type (str): The type of the entity.
 
@@ -12,12 +12,15 @@ class LegalEntity(Entity):
         kind_of_entity(): Returns the type of the entity.
         __str__(): Returns a formatted string with entity information.
     """
-    type: str = 'Legal entity'
+    type: str = 'Legal Entity'
+    subtype: Union[str, None] = None
+
+    def to_dict(self):
+        return {f'type: {self.type}, subtype: {self.subtype}'}
 
     def kind_of_entity(self):
         """
         Returns the type of the entity.
-
         Returns:
             str: The type of the entity.
         """
@@ -28,4 +31,4 @@ class LegalEntity(Entity):
         :returns: string legal entity
         :rtype: str
         """
-        return 'Type: {0}'.format(self.type)
+        return 'Type: {!r}, Subtype: {!r}'.format(self.type, self.subtype)

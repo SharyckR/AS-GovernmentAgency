@@ -8,10 +8,9 @@ from logic.fine_history import FineHistory
 from logic.case_history import CaseHistory
 from logic.medical_history import MedicalHistory
 from logic.vehicle_history import VehicleHistory
-from routers.auth import USER
+from routers.auth import NATURAL
 load_dotenv()
 MY_CLIENT = MongoClient(getenv('MONGODB_CONNECTION_STRING'))
-
 ENTITY = MY_CLIENT['Entity']
 COL_PERSON = ENTITY['Person']
 HISTORIES = MY_CLIENT['Histories']
@@ -140,15 +139,12 @@ class Mediator:
     # Create Person
     def add_person(self, person: Person = Person()):
         self.load_data()
-        print('Collection: ', USER.find())
-        if USER.find_one(f'{person.dni_person}'):
+        if NATURAL.find_one({f"{person.dni_person}": {"$exists": True}}):
             if not any(p[f"{list(p.keys())[0]}"]["dni_person"] == person.dni_person for p in self._persons):
                 self._persons.append(person.to_dict())
                 person.mediator = self
                 print(f"Added person: {person.name}")
                 COL_PERSON.insert_one(person.to_dict())
-                print(person.to_dict())
-                print('HOLA')
                 return person.to_dict()
             raise Exception(f"Person with DNI {person.dni_person} already exists.")
         raise Exception(f"User with DNI {person.dni_person} does not exists.")

@@ -11,13 +11,11 @@ from logic.vehicle_history import VehicleHistory
 class TransportFactory(AbstractFactory):
     """
     Concrete factory for creating transport agency and history objects.
-
     Methods:
         create_agency(agency: AgencyFactory = AgencyFactory(),
                       information_vehicle: VehicleHistory = VehicleHistory(),
                       information_fine: FineHistory = FineHistory()) -> AbstractAgency:
             Create an instance of a TransportAgency.
-
         create_history(id_history: int = 1, dni_person: int = 123456789, licence: str = None, type_licence: Union[
         str] = None, vehicle: str = None, type_vehicle: Union[str] = "Car or Motorcycle", description_vehicle: Union[
         str] = None, plate_vehicle: Union[str] = None, mediator: Union[object, None] = None) -> Tuple[AbstractHistory,
@@ -29,7 +27,6 @@ class TransportFactory(AbstractFactory):
             information_fine: FineHistory = FineHistory()) -> AbstractAgency:
         """
         Create an instance of a TransportAgency.
-
         Args:
             agency (AgencyFactory): The agency associated with the transport agency.
             information_vehicle (VehicleHistory): Information about the vehicle history.
@@ -38,16 +35,14 @@ class TransportFactory(AbstractFactory):
         Returns:
             AbstractAgency: An instance of TransportAgency or its subclass.
         """
-        return TransportAgency(username=agency.id_entity, agency=agency, information_vehicle=information_vehicle,
+        return TransportAgency(username=str(agency.id_entity), agency=agency, information_vehicle=information_vehicle,
                                information_fine=information_fine)
 
     def create_history(self, **kwargs) -> Tuple[AbstractHistory, AbstractHistory]:
         """
         Create an instance of VehicleHistory and FineHistory as a tuple.
-
         Args:
             **kwargs: Keyword arguments for vehicle information and fine information.
-
         Returns:
             Tuple[AbstractHistory, AbstractHistory]: A tuple containing instances of VehicleHistory and FineHistory.
         """

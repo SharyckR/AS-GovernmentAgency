@@ -20,7 +20,6 @@ class AbstractAgency(ABC, BaseModel):
     def __eq__(self, other):
         """
         Compares two agency objects to check if they are equal.
-
         Args:
             other: Another agency object to compare.
 
