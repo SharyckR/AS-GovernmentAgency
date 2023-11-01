@@ -1,5 +1,6 @@
 from fastapi import APIRouter, HTTPException, status, Depends
-from typing import List, Union, Dict, Annotated
+from typing import List, Union, Dict
+from typing_extensions import Annotated
 from logic.agency_factory import AgencyFactory
 from controller.educational_factory_controller import EducationalFactoryController
 from logic.education_history import EducationHistory
