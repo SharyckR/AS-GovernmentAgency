@@ -9,10 +9,9 @@ class NaturalEntity(Entity):
     Methods:
         kind_of_entity(): Returns the type of the entity.
         __str__(): Returns a formatted string representing the natural entity.
-
     """
     type: str = 'Natural Entity'
-    subtype: str = 'Natural'
+    subtype: str = 'Person'
 
     def kind_of_entity(self):
         """
