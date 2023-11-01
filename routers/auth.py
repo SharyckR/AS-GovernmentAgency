@@ -1,4 +1,5 @@
-from typing import Union, Annotated, Optional
+from typing import Union, Optional
+from typing_extensions import Annotated
 from fastapi import Depends, HTTPException, status, APIRouter
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from pymongo import MongoClient

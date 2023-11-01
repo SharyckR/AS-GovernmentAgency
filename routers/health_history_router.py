@@ -1,6 +1,6 @@
-from typing import Dict, Annotated, Union
+from typing import Dict, Union
 from fastapi import APIRouter, HTTPException, status, Depends
-
+from typing_extensions import Annotated
 from logic.legal_entity import LegalEntity
 from logic.medical_history import MedicalHistory
 from logic.natural_entity import NaturalEntity

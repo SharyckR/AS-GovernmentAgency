@@ -1,4 +1,5 @@
-from typing import Dict, Annotated, Union
+from typing import Dict, Union
+from typing_extensions import Annotated
 from fastapi import APIRouter, HTTPException, status, Depends
 from controller.legal_factory_controller import LegalFactoryController
 from logic.agency_factory import AgencyFactory

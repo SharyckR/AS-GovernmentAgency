@@ -1,4 +1,5 @@
-from typing import Dict, Annotated
+from typing import Dict
+from typing_extensions import Annotated
 from fastapi import APIRouter, HTTPException, status, Depends
 from controller.mediator import *
 from logic.case_history import CaseHistory
