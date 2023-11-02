@@ -74,7 +74,7 @@ class TransportFactoryController:
                 del fine_history["_id"]
             return fine_history
         else:
-            raise Exception(f"Fine History with ID HISTORY: {fine_history["id_history"]} already exist")
+            raise Exception(f"Fine History with ID HISTORY: {fine_history['id_history']} already exist")
 
     def add_vehicle_history(self, vehicle_history: dict):
         self.load_data()
