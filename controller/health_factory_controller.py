@@ -66,7 +66,7 @@ class HealthFactoryController:
                 del medical_history['_id']
             return medical_history
         else:
-            raise Exception(f'Medical History with ID HISTORY: {medical_history["id_history"]} already exist')
+            raise Exception(f'Medical History with ID HISTORY: {medical_history['id_history']} already exist')
 
     def link_agency_with_history(self, id_health_agency: int,
                                  health_history: MedicalHistory = MedicalHistory()):

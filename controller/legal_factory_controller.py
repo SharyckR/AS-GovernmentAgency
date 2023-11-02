@@ -64,7 +64,7 @@ class LegalFactoryController:
                 del case_history["_id"]
             return case_history
         else:
-            raise Exception(f"Case History with ID HISTORY: {case_history["id_history"]} already exist")
+            raise Exception(f"Case History with ID HISTORY: {case_history['id_history']} already exist")
 
     def link_legal_agency_with_history(self, id_legal_agency: int, case_history: CaseHistory = CaseHistory()):
         self.load_data()
