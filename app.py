@@ -2,7 +2,14 @@ from fastapi import FastAPI
 from routers import (educational_agency_router, health_agency_router, legal_agency_router, person_router,
                      transport_agency_router, educational_history_router, health_history_router, case_history_router,
                      fine_history_router, vehicle_history_router, auth)
+from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
+origin = ['http://localhost:3000']
+app.add_middleware(CORSMiddleware,
+                   allow_origins=origin,
+                   # allow_credentials=True,
+                   allow_methods=['*'],
+                   allow_headers=['*'])
 app.include_router(educational_agency_router.router)
 app.include_router(health_agency_router.router)
 app.include_router(legal_agency_router.router)
