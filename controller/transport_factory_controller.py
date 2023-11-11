@@ -86,7 +86,7 @@ class TransportFactoryController:
                 del vehicle_history["_id"]
             return vehicle_history
         else:
-            raise Exception(f"Vehicle History with ID HISTORY: {vehicle_history["id_history"]} already exist")
+            raise Exception(f"Vehicle History with ID HISTORY: {vehicle_history['id_history']} already exist")
 
     def link_transport_agency_with_fine_history(self, id_transport_agency: int,
                                                 fine_history: FineHistory = FineHistory()):
