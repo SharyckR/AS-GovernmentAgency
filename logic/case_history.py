@@ -46,15 +46,15 @@ class CaseHistory(AbstractHistory, BaseModel):
         lawyer_str = str(self.lawyer) if self.lawyer is not None else "None"
 
         return {
-            "id_history": self.id_history,
-            "dni_person": self.dni_person,
-            "case": self.case,
-            "arrested": self.arrested,
-            "description_case": description_case_str,
-            "jurisdiction": jurisdiction_str,
-            "date_arrested": str(self.date_arrested),
-            "lawyer": lawyer_str
-        }
+            str(self.dni_person): {
+                "id_history": self.id_history,
+                "case": self.case,
+                "arrested": self.arrested,
+                "description_case": description_case_str,
+                "jurisdiction": jurisdiction_str,
+                "date_arrested": str(self.date_arrested),
+                "lawyer": lawyer_str
+            }}
 
     def __eq__(self, other):
         """ Returns bool of equality of history objects.

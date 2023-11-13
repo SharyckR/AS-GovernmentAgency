@@ -3,7 +3,7 @@ from logic.medical_history import MedicalHistory, medical_history1
 
 
 class TestMedicalHistory(unittest.TestCase):
-    data = {"id_history": 13, "dni_person": 1043638720, "type_blood": "O+", "pathologies": "None",
+    data = {"id_history": 13, "dni_person": 1043638720, "type_blood": "O+", "pathologies": None,
             "description_treatment": "Wound healing",
             "doctor_charge": "Kevin Rodriguez", "day": 5, "month": 10, "year": 2023}
     medical_history = MedicalHistory(**data)
@@ -12,13 +12,14 @@ class TestMedicalHistory(unittest.TestCase):
         self.assertIsInstance(self.medical_history, MedicalHistory, 'It\'s a instance')
 
     def test_to_dict(self):
-        expected = {'date_treatment': '2023-10-05',
-                    'description_treatment': 'Wound healing',
-                    'dni_person': 1043638720,
-                    'doctor_charge': 'Kevin Rodriguez',
-                    'id_history': 13,
-                    'pathologies': 'None',
-                    'type_blood': 'O+'}
+        expected = {
+            "1043638720": {
+                'date_treatment': '2023-10-05',
+                'description_treatment': 'Wound healing',
+                'doctor_charge': 'Kevin Rodriguez',
+                'id_history': 13,
+                'pathologies': None,
+                'type_blood': 'O+'}}
         self.assertEqual(expected, self.medical_history.to_dict(), 'They are equals!')
 
     def test__eq__(self):

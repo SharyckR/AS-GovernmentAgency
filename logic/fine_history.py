@@ -36,12 +36,12 @@ class FineHistory(AbstractHistory, BaseModel):
         description_fine_str = str(self.description_fine) if self.description_fine is not None else "None"
         paid_str = str(self.paid) if self.paid is not None else "None"
         return {
-            "id_history": self.id_history,
-            "dni_person": self.dni_person,
-            "fine": fine_str,
-            "type_fine": type_fine_str,
-            "description_fine": description_fine_str,
-            "paid": paid_str
+            str(self.dni_person): {
+                "id_history": self.id_history,
+                "fine": fine_str,
+                "type_fine": type_fine_str,
+                "description_fine": description_fine_str,
+                "paid": paid_str}
         }
 
     def __eq__(self, other):
@@ -68,7 +68,7 @@ class FineHistory(AbstractHistory, BaseModel):
 
         return ('ID History: {!r}, Dni: {!r}, Has the person received a fine?: {!r}, Type of the fine: {!r}, '
                 'Description of the fine: {!r}, Has the person paid a fine?: {!r}').format(
-                self.id_history, self.dni_person, fine_str, type_fine_str, description_fine_str, paid_str)
+            self.id_history, self.dni_person, fine_str, type_fine_str, description_fine_str, paid_str)
 
 
 if __name__ == '__main__':

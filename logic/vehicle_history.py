@@ -48,18 +48,18 @@ class VehicleHistory(AbstractHistory, BaseModel):
         plate_vehicle = str(self.plate_vehicle) if self.plate_vehicle is not None else "None"
         insurance_int = int(self.insurance) if self.insurance is not None else "None"
         return {
-            "id_history": self.id_history,
-            "dni_person": self.dni_person,
-            "licence": self.licence,
-            "number_licence": number_licence_int,
-            "type_licence": type_licence_str,
-            "expedition_date": expedition_date_str,
-            "expiration_date": expiration_date_str,
-            "vehicle": self.vehicle,
-            "type_vehicle": type_vehicle_str,
-            "description_vehicle": description_vehicle_str,
-            "plate_vehicle": plate_vehicle,
-            "insurance": insurance_int
+            str(self.dni_person): {
+                "id_history": self.id_history,
+                "licence": self.licence,
+                "number_licence": number_licence_int,
+                "type_licence": type_licence_str,
+                "expedition_date": expedition_date_str,
+                "expiration_date": expiration_date_str,
+                "vehicle": self.vehicle,
+                "type_vehicle": type_vehicle_str,
+                "description_vehicle": description_vehicle_str,
+                "plate_vehicle": plate_vehicle,
+                "insurance": insurance_int}
         }
 
     def __str__(self) -> str:

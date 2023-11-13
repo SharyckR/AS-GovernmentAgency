@@ -10,13 +10,13 @@ class TestFineHistory(unittest.TestCase):
         self.assertIsInstance(self.fine_history, FineHistory, 'It is an instance!')
 
     def test_to_dict(self):
-        expected_dict = {'description_fine': 'The person was going more than 100k/h',
-                         'dni_person': 1043638720,
-                         'fine': 'Yes',
-                         'id_history': 14,
-                         'paid': 'No',
-                         'type_fine': 'Fine for high speed'}
-        self.assertEqual(expected_dict, self.fine_history.to_dict(), 'They are equals!')
+        expected_dict = {"1043638720": {
+            'description_fine': 'The person was going more than 100k/h',
+            'fine': 'Yes',
+            'id_history': 14,
+            'paid': 'No',
+            'type_fine': 'Fine for high speed'}}
+        self.assertEqual(self.fine_history.to_dict(), expected_dict, 'They are equals!')
 
     def test__str__(self):
         expected_str = ("ID History: 14, Dni: 1043638720, Has the person received a fine?: 'Yes', "

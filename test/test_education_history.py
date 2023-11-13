@@ -13,23 +13,24 @@ class TestEducationHistory(unittest.TestCase):
         self.assertIsInstance(self.edu_history, EducationHistory, 'It\'s instance')
 
     def test_to_dict(self) -> None:
-        self.assertEqual(self.edu_history.to_dict(), {
-            "id_history": 10,
-            "dni_person": 1412414,
-            "education": 'Bachiller',
-            "name_institution": 'Sena',
-            "location": {
-                "street": '123 Main St',
-                "number": 5,
-                "apartment": 'Apt 3B',
-                "postal_code": '1010',
-                "locality": 'City Ville',
-                "department": 'State Ville',
-                "country": 'Country Land'
-            },
-            "title_obtained": 'Engineering',
-            "date_graduation": '1980-12-15'
-        }, 'They are equals')
+        expected = {
+            "1412414": {
+                "id_history": 10,
+                "education": 'Bachiller',
+                "name_institution": 'Sena',
+                "location": {
+                    "street": '123 Main St',
+                    "number": 5,
+                    "apartment": 'Apt 3B',
+                    "postal_code": '1010',
+                    "locality": 'City Ville',
+                    "department": 'State Ville',
+                    "country": 'Country Land'
+                },
+                "title_obtained": 'Engineering',
+                "date_graduation": '1980-12-15'
+            }}
+        self.assertEqual(self.edu_history.to_dict(), expected, 'They are equals')
 
     def test__eq__(self) -> None:
         self.assertFalse(self.edu_history.__eq__(edu_history1), 'The Educational histories aren\'t equals')

@@ -21,16 +21,17 @@ class TestHealthAgency(unittest.TestCase):
                                                'business_name': 'Tis er ium',
                                                'contact': '3145975012',
                                                'date_actualization': '2023-10-05',
-                                               'entity': 'Legal entity',
+                                               'entity': {'type: Legal Entity, subtype: None'},
                                                'id_entity': 965816,
                                                'nit': 52173},
-                                    'medical_history': {'date_treatment': '2023-10-05',
-                                                        'description_treatment': 'Wound healing',
-                                                        'dni_person': 1043638720,
-                                                        'doctor_charge': 'Kevin Rodriguez',
-                                                        'id_history': 13,
-                                                        'pathologies': 'None',
-                                                        'type_blood': 'O+'}}}
+                                    'medical_history': {'1043638720': {'date_treatment': '2023-10-05',
+                                                                       'description_treatment': 'Wound '
+                                                                                                'healing',
+                                                                       'doctor_charge': 'Kevin '
+                                                                                        'Rodriguez',
+                                                                       'id_history': 13,
+                                                                       'pathologies': None,
+                                                                       'type_blood': 'O+'}}}}
         self.assertEqual(expected_dict, self.health_agency.to_dict(), 'They are equals!')
 
     def test__eq__(self):

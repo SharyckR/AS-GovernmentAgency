@@ -9,15 +9,15 @@ class TestCaseHistory(unittest.TestCase):
 
     def test_to_dict(self):
         expected_dict = {
-            "id_history": 13,
-            "dni_person": 1043638720,
-            "case": "Heist",
-            "arrested": "Yes",
-            "description_case": "Stole a necklace",
-            "jurisdiction": "Disciplinary",
-            "date_arrested": "2021-05-15",
-            "lawyer": "Cristian Arroyo"
-        }
+            "1043638720": {
+                "id_history": 13,
+                "case": "Heist",
+                "arrested": "Yes",
+                "description_case": "Stole a necklace",
+                "jurisdiction": "Disciplinary",
+                "date_arrested": "2021-05-15",
+                "lawyer": "Cristian Arroyo"
+            }}
         self.assertEqual(expected_dict, case_history1.to_dict(), 'They are equals!')
 
     def test__str__(self):

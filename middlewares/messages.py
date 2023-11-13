@@ -3,6 +3,7 @@ import smtplib
 import ssl
 from email.message import EmailMessage
 import re
+from mailjet_rest import Client
 
 
 def is_valid_email(email):

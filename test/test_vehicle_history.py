@@ -12,19 +12,18 @@ class TestVehicleHistory(unittest.TestCase):
         self.assertIsInstance(vehicle_history1, VehicleHistory, 'It is an instance!')
 
     def test_to_dict(self):
-        expected_dict = {"id_history": 13,
-                         "dni_person": 1043638720,
-                         "licence": "Yes",
-                         "number_licence": 123456,
-                         "type_licence": "A2",
-                         "expedition_date": "2020-05-11",
-                         "expiration_date": "2023-05-11",
-                         "vehicle": "Yes",
-                         "type_vehicle": "Car",
-                         "description_vehicle": "Mazda2",
-                         "plate_vehicle": "BJU-521",
-                         "insurance": 2020}
-        self.assertEqual(expected_dict, vehicle_history1.to_dict(), 'They are equals!')
+        expected_dict = {"1043638720": {"id_history": 13,
+                                        "licence": "Yes",
+                                        "number_licence": 123456,
+                                        "type_licence": "A2",
+                                        "expedition_date": "2020-05-11",
+                                        "expiration_date": "2023-05-11",
+                                        "vehicle": "Yes",
+                                        "type_vehicle": "Car",
+                                        "description_vehicle": "Mazda2",
+                                        "plate_vehicle": "BJU-521",
+                                        "insurance": 2020}}
+        self.assertEqual(vehicle_history1.to_dict(), expected_dict, 'They are equals!')
 
     def test__str__(self):
         expected_str = ("ID History: 13 Dni: 1043638720, Does the person have a license?: 'Yes', "

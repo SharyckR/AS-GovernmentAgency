@@ -46,14 +46,14 @@ class EducationHistory(AbstractHistory, BaseModel):
         name_institution_str = str(self.name_institution) if self.name_institution is not None else "None"
         title_obtained_str = str(self.title_obtained) if self.title_obtained is not None else "None"
         return {
-            "id_history": self.id_history,
-            "dni_person": self.dni_person,
-            "education": education_str,
-            "name_institution": name_institution_str,
-            "location": self.location.to_dict(),
-            "title_obtained": title_obtained_str,
-            "date_graduation": str(self.date_graduation)
-        }
+            str(self.dni_person): {
+                "id_history": self.id_history,
+                "education": education_str,
+                "name_institution": name_institution_str,
+                "location": self.location.to_dict(),
+                "title_obtained": title_obtained_str,
+                "date_graduation": str(self.date_graduation)
+            }}
 
     def __eq__(self, other):
         """ Returns bool of equality of history objects.
@@ -81,10 +81,10 @@ class EducationHistory(AbstractHistory, BaseModel):
         month_int = int(self.month) if self.month is not None else "None"
         year_int = int(self.year) if self.year is not None else "None"
 
-        return ('ID History: {!r}, DNI Person: {!r}, Level of Education: {!r}, Institution Name: {!r}, Location: {!r}, ' 
+        return ('ID History: {!r}, DNI Person: {!r}, Level of Education: {!r}, Institution Name: {!r}, Location: {!r}, '
                 'Title Obtained: {!r}, Date Graduation: {!r} - {!r} - {!r}').format(
-                self.id_history, self.dni_person, education_str, name_institution_str, location_str,
-                title_obtained_str, day_int, month_int, year_int)
+            self.id_history, self.dni_person, education_str, name_institution_str, location_str,
+            title_obtained_str, day_int, month_int, year_int)
 
 
 if __name__ == '__main__':
