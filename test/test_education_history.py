@@ -13,23 +13,19 @@ class TestEducationHistory(unittest.TestCase):
         self.assertIsInstance(self.edu_history, EducationHistory, 'It\'s instance')
 
     def test_to_dict(self) -> None:
-        expected = {
-            "1412414": {
-                "id_history": 10,
-                "education": 'Bachiller',
-                "name_institution": 'Sena',
-                "location": {
-                    "street": '123 Main St',
-                    "number": 5,
-                    "apartment": 'Apt 3B',
-                    "postal_code": '1010',
-                    "locality": 'City Ville',
-                    "department": 'State Ville',
-                    "country": 'Country Land'
-                },
-                "title_obtained": 'Engineering',
-                "date_graduation": '1980-12-15'
-            }}
+        expected = {'1412414': {'academic_achievements': 'None',
+                                'date_graduation': '1980-12-15',
+                                'education': 'Bachiller',
+                                'id_history': 10,
+                                'location': {'apartment': 'Apt 3B',
+                                             'country': 'Country Land',
+                                             'department': 'State Ville',
+                                             'locality': 'City Ville',
+                                             'number': 5,
+                                             'postal_code': '1010',
+                                             'street': '123 Main St'},
+                                'name_institution': 'Sena',
+                                'title_obtained': 'Engineering'}}
         self.assertEqual(self.edu_history.to_dict(), expected, 'They are equals')
 
     def test__eq__(self) -> None:
@@ -40,8 +36,9 @@ class TestEducationHistory(unittest.TestCase):
                     'Institution Name: \'Sena\', Location: "(Street: \'123 Main St\', Number: 5, '
                     "Apartment: 'Apt 3B', Postal Code: '1010', Locality: 'City Ville', "
                     'Department: \'Apt 3B\', Country: \'Country Land\')", Title Obtained: '
-                    "'Engineering', Date Graduation: 15 - 12 - 1980")
-        self.assertEqual(expected, self.edu_history.__str__(), 'They are equals')
+                    "'Engineering', Academic Achievements: 'None', Date Graduation: 15 - 12 - "
+                    '1980\n')
+        self.assertEqual(self.edu_history.__str__(), expected, 'They are equals')
 
 
 if __name__ == '__main__':

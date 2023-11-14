@@ -74,7 +74,7 @@ class MedicalHistory(AbstractHistory, BaseModel):
         pathologies_str = str(self.pathologies) if self.pathologies is not None else "None"
 
         return ('ID History: {!r} DNI Person: {!r}, Type blood: {!r}, Pathologies: {!r}, Description treatment: {!r}, '
-                'Doctor charge: {!r}, Date treatment: {!r} - {!r} - {!r}').format(
+                'Doctor charge: {!r}, Date treatment: {!r} - {!r} - {!r}\n').format(
             self.id_history, self.dni_person, self.type_blood, pathologies_str, self.description_treatment,
             self.doctor_charge, self.year, self.month, self.day)
 

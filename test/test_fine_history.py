@@ -21,7 +21,7 @@ class TestFineHistory(unittest.TestCase):
     def test__str__(self):
         expected_str = ("ID History: 14, Dni: 1043638720, Has the person received a fine?: 'Yes', "
                         "Type of the fine: 'Fine for high speed', Description of the fine: 'The "
-                        "person was going more than 100k/h', Has the person paid a fine?: 'No'")
+                        "person was going more than 100k/h', Has the person paid a fine?: 'No'\n")
         self.assertEqual(expected_str, str(self.fine_history), 'They are equals!')
 
     def test__eq__(self):

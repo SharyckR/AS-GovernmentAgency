@@ -43,10 +43,10 @@ class TransportAgency(AgencyFactory):
         """
         information_vehicles = information_fines = ''
         for information_vehicle in self.information_vehicles:
-            information_vehicles += information_vehicle.__str__()
+            information_vehicles += information_vehicle.__str__() + ", "
         for information_fine in self.information_fines:
-            information_fines += information_fine.__str__()
-        return 'Agency: {0}, Information Vehicle: {1}, Information Fine: {2}'.format(
+            information_fines += information_fine.__str__() + ", "
+        return 'Agency: {0}, Information Vehicle: {1}, Information Fine: {2}\n'.format(
             self.agency, information_vehicles, information_fines)
 
     def __eq__(self, other):

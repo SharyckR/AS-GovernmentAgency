@@ -5,7 +5,7 @@ from logic.medical_history import medical_history1
 
 
 class TestHealthAgency(unittest.TestCase):
-    health_agency = HealthAgency(agency=agency1, medical_history=medical_history1)
+    health_agency = HealthAgency(agency=agency1, medical_histories=[medical_history1])
 
     def test_instance(self):
         self.assertIsInstance(self.health_agency, HealthAgency)
@@ -24,14 +24,14 @@ class TestHealthAgency(unittest.TestCase):
                                                'entity': {'type: Legal Entity, subtype: None'},
                                                'id_entity': 965816,
                                                'nit': 52173},
-                                    'medical_history': {'1043638720': {'date_treatment': '2023-10-05',
-                                                                       'description_treatment': 'Wound '
-                                                                                                'healing',
-                                                                       'doctor_charge': 'Kevin '
-                                                                                        'Rodriguez',
-                                                                       'id_history': 13,
-                                                                       'pathologies': None,
-                                                                       'type_blood': 'O+'}}}}
+                                    'medical_histories': [{'1043638720': {'date_treatment': '2023-10-05',
+                                                                          'description_treatment': 'Wound '
+                                                                                                   'healing',
+                                                                          'doctor_charge': 'Kevin '
+                                                                                           'Rodriguez',
+                                                                          'id_history': 13,
+                                                                          'pathologies': None,
+                                                                          'type_blood': 'O+'}}]}}
         self.assertEqual(expected_dict, self.health_agency.to_dict(), 'They are equals!')
 
     def test__eq__(self):

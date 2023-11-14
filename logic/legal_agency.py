@@ -36,7 +36,7 @@ class LegalAgency(AgencyFactory):
         case_histories = ''
         for case_history in self.case_histories:
             case_histories += case_history.__str__() + ", "
-        return 'Agency: {0}, Case Histories: {1}'.format(self.agency, case_histories)
+        return 'Agency: {0}, Case Histories: {1}\n'.format(self.agency, case_histories)
 
     def __eq__(self, other):
         """
@@ -63,5 +63,5 @@ if __name__ == '__main__':
     are_equal_legal_agency = legal1.__eq__(legal2)
     print(f"Are equals ? \n {are_equal_legal_agency} \n\n")
 
-legal1 = LegalAgency(agency=agency1, case_history=case_history1)
-legal2 = LegalAgency(agency=agency2, case_history=case_history2)
+legal1 = LegalAgency(agency=agency1, case_histories=[case_history1])
+legal2 = LegalAgency(agency=agency2, case_histories=[case_history2])

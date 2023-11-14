@@ -88,7 +88,7 @@ class EducationHistory(AbstractHistory, BaseModel):
         year_int = int(self.year) if self.year is not None else "None"
 
         return ('ID History: {!r}, DNI Person: {!r}, Level of Education: {!r}, Institution Name: {!r}, Location: {!r}, '
-                'Title Obtained: {!r}, Academic Achievements: {!r}, Date Graduation: {!r} - {!r} - {!r}').format(
+                'Title Obtained: {!r}, Academic Achievements: {!r}, Date Graduation: {!r} - {!r} - {!r}\n').format(
             self.id_history, self.dni_person, education_str, name_institution_str, location_str,
             title_obtained_str, academic_achievements_str, day_int, month_int, year_int)
 

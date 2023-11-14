@@ -28,7 +28,7 @@ class TestMedicalHistory(unittest.TestCase):
     def test__str__(self):
         expected = ("ID History: 13 DNI Person: 1043638720, Type blood: 'O+', Pathologies: "
                     "'None', Description treatment: 'Wound healing', Doctor charge: 'Kevin "
-                    "Rodriguez', Date treatment: 2023 - 10 - 5")
+                    "Rodriguez', Date treatment: 2023 - 10 - 5\n")
         self.assertEqual(expected, self.medical_history.__str__(), 'They are equals!')
 
 

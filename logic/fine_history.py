@@ -67,7 +67,7 @@ class FineHistory(AbstractHistory, BaseModel):
         paid_str = str(self.paid) if self.paid is not None else "None"
 
         return ('ID History: {!r}, Dni: {!r}, Has the person received a fine?: {!r}, Type of the fine: {!r}, '
-                'Description of the fine: {!r}, Has the person paid a fine?: {!r}').format(
+                'Description of the fine: {!r}, Has the person paid a fine?: {!r}\n').format(
             self.id_history, self.dni_person, fine_str, type_fine_str, description_fine_str, paid_str)
 
 

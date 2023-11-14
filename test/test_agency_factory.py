@@ -25,8 +25,8 @@ class TestAgencyFactory(unittest.TestCase):
                     "Business Name, Contact (Phone or E-mail): 31459750, Address: (Street: 'The "
                     "cross', Number: 10, Apartment: 'Apt 5C', Postal Code: '1010', Locality: "
                     "'Aqueous', Department: 'Apt 5C', Country: 'Colombia'), Date Actualization: 5 "
-                    '- 10 - 2023')
-        self.assertEqual(expected, self.agency_factory.__str__(), 'They are equals!')
+                    '- 10 - 2023\n')
+        self.assertEqual(self.agency_factory.__str__(), expected, 'They are equals!')
 
     def test_agency_to_dict(self):
         expected_dict = {'address': {'apartment': 'Apt 5C',

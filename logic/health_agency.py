@@ -36,7 +36,7 @@ class HealthAgency(AgencyFactory):
             bool: True if both instances are equal, otherwise False.
         """
         if isinstance(other, HealthAgency):
-            return self.agency.__eq__(other.agency) and self.medical_history.__eq__(other.medical_history)
+            return self.agency.__eq__(other.agency) and self.medical_histories.__eq__(other.medical_histories)
         else:
             return False
 
@@ -46,13 +46,13 @@ class HealthAgency(AgencyFactory):
         :returns: string health agency information
         :rtype: str
         """
-        return 'Agency information: {0}, Medical History: {1}'.format(self.agency.__str__(),
-                                                                      self.medical_histories.__str__())
+        return 'Agency information: {0}, Medical History: {1}\n'.format(self.agency.__str__(),
+                                                                        self.medical_histories.__str__())
 
 
 if __name__ == '__main__':
-    health1 = HealthAgency(agency=agency1, medical_history=medical_history1)
-    health2 = HealthAgency(agency=agency2, medical_history=medical_history2)
+    health1 = HealthAgency(agency=agency1, medical_histories=[medical_history1])
+    health2 = HealthAgency(agency=agency2, medical_histories=[medical_history2])
 
     print(f"Medical Agency 1 Information \n {health1}")
     print(f"Medical Agency 2 Information \n {health2}")
@@ -60,5 +60,5 @@ if __name__ == '__main__':
     are_equal_medical_agency = health1.__eq__(health2)
     print(f"Are equals ? \n {are_equal_medical_agency} \n\n")
 
-health1 = HealthAgency(agency=agency1, medical_history=medical_history1)
-health2 = HealthAgency(agency=agency2, medical_history=medical_history2)
+health1 = HealthAgency(agency=agency1, medical_histories=[medical_history1])
+health2 = HealthAgency(agency=agency2, medical_histories=[medical_history2])

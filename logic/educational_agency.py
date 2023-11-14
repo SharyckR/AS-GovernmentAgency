@@ -22,9 +22,9 @@ class EducationalAgency(AgencyFactory):
         for educational_history in self.education_histories:
             educational_histories.append(educational_history.to_dict())
         return {f"{self.agency.id_entity}": {
-                    "agency": self.agency.to_dict(),
-                    "education_history": educational_histories
-                    }
+            "agency": self.agency.to_dict(),
+            "education_histories": educational_histories
+        }
         }
 
     def __str__(self):
@@ -35,8 +35,8 @@ class EducationalAgency(AgencyFactory):
         """
         educational_histories = ''
         for educational_history in self.education_histories:
-            educational_histories += educational_history.__str__()
-        return 'Agency: {0}, Education History: {1}'.format(
+            educational_histories += educational_history.__str__() + ", "
+        return 'Agency: {0}, Education History: {1}\n'.format(
             self.agency,
             educational_histories,
         )
@@ -52,17 +52,14 @@ class EducationalAgency(AgencyFactory):
         if isinstance(other, EducationalAgency):
             return (
                     self.agency.__eq__(other.agency) and
-                    self.education_history.__eq__(other.education_history) and
-                    self.academic_achievements == other.academic_achievements
+                    self.education_histories.__eq__(other.education_histories)
             )
         return False
 
 
 if __name__ == '__main__':
-    educational1 = EducationalAgency(agency=agency1, education_history=edu_history1,
-                                     academic_achievements=['Good Student, Best in maths'])
-    educational2 = EducationalAgency(agency=agency2, education_history=edu_history2,
-                                     academic_achievements=['Best in sports, More speed'])
+    educational1 = EducationalAgency(agency=agency1, education_histories=[edu_history1])
+    educational2 = EducationalAgency(agency=agency2, education_histories=[edu_history2])
 
     print(f"Educational Agency 1 Information \n {educational1}")
     print(f"Educational Agency 2 Information \n {educational2}")
@@ -70,7 +67,5 @@ if __name__ == '__main__':
     are_equal_medical_agency = educational1.__eq__(educational2)
     print(f"Are equals ? \n {are_equal_medical_agency} \n\n")
 
-educational1 = EducationalAgency(agency=agency1, education_history=edu_history1,
-                                 academic_achievements=['Good Students', 'Best in maths'])
-educational2 = EducationalAgency(agency=agency2, education_history=edu_history2,
-                                 academic_achievements=['Best in sports', 'More speed'])
+educational1 = EducationalAgency(agency=agency1, education_histories=[edu_history1])
+educational2 = EducationalAgency(agency=agency2, education_histories=[edu_history2])

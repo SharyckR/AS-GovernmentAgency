@@ -61,10 +61,11 @@ class AgencyFactory(AbstractAgency, LegalEntity):
         :rtype: str
         """
         return ('Id Agency: {0}, Entity: Type: {1}, Nit: {2}, Business Name: {3}, Contact (Phone or E-mail): {4}, '
-                'Address: {5}, Date Actualization: {6} - {7} - {8}').format(self.id_entity, self.entity.type,
-                                                                            self.nit, self.business_name, self.contact,
-                                                                            self.address.__str__(), self.day,
-                                                                            self.month, self.year)
+                'Address: {5}, Date Actualization: {6} - {7} - {8}\n').format(self.id_entity, self.entity.type,
+                                                                              self.nit, self.business_name,
+                                                                              self.contact,
+                                                                              self.address.__str__(), self.day,
+                                                                              self.month, self.year)
 
 
 if __name__ == '__main__':

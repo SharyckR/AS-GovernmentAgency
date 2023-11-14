@@ -80,7 +80,7 @@ class VehicleHistory(AbstractHistory, BaseModel):
         return ('ID History: {!r} Dni: {!r}, Does the person have a license?: {!r}, Number Licence: {!r},'
                 ' Type of license: {!r}, Expedition Date: {!r}, Expiration Date: {!r},'
                 ' Does the person have a vehicle?: {!r}, Type of vehicle: {!r}, Description of the Vehicle: {!r},'
-                ' Plate of the vehicle: {!r}, Insurance: {!r}').format(
+                ' Plate of the vehicle: {!r}, Insurance: {!r}\n').format(
                 self.id_history, self.dni_person, self.licence, number_licence_int, type_licence_str,
                 expedition_date_str, expiration_date_str, self.vehicle, type_vehicle_str, description_vehicle_str,
                 plate_vehicle, insurance_str)

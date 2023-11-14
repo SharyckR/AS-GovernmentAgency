@@ -83,7 +83,7 @@ class CaseHistory(AbstractHistory, BaseModel):
         lawyer_str = str(self.lawyer) if self.lawyer is not None else "None"
 
         return ('ID History: {!r}, DNI Person: {!r}, Case: {!r}, Arrested: {!r}, Description of case: {!r}, '
-                'Jurisdiction: {!r}, Date arrested: {!r} - {!r} - {!r}, Lawyer in Charge: {!r}').format(
+                'Jurisdiction: {!r}, Date arrested: {!r} - {!r} - {!r}, Lawyer in Charge: {!r}\n').format(
             self.id_history, self.dni_person, self.case, self.arrested, description_case_str, jurisdiction_str,
             year_int, month_int, day_int, lawyer_str)
 

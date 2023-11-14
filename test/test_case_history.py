@@ -23,9 +23,9 @@ class TestCaseHistory(unittest.TestCase):
     def test__str__(self):
         expected_str = ("ID History: 13, DNI Person: 1043638720, Case: 'Heist', Arrested: 'Yes', Description of "
                         "case: 'Stole a necklace', Jurisdiction: 'Disciplinary', Date arrested: 2021 - 5 - 15, "
-                        "Lawyer in Charge: 'Cristian Arroyo'")
+                        "Lawyer in Charge: 'Cristian Arroyo'\n")
 
-        self.assertEqual(expected_str, case_history1.__str__(), 'They are equals!')
+        self.assertEqual(case_history1.__str__(), expected_str, 'They are equals!')
 
     def test__eq__(self):
         case_history = CaseHistory(

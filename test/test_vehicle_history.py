@@ -27,10 +27,10 @@ class TestVehicleHistory(unittest.TestCase):
 
     def test__str__(self):
         expected_str = ("ID History: 13 Dni: 1043638720, Does the person have a license?: 'Yes', "
-                        "Number Licence: 123456, Type of license: 'A2', Expedition Date: '2020-05-11', "
-                        "Expiration Date: '2023-05-11', Does the person have a vehicle?: 'Yes', "
-                        "Type of vehicle: 'Car', Description of the Vehicle: 'Mazda2', "
-                        "Plate of the vehicle: 'BJU-521', Insurance: 2020")
+                        "Number Licence: 123456, Type of license: 'A2', Expedition Date: "
+                        "'2020-05-11', Expiration Date: '2023-05-11', Does the person have a "
+                        "vehicle?: 'Yes', Type of vehicle: 'Car', Description of the Vehicle: "
+                        "'Mazda2', Plate of the vehicle: 'BJU-521', Insurance: 2020\n")
         self.assertEqual(expected_str, self.vehicle.__str__(), 'They are equals!')
 
     def test__eq__(self):
