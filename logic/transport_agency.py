@@ -22,17 +22,14 @@ class TransportAgency(AgencyFactory):
     information_fines: List[FineHistory] = [FineHistory()]
 
     def to_dict(self):
-        information_vehicles = information_fines = []
-        for information_vehicle in self.information_vehicles:
-            information_vehicles.append(information_vehicle.to_dict())
-        for information_fine in self.information_fines:
-            information_fines.append(information_fine.to_dict())
+        information_vehicles = [info.to_dict() for info in self.information_vehicles]
+        information_fines = [info.to_dict() for info in self.information_fines]
 
         return {f"{self.agency.id_entity}": {
             "agency": self.agency.to_dict(),
             "information_vehicles": information_vehicles,
             "information_fines": information_fines
-            }
+        }
         }
 
     def __str__(self):
@@ -61,8 +58,8 @@ class TransportAgency(AgencyFactory):
         """
         if isinstance(other, TransportAgency):
             return (self.agency == other.agency and
-                    self.information_vehicle == other.information_vehicle and
-                    self.information_fine == other.information_fine)
+                    self.information_vehicles == other.information_vehicles and
+                    self.information_fines == other.information_fines)
 
 
 if __name__ == '__main__':

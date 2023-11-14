@@ -17,17 +17,17 @@ class TestTransportAgency(unittest.TestCase):
         expected_dict = {
             "965816": {
                 "agency": agency1.to_dict(),
-                "information_vehicle": vehicle_history2.to_dict(),
-                "information_fine": fine_history2.to_dict()}
+                "information_vehicles": [vehicle_history2.to_dict()],
+                "information_fines": [fine_history2.to_dict()]}
         }
         self.assertEqual(expected_dict, self.transport_agency.to_dict(), 'They are equals!')
 
     def test__str__(self):
-        expected_str = (f'Agency: {str(agency1)}, Information Vehicle: {vehicle_history2.__str__()}, \n'
-                        f'Information Fine: {fine_history2.__str__()}\n')
+        expected_str = (f'Agency: {str(agency1)}, Information Vehicle: {vehicle_history2.__str__()}, '
+                        f', Information Fine: {fine_history2.__str__()}, \n')
         print(expected_str)
         print(self.transport_agency.__str__())
-        self.assertEqual(self.transport_agency.__str__(), expected_str, 'They are equals!')
+        self.assertEqual(expected_str, self.transport_agency.__str__(), 'They are equals!')
 
     def test__eq__(self):
         transport_agency1 = TransportAgency(agency=agency1,

@@ -59,7 +59,8 @@ class VehicleHistory(AbstractHistory, BaseModel):
                 "type_vehicle": type_vehicle_str,
                 "description_vehicle": description_vehicle_str,
                 "plate_vehicle": plate_vehicle,
-                "insurance": insurance_int}
+                "insurance": insurance_int
+            }
         }
 
     def __str__(self) -> str:
