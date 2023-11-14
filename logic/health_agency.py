@@ -1,3 +1,5 @@
+from typing import List
+
 from logic.medical_history import MedicalHistory, medical_history1, medical_history2
 from logic.agency_factory import AgencyFactory, agency1, agency2
 
@@ -7,19 +9,22 @@ class HealthAgency(AgencyFactory):
     Represents a health agency.
     Attributes:
         agency (object): The associated agency factory.
-        medical_history (object): The medical history.
+        medical_histories (List): The medical histories.
     Methods:
         __str__(): Returns a formatted string with health agency information.
         __eq__(other): Compares if two instances of HealthAgency are equal.
     """
     agency: AgencyFactory = AgencyFactory()
     agency.entity.subtype = "Health Agency"
-    medical_history: MedicalHistory = MedicalHistory()
+    medical_histories: List[MedicalHistory] = [MedicalHistory()]
 
     def to_dict(self):
+        medical_histories = []
+        for medical_history in self.medical_histories:
+            medical_histories.append(medical_history.to_dict())
         return {f"{self.agency.id_entity}": {
             "agency": self.agency.to_dict(),
-            "medical_history": self.medical_history.to_dict()
+            "medical_histories": medical_histories
         }}
 
     def __eq__(self, other):
@@ -42,7 +47,7 @@ class HealthAgency(AgencyFactory):
         :rtype: str
         """
         return 'Agency information: {0}, Medical History: {1}'.format(self.agency.__str__(),
-                                                                      self.medical_history.__str__())
+                                                                      self.medical_histories.__str__())
 
 
 if __name__ == '__main__':

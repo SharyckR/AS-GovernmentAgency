@@ -8,23 +8,24 @@ class EducationalAgency(AgencyFactory):
     Represents an educational agency.
     Attributes:
         agency (object): The associated agency.
-        education_history (object): The education history.
-        academic_achievements (List[str]): List of academic achievements.
+        education_histories (List): The education histories.
     Methods:
         __str__(): Returns a formatted string with educational agency information.
         __eq__(other): Compares if two instances of EducationalAgency are equal.
     """
     agency: AgencyFactory = AgencyFactory()
     agency.entity.subtype = 'Educational Agency'
-    education_history: EducationHistory = EducationHistory()
-    academic_achievements: List[str] = []
+    education_histories: List[EducationHistory] = [EducationHistory()]
 
     def to_dict(self):
-        return {f"{self.agency.id_entity}":  {
-            "agency": self.agency.to_dict(),
-            "education_history": self.education_history.to_dict(),
-            "academic_achievements": self.academic_achievements
-        }}
+        educational_histories = []
+        for educational_history in self.education_histories:
+            educational_histories.append(educational_history.to_dict())
+        return {f"{self.agency.id_entity}": {
+                    "agency": self.agency.to_dict(),
+                    "education_history": educational_histories
+                    }
+        }
 
     def __str__(self):
         """
@@ -32,10 +33,12 @@ class EducationalAgency(AgencyFactory):
         :returns: string educational history
         :rtype: str
         """
-        return 'Agency: {0}, Education History: {1}, Academic achievements: {2}'.format(
+        educational_histories = ''
+        for educational_history in self.education_histories:
+            educational_histories += educational_history.__str__()
+        return 'Agency: {0}, Education History: {1}'.format(
             self.agency,
-            self.education_history,
-            self.academic_achievements
+            educational_histories,
         )
 
     def __eq__(self, other):
@@ -48,9 +51,9 @@ class EducationalAgency(AgencyFactory):
         """
         if isinstance(other, EducationalAgency):
             return (
-                self.agency.__eq__(other.agency) and
-                self.education_history.__eq__(other.education_history) and
-                self.academic_achievements == other.academic_achievements
+                    self.agency.__eq__(other.agency) and
+                    self.education_history.__eq__(other.education_history) and
+                    self.academic_achievements == other.academic_achievements
             )
         return False
 

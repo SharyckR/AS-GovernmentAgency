@@ -1,3 +1,5 @@
+from typing import List
+
 from logic.agency_factory import *
 from logic.case_history import *
 
@@ -7,19 +9,22 @@ class LegalAgency(AgencyFactory):
     Represents a legal agency.
     Attributes:
         agency (object): The associated agency factory.
-        case_history (object): The legal history.
+        case_histories (List): The legal histories.
     Methods:
         __str__(): Returns a formatted string with legal agency information.
         __eq__(other): Compares if two instances of LegalAgency are equal.
     """
     agency: AgencyFactory = AgencyFactory()
     agency.entity.subtype = "Legal Agency"
-    case_history: CaseHistory = CaseHistory()
+    case_histories: List[CaseHistory] = [CaseHistory()]
 
     def to_dict(self):
+        case_histories = []
+        for case_history in self.case_histories:
+            case_histories.append(case_history.to_dict())
         return {f"{self.agency.id_entity}": {
             "agency": self.agency.to_dict(),
-            "case_history": self.case_history.to_dict()
+            "case_histories": case_histories
             }
         }
 
@@ -28,7 +33,10 @@ class LegalAgency(AgencyFactory):
         :returns: string legal agency
         :rtype: str
         """
-        return 'Agency: {0}, Case History: {1}'.format(self.agency, self.case_history)
+        case_histories = ''
+        for case_history in self.case_histories:
+            case_histories += case_history.__str__() + ", "
+        return 'Agency: {0}, Case Histories: {1}'.format(self.agency, case_histories)
 
     def __eq__(self, other):
         """
@@ -46,9 +54,9 @@ class LegalAgency(AgencyFactory):
 
 
 if __name__ == '__main__':
-    legal1 = LegalAgency(agency=agency1, case_history=case_history1)
-    legal2 = LegalAgency(agency=agency2, case_history=case_history2)
-
+    legal1 = LegalAgency(agency=agency1, case_histories=[case_history1])
+    legal2 = LegalAgency(agency=agency2, case_histories=[case_history2])
+    legal2.case_histories.append(case_history1)
     print(f"Legal Agency 1 Information \n {legal1.__str__()}")
     print(f"Legal Agency 2 Information \n {legal2.__str__()}")
 

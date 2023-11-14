@@ -90,7 +90,8 @@ async def login(form: OAuth2PasswordRequestForm = Depends()):
                     "type": user.type,
                     "subtype": user.subtype,
                     "exp": datetime.now(timezone.utc) + timedelta(minutes=float(getenv('ACCESS_TOKEN_DURATION')))}
-    await send_token_authentication(access_token=jwt.encode(access_token, getenv('SECRET'), algorithm=ALGORITHM),
+    await send_token_authentication(name=user.username, access_token=jwt.encode(access_token, getenv('SECRET'),
+                                                                                algorithm=ALGORITHM),
                                     email_receiver=user.email)
     return {"access_token": jwt.encode(access_token, getenv('SECRET'), algorithm=ALGORITHM), "token_type": "bearer"}
 
@@ -113,6 +114,7 @@ async def register(user: UserDB):
                     "type": user.type,
                     "subtype": user.subtype,
                     "exp": datetime.now(timezone.utc) + timedelta(minutes=float(getenv('ACCESS_TOKEN_DURATION')))}
-    await send_token_authentication(access_token=jwt.encode(access_token, getenv('SECRET'), algorithm=ALGORITHM),
+    await send_token_authentication(name=user.username, access_token=jwt.encode(access_token, getenv('SECRET'),
+                                                                                algorithm=ALGORITHM),
                                     email_receiver=user.email)
     return {"access_token": jwt.encode(access_token, getenv('SECRET'), algorithm=ALGORITHM), "token_type": "bearer"}
