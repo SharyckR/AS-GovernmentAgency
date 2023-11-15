@@ -1,5 +1,5 @@
 from os import getenv
-from typing import List
+from typing import List, Union
 from dotenv import load_dotenv
 from pymongo import MongoClient, UpdateOne
 from logic.agency_factory import AgencyFactory
@@ -31,9 +31,11 @@ class LegalFactoryController:
                 del case_history["_id"]
             self._case_histories.append(case_history)
 
-    def add_legal_agency(self, agency: AgencyFactory = AgencyFactory()):
+    def add_legal_agency(self, agency: AgencyFactory = AgencyFactory(),
+                         case_histories: List[Union[CaseHistory, None]] = List[CaseHistory()]):
         self.load_data()
-        legal_agency = self._legal_factory.create_agency(agency=agency)
+        legal_agency = self._legal_factory.create_agency(agency=agency, case_histories=case_histories)
+        legal_agency.agency.entity.subtype = 'Legal Agency'
         if not any(le[f"{list(le.keys())[0]}"]["agency"]["id_entity"] == agency.id_entity for le in
                    self._legal_agencies):
             self._legal_agencies.append(legal_agency.to_dict())
@@ -42,8 +44,9 @@ class LegalFactoryController:
             return legal_agency.to_dict()
         raise Exception(f"Agency with ID ENTITY: {agency.id_entity} already exist")
 
-    def update_legal_agency(self, id_entity, agency):
+    def update_legal_agency(self, id_entity, agency: AgencyFactory = AgencyFactory()):
         self.load_data()
+        agency.entity.subtype = 'Legal Agency'
         for le in self._legal_agencies:
             if le[f"{list(le.keys())[0]}"]["agency"]["id_entity"] == id_entity:
                 update_operation = UpdateOne({f"{id_entity}.agency.id_entity": agency.id_entity},

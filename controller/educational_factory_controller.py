@@ -1,11 +1,10 @@
 from os import getenv
-from typing import List
+from typing import List, Union
 from dotenv import load_dotenv
 from pymongo import MongoClient, UpdateOne
 from logic.agency_factory import AgencyFactory
 from logic.education_history import EducationHistory
 from logic.educational_factory import EducationalFactory
-
 load_dotenv()
 MY_CLIENT = MongoClient(getenv('MONGODB_CONNECTION_STRING'))
 MY_DB = MY_CLIENT['Entity']
@@ -34,13 +33,11 @@ class EducationalFactoryController:
             self._educational_histories.append(educational_history)
 
     def add_educational_agency(self, agency: AgencyFactory = AgencyFactory(),
-                               academic_achievements: List[str] = None):
+                               educational_histories: List[Union[EducationHistory, None]] = List[EducationHistory()]):
         self.load_data_db()
-        if academic_achievements is None:
-            academic_achievements = []
-        educational_agency = self._educational_factory.create_agency(
-            agency=agency, academic_achievements=academic_achievements)
-        print('....')
+        educational_agency = self._educational_factory.create_agency(agency=agency,
+                                                                     education_histories=educational_histories)
+        educational_agency.agency.entity.subtype = 'Educational Agency'
         if not any(ea[f'{list(ea.keys())[0]}']['agency']['id_entity'] == agency.id_entity
                    for ea in self._educational_agencies):
             self._educational_agencies.append(educational_agency.to_dict())
@@ -49,22 +46,17 @@ class EducationalFactoryController:
             return educational_agency.to_dict()
         raise Exception(f'Agency with ID ENTITY: {agency.id_entity} already exist')
 
-    def update_educational_agency(
-            self, id_entity: int,  agency: AgencyFactory = AgencyFactory(), academic_achievements: List[str] = None):
+    def update_educational_agency(self, id_entity: int,  agency: AgencyFactory = AgencyFactory()):
         self.load_data_db()
-        if academic_achievements is None:
-            academic_achievements = []
+        agency.entity.subtype = 'Educational Agency'
         for ea in self._educational_agencies:
             if ea[f'{list(ea.keys())[0]}']['agency']['id_entity'] == id_entity:
                 update_dict = {"$set": {f"{id_entity}.agency": agency.to_dict()}}
-                if academic_achievements is not None and len(academic_achievements) != 0:
-                    update_dict["$set"]["academic_achievements"] = academic_achievements
-                    ea['academic_achievements'] = academic_achievements
                 update_operation = UpdateOne({f"{id_entity}.agency.id_entity": id_entity}, update_dict)
                 EDUCATIONAL_AGENCY_DB.bulk_write([update_operation])
                 ea['agency'] = agency.to_dict()
                 print(f'Agency with ID Entity: {agency.id_entity} updated')
-                return agency.to_dict(), academic_achievements
+                return agency.to_dict()
         raise Exception(f'Does n\'t exist an agency with ID Entity : {id_entity}')
 
     def add_ed_history(self, educational_history: dict):

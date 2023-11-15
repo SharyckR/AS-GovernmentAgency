@@ -1,5 +1,5 @@
 from os import getenv
-from typing import List
+from typing import List, Union
 from dotenv import load_dotenv
 from pymongo import MongoClient, UpdateOne
 from logic.agency_factory import AgencyFactory
@@ -41,9 +41,14 @@ class TransportFactoryController:
                 del vehicle_history["_id"]
             self._vehicle_histories.append(vehicle_history)
 
-    def add_transport_agency(self, agency: AgencyFactory):
+    def add_transport_agency(self, agency: AgencyFactory = AgencyFactory(),
+                             vehicle_histories: List[Union[VehicleHistory, None]] = List[VehicleHistory],
+                             fine_histories: List[Union[FineHistory, None]] = List[FineHistory]):
         self.load_data()
-        transport_agency = self._transport_factory.create_agency(agency=agency)
+        transport_agency = self._transport_factory.create_agency(agency=agency,
+                                                                 vehicle_histories=vehicle_histories,
+                                                                 fine_histories=fine_histories)
+        transport_agency.agency.entity.subtype = 'Transport Agency'
         if not any(le[f"{list(le.keys())[0]}"]["agency"]["id_entity"] == agency.id_entity for le in
                    self._transport_agencies):
             self._transport_agencies.append(transport_agency.to_dict())
@@ -52,8 +57,9 @@ class TransportFactoryController:
             return transport_agency.to_dict()
         raise Exception(f"Agency with ID ENTITY: {agency.id_entity} already exist")
 
-    def update_transport_agency(self, id_entity, agency):
+    def update_transport_agency(self, id_entity, agency: AgencyFactory = AgencyFactory()):
         self.load_data()
+        agency.entity.subtype = 'Transport Agency'
         for ta in self._transport_agencies:
             if ta[f"{list(ta.keys())[0]}"]["agency"]["id_entity"] == id_entity:
                 update_operation = UpdateOne({f"{id_entity}.agency.id_entity": agency.id_entity},

@@ -1,4 +1,4 @@
-from typing import Dict, Union
+from typing import Dict, Union, List
 from typing_extensions import Annotated
 from fastapi import APIRouter, HTTPException, status, Depends
 from controller.health_factory_controller import HealthFactoryController
@@ -25,13 +25,13 @@ async def get_health_agencies(user: Annotated[Union[NaturalEntity, LegalEntity],
 
 
 @router.post('/health-agencies', status_code=status.HTTP_201_CREATED, response_model=Dict)  # Tested
-async def create_health_agency(agency: AgencyFactory,
+async def create_health_agency(agency: AgencyFactory, medical_histories: List[Union[MedicalHistory, None]],
                                user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
     if not user.type == 'Legal Entity':
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
-        health_agency = health_factory_controller.add_health_agency(agency)
+        health_agency = health_factory_controller.add_health_agency(agency, medical_histories)
         return {'Health Agency': health_agency}
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(e))

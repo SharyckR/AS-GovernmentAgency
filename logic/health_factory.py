@@ -1,3 +1,5 @@
+from typing import List, Union
+
 from logic.abstract_factory import AbstractFactory
 from logic.abstract_agency import AbstractAgency
 from logic.abstract_history import AbstractHistory
@@ -19,18 +21,18 @@ class HealthFactory(AbstractFactory):
         instance of a MedicalHistory.
     """
     def create_agency(self, agency: AgencyFactory = AgencyFactory(),
-                      medical_history: MedicalHistory = MedicalHistory()) -> AbstractAgency:
+                      medical_histories: List[Union[MedicalHistory, None]] = List[MedicalHistory()]) -> AbstractAgency:
         """
         Create an instance of a HealthAgency.
 
         Args:
             agency (AgencyFactory): The agency associated with the health agency.
-            medical_history (MedicalHistory): The medical history of the agency.
+            medical_histories (MedicalHistory): The medical histories of the agency.
 
         Returns:
             AbstractAgency: An instance of HealthAgency or its subclass.
         """
-        return HealthAgency(username=str(agency.id_entity), agency=agency, medical_history=medical_history)
+        return HealthAgency(username=str(agency.id_entity), agency=agency, medical_histories=medical_histories)
 
     def create_history(self, **data) -> AbstractHistory:
         """

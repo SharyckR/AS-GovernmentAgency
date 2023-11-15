@@ -1,5 +1,5 @@
 from os import getenv
-from typing import List
+from typing import List, Union
 from dotenv import load_dotenv
 from pymongo import MongoClient, UpdateOne
 from logic.agency_factory import AgencyFactory
@@ -33,9 +33,11 @@ class HealthFactoryController:
                 del health_history['_id']
             self._health_histories.append(health_history)
 
-    def add_health_agency(self, agency: AgencyFactory = AgencyFactory()):
+    def add_health_agency(self, agency: AgencyFactory = AgencyFactory(),
+                          medical_histories: List[Union[MedicalHistory, None]] = List[MedicalHistory()]):
         self.load_data_db()
-        health_agency = self._health_factory.create_agency(agency=agency)
+        health_agency = self._health_factory.create_agency(agency=agency, medical_histories=medical_histories)
+        health_agency.agency.entity.subtype = 'Health Agency'
         if not any(ha[f'{list(ha.keys())[0]}']['agency']['id_entity'] == agency.id_entity
                    for ha in self._health_agencies):
             self._health_agencies.append(health_agency.to_dict())
@@ -46,6 +48,7 @@ class HealthFactoryController:
 
     def update_health_agency(self, id_entity, agency: AgencyFactory = AgencyFactory()):
         self.load_data_db()
+        agency.entity.subtype = 'Health Agency'
         for ha in self._health_agencies:
             if ha[f'{list(ha.keys())[0]}']['agency']['id_entity'] == id_entity:
                 update_operation = UpdateOne({f"{id_entity}.agency.id_entity": agency.id_entity},

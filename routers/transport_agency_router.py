@@ -1,4 +1,4 @@
-from typing import Dict, Union
+from typing import Dict, Union, List
 from typing_extensions import Annotated
 from fastapi import APIRouter, HTTPException, status, Depends
 from logic.agency_factory import AgencyFactory
@@ -26,13 +26,13 @@ async def get_transport_agencies(user: Annotated[Union[NaturalEntity, LegalEntit
 
 
 @router.post('/transport-agencies', status_code=status.HTTP_201_CREATED, response_model=Dict)  # Tested
-async def create_transport_agency(agency: AgencyFactory,
+async def create_transport_agency(agency: AgencyFactory, vehicle_histories: List[Union[VehicleHistory, None]],
                                   user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
     if not (user.type == 'Legal Entity' and user.subtype == 'Transport Agency'):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
-        transport_agency = transport_factory_controller.add_transport_agency(agency)
+        transport_agency = transport_factory_controller.add_transport_agency(agency, vehicle_histories)
         return {'Transport Agency': transport_agency}
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(e))

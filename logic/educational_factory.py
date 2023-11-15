@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Union
 from logic.abstract_factory import AbstractFactory
 from logic.abstract_agency import AbstractAgency
 from logic.abstract_history import AbstractHistory
@@ -22,19 +22,17 @@ class EducationalFactory(AbstractFactory):
         AbstractHistory: Create an instance of an EducationHistory.
     """
     def create_agency(self, agency: AgencyFactory = AgencyFactory(),
-                      education_history: EducationHistory = EducationHistory(),
-                      academic_achievements: List[str] = None) -> AbstractAgency:
+                      education_histories: List[Union[EducationHistory, None]] = List[EducationHistory()]
+                      ) -> AbstractAgency:
         """
         Create an instance of an EducationalAgency.
         Args:
             agency (AgencyFactory): The agency associated with the educational agency.
-            education_history (EducationHistory): The education history of the agency.
-            academic_achievements (List[str]): List of academic achievements.
+            education_histories (EducationHistory): The education history of the agency.
         Returns:
             AbstractAgency: An instance of EducationalAgency or its subclass.
         """
-        return EducationalAgency(username=str(agency.id_entity), agency=agency, education_history=education_history,
-                                 academic_achievements=academic_achievements)
+        return EducationalAgency(username=str(agency.id_entity), agency=agency, education_histories=education_histories)
 
     def create_history(self, **data) -> AbstractHistory:
         """

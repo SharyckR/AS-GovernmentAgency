@@ -16,7 +16,7 @@ class LegalEntity(Entity):
     subtype: Union[str, None] = None
 
     def to_dict(self):
-        return {f'type: {self.type}, subtype: {self.subtype}'}
+        return {'type': self.type, 'subtype': self.subtype}
 
     def kind_of_entity(self):
         """

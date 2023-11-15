@@ -1,4 +1,4 @@
-from typing import Dict, Union
+from typing import Dict, Union, List
 from typing_extensions import Annotated
 from fastapi import APIRouter, HTTPException, status, Depends
 from controller.legal_factory_controller import LegalFactoryController
@@ -25,13 +25,13 @@ async def get_legal_agencies(user: Annotated[Union[NaturalEntity, LegalEntity], 
 
 
 @router.post('/legal-agencies', status_code=status.HTTP_201_CREATED, response_model=Dict)  # Tested
-async def create_legal_agency(agency: AgencyFactory,
+async def create_legal_agency(agency: AgencyFactory, case_histories: List[Union[CaseHistory, None]],
                               user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
     if not (user.type == 'Legal Entity' and user.subtype == 'Legal Agency'):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
-        legal_agency = legal_factory_controller.add_legal_agency(agency)
+        legal_agency = legal_factory_controller.add_legal_agency(agency, case_histories)
         return {'Legal Agency': legal_agency}
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(e))

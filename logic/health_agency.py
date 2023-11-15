@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Union
 
 from logic.medical_history import MedicalHistory, medical_history1, medical_history2
 from logic.agency_factory import AgencyFactory, agency1, agency2
@@ -16,7 +16,7 @@ class HealthAgency(AgencyFactory):
     """
     agency: AgencyFactory = AgencyFactory()
     agency.entity.subtype = "Health Agency"
-    medical_histories: List[MedicalHistory] = [MedicalHistory()]
+    medical_histories: List[Union[MedicalHistory, None]] = [MedicalHistory()]
 
     def to_dict(self):
         medical_histories = []

@@ -1,3 +1,5 @@
+from typing import List, Union
+
 from logic.abstract_factory import AbstractFactory
 from logic.abstract_agency import AbstractAgency
 from logic.abstract_history import AbstractHistory
@@ -18,16 +20,16 @@ class LegalFactory(AbstractFactory):
         AbstractHistory: Create an instance of a CaseHistory.
     """
     def create_agency(self, agency: AgencyFactory = AgencyFactory(),
-                      legal_history: CaseHistory = CaseHistory()) -> AbstractAgency:
+                      case_histories: List[Union[CaseHistory, None]] = List[CaseHistory()]) -> AbstractAgency:
         """
         Create an instance of a LegalAgency.
         Args:
             agency (AgencyFactory): The agency associated with the legal agency.
-            legal_history (CaseHistory): The legal history of the agency.
+            case_histories (CaseHistory): The legal histories of the agency.
         Returns:
             AbstractAgency: An instance of LegalAgency or its subclass.
         """
-        return LegalAgency(username=str(agency.id_entity), agency=agency, legal_history=legal_history)
+        return LegalAgency(username=str(agency.id_entity), agency=agency, case_histories=case_histories)
 
     def create_history(self, **data) -> AbstractHistory:
         """

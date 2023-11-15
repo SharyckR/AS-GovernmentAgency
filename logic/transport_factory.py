@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Tuple, Union, List
 from logic.abstract_agency import AbstractAgency
 from logic.abstract_factory import AbstractFactory
 from logic.abstract_history import AbstractHistory
@@ -13,8 +13,8 @@ class TransportFactory(AbstractFactory):
     Concrete factory for creating transport agency and history objects.
     Methods:
         create_agency(agency: AgencyFactory = AgencyFactory(),
-                      information_vehicle: VehicleHistory = VehicleHistory(),
-                      information_fine: FineHistory = FineHistory()) -> AbstractAgency:
+                      vehicle_histories: List[Union[VehicleHistory, None]] = List[VehicleHistory()],
+                      information_fine: List[Union[FineHistory, None]] = List[FineHistory()]) -> AbstractAgency:
             Create an instance of a TransportAgency.
         create_history(id_history: int = 1, dni_person: int = 123456789, licence: str = None, type_licence: Union[
         str] = None, vehicle: str = None, type_vehicle: Union[str] = "Car or Motorcycle", description_vehicle: Union[
@@ -23,20 +23,21 @@ class TransportFactory(AbstractFactory):
     """
 
     def create_agency(
-            self, agency: AgencyFactory = AgencyFactory(), information_vehicle: VehicleHistory = VehicleHistory(),
-            information_fine: FineHistory = FineHistory()) -> AbstractAgency:
+            self, agency: AgencyFactory = AgencyFactory(),
+            vehicle_histories: List[Union[VehicleHistory, None]] = List[VehicleHistory()],
+            fine_histories: List[Union[FineHistory, None]] = List[FineHistory()]) -> AbstractAgency:
         """
         Create an instance of a TransportAgency.
         Args:
             agency (AgencyFactory): The agency associated with the transport agency.
-            information_vehicle (VehicleHistory): Information about the vehicle history.
-            information_fine (FineHistory): Information about fines.
+            vehicle_histories (List): Information about the vehicle histories.
+            fine_histories (List): Information about fines.
 
         Returns:
             AbstractAgency: An instance of TransportAgency or its subclass.
         """
-        return TransportAgency(username=str(agency.id_entity), agency=agency, information_vehicle=information_vehicle,
-                               information_fine=information_fine)
+        return TransportAgency(username=str(agency.id_entity), agency=agency, information_vehicles=vehicle_histories,
+                               information_fines=fine_histories)
 
     def create_history(self, **kwargs) -> Tuple[AbstractHistory, AbstractHistory]:
         """

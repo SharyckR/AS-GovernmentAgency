@@ -11,6 +11,7 @@ from os import getenv
 from logic.legal_entity import LegalEntity
 from logic.natural_entity import NaturalEntity
 from middlewares.messages import send_token_authentication, is_valid_email
+
 load_dotenv()
 MY_CLIENT = MongoClient(getenv('MONGODB_CONNECTION_STRING'))
 USERS = MY_CLIENT['USERS']
@@ -90,8 +91,8 @@ async def login(form: OAuth2PasswordRequestForm = Depends()):
                     "type": user.type,
                     "subtype": user.subtype,
                     "exp": datetime.now(timezone.utc) + timedelta(minutes=float(getenv('ACCESS_TOKEN_DURATION')))}
-    await send_token_authentication(name=user.username, access_token=jwt.encode(access_token, getenv('SECRET'),
-                                                                                algorithm=ALGORITHM),
+    await send_token_authentication(access_token=jwt.encode(access_token, getenv('SECRET'),
+                                                            algorithm=ALGORITHM),
                                     email_receiver=user.email)
     return {"access_token": jwt.encode(access_token, getenv('SECRET'), algorithm=ALGORITHM), "token_type": "bearer"}
 
@@ -114,7 +115,6 @@ async def register(user: UserDB):
                     "type": user.type,
                     "subtype": user.subtype,
                     "exp": datetime.now(timezone.utc) + timedelta(minutes=float(getenv('ACCESS_TOKEN_DURATION')))}
-    await send_token_authentication(name=user.username, access_token=jwt.encode(access_token, getenv('SECRET'),
-                                                                                algorithm=ALGORITHM),
+    await send_token_authentication(access_token=jwt.encode(access_token, getenv('SECRET'), algorithm=ALGORITHM),
                                     email_receiver=user.email)
     return {"access_token": jwt.encode(access_token, getenv('SECRET'), algorithm=ALGORITHM), "token_type": "bearer"}

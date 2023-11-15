@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, status, Depends
-from typing import List, Union, Dict
+from typing import Union, Dict, List
 from typing_extensions import Annotated
 from logic.agency_factory import AgencyFactory
 from controller.educational_factory_controller import EducationalFactoryController
@@ -7,6 +7,7 @@ from logic.education_history import EducationHistory
 from logic.legal_entity import LegalEntity
 from logic.natural_entity import NaturalEntity
 from routers.auth import current_user
+
 router = APIRouter(prefix='/agencies', tags=['educational agency'],
                    responses={status.HTTP_404_NOT_FOUND: {'message': 'Not found'}})
 educational_factory_controller = EducationalFactoryController()
@@ -25,13 +26,15 @@ async def get_educational_agencies(user: Annotated[Union[NaturalEntity, LegalEnt
 
 
 @router.post('/educational-agencies', status_code=status.HTTP_201_CREATED, response_model=Dict)  # Tested
-async def create_educational_agency(agency: AgencyFactory, academic_achievements: List[str],
-                                    user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
+async def create_educational_agency(agency: AgencyFactory, educational_histories: Union[List[EducationHistory], None],
+                                    user: Annotated[Union[NaturalEntity, LegalEntity],
+                                    Depends(current_user)]):
     if not (user.type == 'Legal Entity' and user.subtype == 'Educational Agency'):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
-        ed_agency = educational_factory_controller.add_educational_agency(agency, academic_achievements)
+        print(agency)
+        ed_agency = educational_factory_controller.add_educational_agency(agency, educational_histories)
         return {'Education Agency': ed_agency}
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(e))
@@ -40,15 +43,13 @@ async def create_educational_agency(agency: AgencyFactory, academic_achievements
 @router.put('/update-educational-agencies/{id_entity}', status_code=status.HTTP_200_OK, response_model=Dict)
 # Tested
 async def update_educational_agency(id_entity: int, agency: AgencyFactory,
-                                    academic_achievements: Union[List[str], None],
                                     user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
     if not (user.type == 'Legal Entity' and user.subtype == 'Educational Agency'):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
-        agency, academic_achievements = educational_factory_controller.update_educational_agency(
-            id_entity, agency, academic_achievements)
-        return {'Agency': agency, 'Academic Achievements': academic_achievements}
+        agency = educational_factory_controller.update_educational_agency(id_entity, agency)
+        return {'Agency': agency}
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
 
