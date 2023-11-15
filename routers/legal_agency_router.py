@@ -25,7 +25,7 @@ async def get_legal_agencies(user: Annotated[Union[NaturalEntity, LegalEntity], 
 
 
 @router.post('/legal-agencies', status_code=status.HTTP_201_CREATED, response_model=Dict)  # Tested
-async def create_legal_agency(agency: AgencyFactory, case_histories: List[Union[CaseHistory, None]],
+async def create_legal_agency(agency: AgencyFactory, case_histories: Union[List[CaseHistory], None],
                               user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
     if not (user.type == 'Legal Entity' and user.subtype == 'Legal Agency'):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',

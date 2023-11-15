@@ -25,7 +25,7 @@ async def get_health_agencies(user: Annotated[Union[NaturalEntity, LegalEntity],
 
 
 @router.post('/health-agencies', status_code=status.HTTP_201_CREATED, response_model=Dict)  # Tested
-async def create_health_agency(agency: AgencyFactory, medical_histories: List[Union[MedicalHistory, None]],
+async def create_health_agency(agency: AgencyFactory, medical_histories: Union[List[MedicalHistory], None],
                                user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
     if not user.type == 'Legal Entity':
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',

@@ -79,7 +79,7 @@ class HealthFactoryController:
             if ha[f'{list(ha.keys())[0]}']['agency']['id_entity'] == id_health_agency:
                 update_operation = UpdateOne(
                     {f"{id_health_agency}.agency.id_entity": id_health_agency},
-                    {"$set": {f"{id_health_agency}.medical_history": health_history_dict}}
+                    {"$push": {f"{id_health_agency}.medical_histories": health_history_dict}}
                 )
                 ha['medical_history'] = health_history_dict
                 HEALTH_AGENCY_DB.bulk_write([update_operation])

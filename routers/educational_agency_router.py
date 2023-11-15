@@ -7,7 +7,6 @@ from logic.education_history import EducationHistory
 from logic.legal_entity import LegalEntity
 from logic.natural_entity import NaturalEntity
 from routers.auth import current_user
-
 router = APIRouter(prefix='/agencies', tags=['educational agency'],
                    responses={status.HTTP_404_NOT_FOUND: {'message': 'Not found'}})
 educational_factory_controller = EducationalFactoryController()

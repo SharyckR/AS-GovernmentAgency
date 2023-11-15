@@ -77,7 +77,7 @@ class EducationalFactoryController:
             if ea[f'{list(ea.keys())[0]}']['agency']['id_entity'] == id_educational_agency:
                 update_operation = UpdateOne(
                     {f"{id_educational_agency}.agency.id_entity": id_educational_agency},
-                    {"$set": {f"{id_educational_agency}.education_history": education_history.to_dict()}})
+                    {"$push": {f"{id_educational_agency}.education_histories": education_history.to_dict()}})
                 ea[f'{id_educational_agency}']['education_history'] = education_history.to_dict()
                 EDUCATIONAL_AGENCY_DB.bulk_write([update_operation])
                 print(f'Linked {education_history.__class__.__name__} with {id_educational_agency} '

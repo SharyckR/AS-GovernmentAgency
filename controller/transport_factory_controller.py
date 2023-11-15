@@ -101,8 +101,8 @@ class TransportFactoryController:
             if ta[f"{list(ta.keys())[0]}"]["agency"]["id_entity"] == id_transport_agency:
                 update_operation = UpdateOne(
                     {f"{id_transport_agency}.agency.id_entity": id_transport_agency},
-                    {"$set": {f"{id_transport_agency}.information_fine": fine_history.to_dict()}})
-                ta[f"{id_transport_agency}"]["fine_history"] = fine_history.to_dict()
+                    {"$push": {f"{id_transport_agency}.information_fines": fine_history.to_dict()}})
+                ta[f"{id_transport_agency}"]["fine_histories"] = fine_history.to_dict()
                 TRANSPORT_AGENCY.bulk_write([update_operation])
                 print(f"Linked {fine_history.__class__.__name__} with {id_transport_agency} of Transport Agency")
                 return fine_history.to_dict()
@@ -115,8 +115,8 @@ class TransportFactoryController:
             if ta[f"{list(ta.keys())[0]}"]["agency"]["id_entity"] == id_transport_agency:
                 update_operation = UpdateOne(
                     {f"{id_transport_agency}.agency.id_entity": id_transport_agency},
-                    {"$set": {f"{id_transport_agency}.information_vehicle": vehicle_history.to_dict()}})
-                ta[f"{id_transport_agency}"]["vehicle_history"] = vehicle_history.to_dict()
+                    {"$push": {f"{id_transport_agency}.information_vehicles": vehicle_history.to_dict()}})
+                ta[f"{id_transport_agency}"]["vehicle_histories"] = vehicle_history.to_dict()
                 TRANSPORT_AGENCY.bulk_write([update_operation])
                 print(f"Linked {vehicle_history.__class__.__name__} with {id_transport_agency} of Transport Agency")
                 return vehicle_history.to_dict()

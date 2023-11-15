@@ -75,7 +75,7 @@ class LegalFactoryController:
             if le[f"{list(le.keys())[0]}"]["agency"]["id_entity"] == id_legal_agency:
                 update_operation = UpdateOne(
                     {f"{id_legal_agency}.agency.id_entity": id_legal_agency},
-                    {"$set": {f"{id_legal_agency}.case_history": case_history.to_dict()}})
+                    {"$push": {f"{id_legal_agency}.case_histories": case_history.to_dict()}})
                 le[f"{id_legal_agency}"]["case_history"] = case_history.to_dict()
                 LEGAL_AGENCY.bulk_write([update_operation])
                 print(f"Linked {case_history.__class__.__name__} with {id_legal_agency} of Legal Agency")
