@@ -15,7 +15,10 @@ mediator_controller = Mediator()
 
 
 @router.get('', response_model=Dict)  # Tested
-async def get_person(user: Annotated[NaturalEntity, Depends(current_user)]):
+async def get_person(user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
+    print('hola')
+    print(user.type)
+    print(user.subtype)
     if not user.type == 'Legal Entity':
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})

@@ -4,7 +4,8 @@ from routers import (educational_agency_router, health_agency_router, legal_agen
                      fine_history_router, vehicle_history_router, auth)
 from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
-origin = ['http://localhost:3000', 'http://localhost:3001']
+origin = ['http://localhost:3000', 'http://localhost:3001',
+          'https://personal-dyuhx6sz.outsystemscloud.com/TransportAgency/InvalidPermissions?_ts=638356624884638887']
 app.add_middleware(CORSMiddleware,
                    allow_origins=origin,
                    allow_credentials=True,

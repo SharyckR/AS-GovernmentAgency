@@ -15,6 +15,9 @@ transport_factory_controller = TransportFactoryController()
 
 @router.get('/transport-agencies', response_model=Dict)  # Tested
 async def get_transport_agencies(user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
+    print('hola')
+    print(user.type)
+    print(user.subtype)
     if not (user.type == 'Legal Entity' and user.subtype == 'Transport Agency'):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})

@@ -62,6 +62,7 @@ async def auth_user(token: Annotated[str, Depends(oauth2)]):
                               detail='Invalid authentication credentials',
                               headers={"WWW-Authenticate": "Bearer"}
                               )
+    print('hola')
     try:
         username = jwt.decode(token=token, key=getenv('SECRET'), algorithms=[ALGORITHM]).get('sub')
         if username is None:
