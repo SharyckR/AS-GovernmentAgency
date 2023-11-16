@@ -171,7 +171,8 @@ async def link_vehicle_history_to_person(dni_person: int,
 async def link_case_history_to_person(dni_person: int,
                                       user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)],
                                       case_history: CaseHistory):
-    if not user.type == 'Legal Agency':
+    print(user.type)
+    if not user.subtype == 'Legal Agency':
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
@@ -186,7 +187,7 @@ async def link_case_history_to_person(dni_person: int,
 async def link_medical_history_to_person(dni_person: int,
                                          user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)],
                                          medical_history: MedicalHistory):
-    if not user.type == 'Health Agency':
+    if not user.subtype == 'Health Agency':
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
