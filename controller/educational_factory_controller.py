@@ -70,7 +70,7 @@ class EducationalFactoryController:
                 del educational_history['_id']
             return educational_history
         raise Exception(f'Educational History with ID HISTORY: '
-                        f'{educational_history[list(educational_history.keys())[0]]['id_history']} already exist')
+                        f'{educational_history[list(educational_history.keys())[0]]["id_history"]} already exist')
 
     def link_agency_with_history(self, id_educational_agency: int,
                                  education_history: EducationHistory = EducationHistory()):
