@@ -20,7 +20,7 @@ class LegalFactory(AbstractFactory):
         AbstractHistory: Create an instance of a CaseHistory.
     """
     def create_agency(self, agency: AgencyFactory = AgencyFactory(),
-                      case_histories: List[Union[CaseHistory, None]] = List[CaseHistory()]) -> AbstractAgency:
+                      case_histories: List[Union[CaseHistory, None]] = None) -> AbstractAgency:
         """
         Create an instance of a LegalAgency.
         Args:
@@ -29,6 +29,8 @@ class LegalFactory(AbstractFactory):
         Returns:
             AbstractAgency: An instance of LegalAgency or its subclass.
         """
+        if case_histories is None:
+            case_histories = [CaseHistory()]
         return LegalAgency(username=str(agency.id_entity), agency=agency, case_histories=case_histories)
 
     def create_history(self, **data) -> AbstractHistory:

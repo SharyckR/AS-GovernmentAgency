@@ -22,16 +22,18 @@ class EducationalFactory(AbstractFactory):
         AbstractHistory: Create an instance of an EducationHistory.
     """
     def create_agency(self, agency: AgencyFactory = AgencyFactory(),
-                      education_histories: List[Union[EducationHistory, None]] = List[EducationHistory()]
+                      education_histories: List[Union[EducationHistory, None]] = None
                       ) -> AbstractAgency:
         """
         Create an instance of an EducationalAgency.
         Args:
             agency (AgencyFactory): The agency associated with the educational agency.
-            education_histories (EducationHistory): The education history of the agency.
+            education_histories (List): The education histories of the agency.
         Returns:
             AbstractAgency: An instance of EducationalAgency or its subclass.
         """
+        if education_histories is None:
+            education_histories = [EducationHistory()]
         return EducationalAgency(username=str(agency.id_entity), agency=agency, education_histories=education_histories)
 
     def create_history(self, **data) -> AbstractHistory:

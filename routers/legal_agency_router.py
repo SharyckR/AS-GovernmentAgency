@@ -31,7 +31,7 @@ async def create_legal_agency(agency: AgencyFactory, case_histories: Union[List[
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
-        legal_agency = legal_factory_controller.add_legal_agency(agency, case_histories)
+        legal_agency = legal_factory_controller.add_legal_agency(agency=agency, case_histories=case_histories)
         return {'Legal Agency': legal_agency}
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(e))

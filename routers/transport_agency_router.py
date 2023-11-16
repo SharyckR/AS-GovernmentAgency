@@ -36,7 +36,9 @@ async def create_transport_agency(agency: AgencyFactory, vehicle_histories: Unio
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
-        transport_agency = transport_factory_controller.add_transport_agency(agency, vehicle_histories, fine_histories)
+        transport_agency = transport_factory_controller.add_transport_agency(agency=agency,
+                                                                             vehicle_histories=vehicle_histories,
+                                                                             fine_histories=fine_histories)
         return {'Transport Agency': transport_agency}
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(e))

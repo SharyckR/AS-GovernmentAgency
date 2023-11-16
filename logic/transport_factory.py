@@ -24,8 +24,8 @@ class TransportFactory(AbstractFactory):
 
     def create_agency(
             self, agency: AgencyFactory = AgencyFactory(),
-            vehicle_histories: List[Union[VehicleHistory, None]] = List[VehicleHistory()],
-            fine_histories: List[Union[FineHistory, None]] = List[FineHistory()]) -> AbstractAgency:
+            vehicle_histories: List[Union[VehicleHistory, None]] = None,
+            fine_histories: List[Union[FineHistory, None]] = None) -> AbstractAgency:
         """
         Create an instance of a TransportAgency.
         Args:
@@ -36,6 +36,10 @@ class TransportFactory(AbstractFactory):
         Returns:
             AbstractAgency: An instance of TransportAgency or its subclass.
         """
+        if vehicle_histories is None:
+            vehicle_histories = [VehicleHistory()]
+        if fine_histories is None:
+            fine_histories = [FineHistory()]
         return TransportAgency(username=str(agency.id_entity), agency=agency, information_vehicles=vehicle_histories,
                                information_fines=fine_histories)
 

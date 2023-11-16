@@ -33,7 +33,8 @@ async def create_educational_agency(agency: AgencyFactory, educational_histories
                             headers={"WWW-Authenticate": "Bearer"})
     try:
         print(agency)
-        ed_agency = educational_factory_controller.add_educational_agency(agency, educational_histories)
+        ed_agency = educational_factory_controller.add_educational_agency(agency=agency,
+                                                                          educational_histories=educational_histories)
         return {'Education Agency': ed_agency}
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(e))

@@ -31,7 +31,7 @@ async def create_health_agency(agency: AgencyFactory, medical_histories: Union[L
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
-        health_agency = health_factory_controller.add_health_agency(agency, medical_histories)
+        health_agency = health_factory_controller.add_health_agency(agency=agency, medical_histories=medical_histories)
         return {'Health Agency': health_agency}
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(e))
