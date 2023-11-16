@@ -16,7 +16,7 @@ class HealthAgency(AgencyFactory):
     """
     agency: AgencyFactory = AgencyFactory()
     agency.entity.subtype = "Health Agency"
-    medical_histories: List[Union[MedicalHistory, None]] = [MedicalHistory()]
+    medical_histories: List[Union[MedicalHistory, None]] = []
 
     def to_dict(self):
         medical_histories = []

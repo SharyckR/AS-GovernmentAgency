@@ -29,8 +29,6 @@ class LegalFactory(AbstractFactory):
         Returns:
             AbstractAgency: An instance of LegalAgency or its subclass.
         """
-        if case_histories is None:
-            case_histories = [CaseHistory()]
         return LegalAgency(username=str(agency.id_entity), agency=agency, case_histories=case_histories)
 
     def create_history(self, **data) -> AbstractHistory:

@@ -32,8 +32,6 @@ class HealthFactory(AbstractFactory):
         Returns:
             AbstractAgency: An instance of HealthAgency or its subclass.
         """
-        if medical_histories is None:
-            medical_histories = [MedicalHistory()]
         return HealthAgency(username=str(agency.id_entity), agency=agency, medical_histories=medical_histories)
 
     def create_history(self, **data) -> AbstractHistory:

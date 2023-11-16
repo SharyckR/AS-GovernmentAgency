@@ -14,7 +14,7 @@ legal_factory_controller = LegalFactoryController()
 
 @router.get('/legal-agencies', response_model=Dict)  # Tested
 async def get_legal_agencies(user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not (user.type == 'Legal Entity' and user.subtype == 'Legal Agency'):
+    if not user.subtype == 'Legal Agency':
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
@@ -27,7 +27,7 @@ async def get_legal_agencies(user: Annotated[Union[NaturalEntity, LegalEntity], 
 @router.post('/legal-agencies', status_code=status.HTTP_201_CREATED, response_model=Dict)  # Tested
 async def create_legal_agency(agency: AgencyFactory, case_histories: Union[List[CaseHistory], None],
                               user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not (user.type == 'Legal Entity' and user.subtype == 'Legal Agency'):
+    if not user.subtype == 'Legal Agency':
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
@@ -40,7 +40,7 @@ async def create_legal_agency(agency: AgencyFactory, case_histories: Union[List[
 @router.put('/update-legal-agencies/{id_entity}', status_code=status.HTTP_200_OK, response_model=Dict)  # Tested
 async def update_legal_agency(id_entity: int, agency: AgencyFactory,
                               user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not (user.type == 'Legal Entity' and user.subtype == 'Legal Agency'):
+    if not user.subtype == 'Legal Agency':
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
@@ -54,7 +54,7 @@ async def update_legal_agency(id_entity: int, agency: AgencyFactory,
 # Tested
 async def link_case_history(case_history: CaseHistory, id_entity: int,
                             user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not (user.type == 'Legal Entity' and user.subtype == 'Legal Agency'):
+    if not user.subtype == 'Legal Agency':
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:

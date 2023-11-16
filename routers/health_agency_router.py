@@ -14,7 +14,7 @@ health_factory_controller = HealthFactoryController()
 
 @router.get('/health-agencies', response_model=Dict)  # Tested
 async def get_health_agencies(user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not user.type == 'Legal Entity':
+    if not user.subtype == 'Health Agency':
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
@@ -27,7 +27,7 @@ async def get_health_agencies(user: Annotated[Union[NaturalEntity, LegalEntity],
 @router.post('/health-agencies', status_code=status.HTTP_201_CREATED, response_model=Dict)  # Tested
 async def create_health_agency(agency: AgencyFactory, medical_histories: Union[List[MedicalHistory], None],
                                user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not user.type == 'Legal Entity':
+    if not user.subtype == 'Health Agency':
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
@@ -40,7 +40,7 @@ async def create_health_agency(agency: AgencyFactory, medical_histories: Union[L
 @router.put('/health-agencies/{id_entity}', status_code=status.HTTP_200_OK, response_model=Dict)  # Tested
 async def update_health_agency(id_entity: int, agency: AgencyFactory,
                                user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not user.type == 'Legal Entity':
+    if not user.subtype == 'Health Agency':
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
@@ -54,7 +54,7 @@ async def update_health_agency(id_entity: int, agency: AgencyFactory,
 # Tested
 async def link_health_history(history: MedicalHistory, id_entity: int,
                               user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not (user.type == 'Legal Entity' and user.subtype == 'Health Agency'):
+    if not user.subtype == 'Health Agency':
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:

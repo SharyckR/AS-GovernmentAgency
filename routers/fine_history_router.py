@@ -12,7 +12,7 @@ router = APIRouter(prefix='/histories', tags=['fine history'],
 
 @router.get('/fine-histories', response_model=Dict)  # Tested
 async def get_fine_histories(user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not (user.type == 'Legal Entity' and user.subtype == 'Transport Agency'):
+    if not user.subtype == 'Transport Agency':
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
@@ -26,7 +26,7 @@ async def get_fine_histories(user: Annotated[Union[NaturalEntity, LegalEntity], 
 @router.post('/new-fine-histories', status_code=status.HTTP_201_CREATED, response_model=Dict)  # Tested
 async def create_fine_history(fine_history: FineHistory,
                               user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not (user.type == 'Legal Entity' and user.subtype == 'Transport Agency'):
+    if not user.subtype == 'Transport Agency':
         if not (user.type == 'Legal Entity' and user.subtype == 'Transport Agency'):
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                                 headers={"WWW-Authenticate": "Bearer"})

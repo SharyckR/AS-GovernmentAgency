@@ -12,7 +12,7 @@ router = APIRouter(prefix='/histories', tags=['educational history'],
 
 @router.get('/educational-histories', response_model=Dict)  # Tested
 async def get_educational_histories(user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not (user.type == 'Legal Entity' and user.subtype == 'Educational Agency'):
+    if not user.subtype == 'Educational Agency':
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
 
@@ -26,7 +26,7 @@ async def get_educational_histories(user: Annotated[Union[NaturalEntity, LegalEn
 @router.post('/new-educational-histories', status_code=status.HTTP_201_CREATED, response_model=Dict)  # Tested
 async def create_educational_history(education_history: EducationHistory,
                                      user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not (user.type == 'Legal Entity' and user.subtype == 'Educational Agency'):
+    if not user.subtype == 'Educational Agency':
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:

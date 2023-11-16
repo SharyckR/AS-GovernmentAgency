@@ -14,7 +14,7 @@ educational_factory_controller = EducationalFactoryController()
 
 @router.get('/educational-agencies', response_model=Dict)  # Tested
 async def get_educational_agencies(user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not user.type == 'Legal Entity':
+    if not user.subtype == 'Educational Agency':
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
@@ -28,11 +28,10 @@ async def get_educational_agencies(user: Annotated[Union[NaturalEntity, LegalEnt
 async def create_educational_agency(agency: AgencyFactory, educational_histories: Union[List[EducationHistory], None],
                                     user: Annotated[Union[NaturalEntity, LegalEntity],
                                     Depends(current_user)]):
-    if not (user.type == 'Legal Entity' and user.subtype == 'Educational Agency'):
+    if not user.subtype == 'Educational Agency':
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
-        print(agency)
         ed_agency = educational_factory_controller.add_educational_agency(agency=agency,
                                                                           educational_histories=educational_histories)
         return {'Education Agency': ed_agency}
@@ -44,7 +43,7 @@ async def create_educational_agency(agency: AgencyFactory, educational_histories
 # Tested
 async def update_educational_agency(id_entity: int, agency: AgencyFactory,
                                     user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not (user.type == 'Legal Entity' and user.subtype == 'Educational Agency'):
+    if not user.subtype == 'Educational Agency':
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
@@ -58,7 +57,7 @@ async def update_educational_agency(id_entity: int, agency: AgencyFactory,
 # Tested
 async def link_educational_history(education_history: EducationHistory, id_entity: int,
                                    user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not (user.type == 'Legal Entity' and user.subtype == 'Educational Agency'):
+    if not user.subtype == 'Educational Agency':
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:

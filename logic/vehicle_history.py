@@ -31,7 +31,7 @@ class VehicleHistory(AbstractHistory, BaseModel):
     plate_vehicle: Union[str, None] = "Plate of the vehicle"
     expedition_date: Union[str, None] = "9999-01-01"
     expiration_date: Union[str, None] = "9999-01-01"
-    insurance: Union[int, None] = 1
+    insurance: Union[int, None] = None
     mediator: Union[object, None] = None
 
     def __init__(self, mediator=None, **data):

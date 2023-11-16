@@ -60,14 +60,17 @@ class EducationalFactoryController:
 
     def add_ed_history(self, educational_history: dict):
         self.load_data_db()
-        if not any(eh['id_history'] == educational_history["id_history"] for eh in self._educational_histories):
+        if not (any(
+                eh[f'{list(eh.keys())[0]}']['id_history'] == educational_history
+                [f'{list(educational_history.keys())[0]}']['id_history'] for eh in self._educational_histories)):
             self._educational_histories.append(educational_history)
             print(f'{educational_history.__class__.__name__} added\n')
             EDUCATIONAL_HISTORY_DB.insert_one(educational_history)
             if '_id' in educational_history:
                 del educational_history['_id']
             return educational_history
-        raise Exception(f'Educational History with ID HISTORY: {educational_history["id_history"]} already exist')
+        raise Exception(f'Educational History with ID HISTORY: '
+                        f'{educational_history[list(educational_history.keys())[0]]['id_history']} already exist')
 
     def link_agency_with_history(self, id_educational_agency: int,
                                  education_history: EducationHistory = EducationHistory()):

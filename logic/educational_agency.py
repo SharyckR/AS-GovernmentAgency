@@ -15,7 +15,7 @@ class EducationalAgency(AgencyFactory):
     """
     agency: AgencyFactory = AgencyFactory()
     agency.entity.subtype = 'Educational Agency'
-    education_histories: List[EducationHistory] = [EducationHistory()]
+    education_histories: List[EducationHistory] = []
 
     def to_dict(self):
         educational_histories = []

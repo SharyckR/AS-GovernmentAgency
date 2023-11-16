@@ -18,8 +18,8 @@ class TransportAgency(AgencyFactory):
     """
     agency: AgencyFactory = AgencyFactory()
     agency.entity.subtype = "Transport Agency"
-    information_vehicles: List[VehicleHistory] = [VehicleHistory()]
-    information_fines: List[FineHistory] = [FineHistory()]
+    information_vehicles: List[VehicleHistory] = []
+    information_fines: List[FineHistory] = []
 
     def to_dict(self):
         information_vehicles = [info.to_dict() for info in self.information_vehicles]

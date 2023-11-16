@@ -59,7 +59,8 @@ class LegalFactoryController:
 
     def add_case_history(self, case_history: dict):
         self.load_data()
-        if not any(ca["id_history"] == case_history["id_history"] for ca in self._case_histories):
+        if not (any(ca[f'{list(ca.keys())[0]}']["id_history"] == case_history[f'{list(case_history.keys())[0]}']
+                ["id_history"] for ca in self._case_histories)):
             self._case_histories.append(case_history)
             print(f"{case_history.__class__.__name__} added\n")
             COL_CASE_HISTORY.insert_one(case_history)
@@ -67,7 +68,8 @@ class LegalFactoryController:
                 del case_history["_id"]
             return case_history
         else:
-            raise Exception(f"Case History with ID HISTORY: {case_history['id_history']} already exist")
+            raise Exception(f"Case History with ID HISTORY: "
+                            f"{case_history[list(case_history.keys())[0]]['id_history']} already exist")
 
     def link_legal_agency_with_history(self, id_legal_agency: int, case_history: CaseHistory = CaseHistory()):
         self.load_data()

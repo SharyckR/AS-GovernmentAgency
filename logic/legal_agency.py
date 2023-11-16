@@ -16,7 +16,7 @@ class LegalAgency(AgencyFactory):
     """
     agency: AgencyFactory = AgencyFactory()
     agency.entity.subtype = "Legal Agency"
-    case_histories: List[CaseHistory] = [CaseHistory()]
+    case_histories: List[CaseHistory] = []
 
     def to_dict(self):
         case_histories = []

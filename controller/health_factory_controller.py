@@ -61,7 +61,8 @@ class HealthFactoryController:
 
     def add_md_history(self, medical_history: dict):
         self.load_data_db()
-        if not any(eh['id_history'] == medical_history["id_history"] for eh in self._health_histories):
+        if not (any(mh[f'{list(mh.keys())[0]}']['id_history'] == medical_history[f'{list(medical_history.keys())[0]}']
+                ["id_history"] for mh in self._health_histories)):
             self._health_histories.append(medical_history)
             print(f'{medical_history.__class__.__name__} added\n')
             HEALTH_HISTORY_DB.insert_one(medical_history)
@@ -69,7 +70,8 @@ class HealthFactoryController:
                 del medical_history['_id']
             return medical_history
         else:
-            raise Exception(f"Medical History with ID HISTORY: {medical_history['id_history']} already exist")
+            raise Exception(f"Medical History with ID HISTORY: "
+                            f"{medical_history[f'{list(medical_history.keys())[0]}']['id_history']} already exist")
 
     def link_agency_with_history(self, id_health_agency: int,
                                  health_history: MedicalHistory = MedicalHistory()):

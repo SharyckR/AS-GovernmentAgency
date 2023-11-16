@@ -72,7 +72,8 @@ class TransportFactoryController:
 
     def add_fine_history(self, fine_history: dict):
         self.load_data()
-        if not any(ca["id_history"] == fine_history["id_history"] for ca in self._fine_histories):
+        if not (any(ca[list(ca.keys())[0]]["id_history"] == fine_history[list(fine_history.keys())[0]]
+                ["id_history"] for ca in self._fine_histories)):
             self._fine_histories.append(fine_history)
             print(f"{fine_history.__class__.__name__} added\n")
             COL_FINE_HISTORY.insert_one(fine_history)
@@ -80,11 +81,13 @@ class TransportFactoryController:
                 del fine_history["_id"]
             return fine_history
         else:
-            raise Exception(f"Fine History with ID HISTORY: {fine_history['id_history']} already exist")
+            raise Exception(f"Fine History with ID HISTORY: "
+                            f"{fine_history[list(fine_history.keys())[0]]['id_history']} already exist")
 
     def add_vehicle_history(self, vehicle_history: dict):
         self.load_data()
-        if not any(ca["id_history"] == vehicle_history["id_history"] for ca in self._vehicle_histories):
+        if not (any(vh[list(vh.keys())[0]]["id_history"] == vehicle_history[list(vehicle_history.keys())[0]]
+                ["id_history"] for vh in self._vehicle_histories)):
             self._vehicle_histories.append(vehicle_history)
             print(f"{vehicle_history.__class__.__name__} added\n")
             COL_VEHICLE_HISTORY.insert_one(vehicle_history)
@@ -92,7 +95,8 @@ class TransportFactoryController:
                 del vehicle_history["_id"]
             return vehicle_history
         else:
-            raise Exception(f"Vehicle History with ID HISTORY: {vehicle_history['id_history']} already exist")
+            raise Exception(f"Vehicle History with ID HISTORY: "
+                            f"{vehicle_history[list(vehicle_history.keys())[0]]['id_history']} already exist")
 
     def link_transport_agency_with_fine_history(self, id_transport_agency: int,
                                                 fine_history: FineHistory = FineHistory()):
