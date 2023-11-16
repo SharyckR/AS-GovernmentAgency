@@ -21,7 +21,7 @@ ALGORITHM = "HS256"
 crypt = CryptContext(schemes=["bcrypt"])
 router = APIRouter(prefix='/authentication', tags=['authentication'],
                    responses={status.HTTP_404_NOT_FOUND: {'message': 'Not found'}})
-oauth2 = OAuth2PasswordBearer(tokenUrl='login')
+oauth2 = OAuth2PasswordBearer(tokenUrl='/authentication/login')
 
 
 class UserDB(LegalEntity, NaturalEntity):
@@ -62,7 +62,6 @@ async def auth_user(token: Annotated[str, Depends(oauth2)]):
                               detail='Invalid authentication credentials',
                               headers={"WWW-Authenticate": "Bearer"}
                               )
-    print('hola')
     try:
         username = jwt.decode(token=token, key=getenv('SECRET'), algorithms=[ALGORITHM]).get('sub')
         if username is None:
