@@ -16,7 +16,13 @@ class LegalAgency(AgencyFactory):
     """
     agency: AgencyFactory = AgencyFactory()
     agency.entity.subtype = "Legal Agency"
-    case_histories: List[CaseHistory] = []
+    case_histories: Union[List[CaseHistory], None] = []
+
+    def __init__(self, username: Union[str, None] = None, agency: AgencyFactory = AgencyFactory(),
+                 case_histories: List[CaseHistory] = None):
+        super().__init__(agency=agency)
+        self.username = username
+        self.case_histories = case_histories or []
 
     def to_dict(self):
         case_histories = []

@@ -14,7 +14,6 @@ class HealthFactory(AbstractFactory):
     Methods:
         create_agency(agency: Agency = None, medical_history: MedicalHistory = None) -> AbstractAgency:
             Create an instance of a HealthAgency.
-
         create_history(dni_person: int = None, type_blood: str = None, pathologies: str = None,
         description_treatment: str = None, doctor_charge: str = None, day: int = None, month: int = None, year: int =
         None, date_treatment: date = None, mediator: Union[object, None] = None ) -> AbstractHistory: Create an
@@ -32,6 +31,8 @@ class HealthFactory(AbstractFactory):
         Returns:
             AbstractAgency: An instance of HealthAgency or its subclass.
         """
+        if medical_histories is None:
+            medical_histories = []
         return HealthAgency(username=str(agency.id_entity), agency=agency, medical_histories=medical_histories)
 
     def create_history(self, **data) -> AbstractHistory:

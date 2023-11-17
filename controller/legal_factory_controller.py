@@ -32,7 +32,7 @@ class LegalFactoryController:
             self._case_histories.append(case_history)
 
     def add_legal_agency(self, agency: AgencyFactory,
-                         case_histories: List[Union[CaseHistory, None]]):
+                         case_histories: List[Union[CaseHistory, None]] = None):
         self.load_data()
         legal_agency = self._legal_factory.create_agency(agency=agency, case_histories=case_histories)
         legal_agency.agency.entity.subtype = 'Legal Agency'

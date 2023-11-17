@@ -34,7 +34,7 @@ class HealthFactoryController:
             self._health_histories.append(health_history)
 
     def add_health_agency(self, agency: AgencyFactory,
-                          medical_histories: List[Union[MedicalHistory, None]]):
+                          medical_histories: List[Union[MedicalHistory, None]] = None):
         self.load_data_db()
         health_agency = self._health_factory.create_agency(agency=agency, medical_histories=medical_histories)
         health_agency.agency.entity.subtype = 'Health Agency'

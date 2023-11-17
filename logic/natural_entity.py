@@ -1,3 +1,4 @@
+from typing import Union
 from logic.entity import Entity
 
 
@@ -11,7 +12,7 @@ class NaturalEntity(Entity):
         __str__(): Returns a formatted string representing the natural entity.
     """
     type: str = 'Natural Entity'
-    subtype: str = 'Person'
+    subtype: Union[str, None] = 'Person'
 
     def kind_of_entity(self):
         """

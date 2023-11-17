@@ -32,7 +32,8 @@ class EducationalFactoryController:
                 del educational_history['_id']
             self._educational_histories.append(educational_history)
 
-    def add_educational_agency(self, agency: AgencyFactory, educational_histories: List[Union[EducationHistory, None]]):
+    def add_educational_agency(self, agency: AgencyFactory,
+                               educational_histories: List[Union[EducationHistory, None]] = None):
         self.load_data_db()
         educational_agency = self._educational_factory.create_agency(education_histories=educational_histories,
                                                                      agency=agency)

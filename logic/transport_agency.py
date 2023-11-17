@@ -18,8 +18,16 @@ class TransportAgency(AgencyFactory):
     """
     agency: AgencyFactory = AgencyFactory()
     agency.entity.subtype = "Transport Agency"
-    information_vehicles: List[VehicleHistory] = []
-    information_fines: List[FineHistory] = []
+    information_vehicles: Union[List[VehicleHistory], None] = []
+    information_fines: Union[List[FineHistory], None] = []
+
+    def __init__(self, username: Union[str, None] = None, agency: AgencyFactory = AgencyFactory(),
+                 information_vehicles: List[VehicleHistory] = None,
+                 information_fines: List[FineHistory] = None):
+        super().__init__(agency=agency)
+        self.username = username
+        self.information_vehicles = information_vehicles or []
+        self.information_fines = information_fines or []
 
     def to_dict(self):
         information_vehicles = [info.to_dict() for info in self.information_vehicles]

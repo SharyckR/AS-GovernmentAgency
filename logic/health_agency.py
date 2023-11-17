@@ -1,5 +1,4 @@
 from typing import List, Union
-
 from logic.medical_history import MedicalHistory, medical_history1, medical_history2
 from logic.agency_factory import AgencyFactory, agency1, agency2
 
@@ -8,15 +7,15 @@ class HealthAgency(AgencyFactory):
     """
     Represents a health agency.
     Attributes:
-        agency (object): The associated agency factory.
+        agency (AgencyFactory): The associated agency factory.
         medical_histories (List): The medical histories.
     Methods:
         __str__(): Returns a formatted string with health agency information.
         __eq__(other): Compares if two instances of HealthAgency are equal.
     """
+    username: Union[str, None] = None
     agency: AgencyFactory = AgencyFactory()
-    agency.entity.subtype = "Health Agency"
-    medical_histories: List[Union[MedicalHistory, None]] = []
+    medical_histories: List[MedicalHistory] = []
 
     def to_dict(self):
         medical_histories = []

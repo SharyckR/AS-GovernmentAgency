@@ -42,8 +42,8 @@ class TransportFactoryController:
             self._vehicle_histories.append(vehicle_history)
 
     def add_transport_agency(self, agency: AgencyFactory,
-                             vehicle_histories: List[Union[VehicleHistory, None]],
-                             fine_histories: List[Union[FineHistory, None]]):
+                             vehicle_histories: List[Union[VehicleHistory, None]] = None,
+                             fine_histories: List[Union[FineHistory, None]] = None):
         self.load_data()
         transport_agency = self._transport_factory.create_agency(agency=agency,
                                                                  vehicle_histories=vehicle_histories,

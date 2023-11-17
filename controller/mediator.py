@@ -8,8 +8,10 @@ from logic.fine_history import FineHistory
 from logic.case_history import CaseHistory
 from logic.medical_history import MedicalHistory
 from logic.vehicle_history import VehicleHistory
-from routers.auth import NATURAL
 load_dotenv()
+MY_CLIENT = MongoClient(getenv('MONGODB_CONNECTION_STRING'))
+USERS = MY_CLIENT['USERS']
+NATURAL = USERS['Natural']
 MY_CLIENT = MongoClient(getenv('MONGODB_CONNECTION_STRING'))
 ENTITY = MY_CLIENT['Entity']
 COL_PERSON = ENTITY['Person']

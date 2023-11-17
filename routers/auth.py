@@ -1,3 +1,8 @@
+from controller.transport_factory_controller import TransportFactoryController
+from controller.legal_factory_controller import LegalFactoryController
+from controller.health_factory_controller import HealthFactoryController
+from controller.educational_factory_controller import EducationalFactoryController
+from controller.mediator import Mediator
 from typing import Union, Optional
 from logic.person import Person
 from logic.agency_factory import AgencyFactory
@@ -14,6 +19,11 @@ from logic.legal_entity import LegalEntity
 from logic.natural_entity import NaturalEntity
 from middlewares.messages import send_token_authentication, is_valid_email
 load_dotenv()
+mediator = Mediator()
+controller_education = EducationalFactoryController()
+controller_transport = TransportFactoryController()
+controller_legal = LegalFactoryController()
+controller_health = HealthFactoryController()
 MY_CLIENT = MongoClient(getenv('MONGODB_CONNECTION_STRING'))
 USERS = MY_CLIENT['USERS']
 NATURAL = USERS['Natural']
@@ -105,11 +115,33 @@ async def login(form: OAuth2PasswordRequestForm = Depends()):
 
 
 @router.post('/register')
-async def register(user: Union[UserDB, AgencyFactory, Person]):
+async def register(user: UserDB, person: Union[Person, None] = None, agency: Union[AgencyFactory, None] = None):
+    print(user.username)
+    print(agency.id_entity)
+    print(agency.id_entity == user.username)
     if search_user(user.username):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='The user already exist')
     if not is_valid_email(user.email):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='The email is invalid')
+    try:
+        if person and user.username == person.dni_person:
+            mediator.add_person(person=person)
+        elif agency and int(user.username) == agency.id_entity:
+            if user.subtype == 'Educational Agency':
+                controller_education.add_educational_agency(agency)
+            elif user.subtype == 'Health Agency':
+                controller_health.add_health_agency(agency)
+            elif user.subtype == 'Legal Agency':
+                controller_legal.add_legal_agency(agency)
+            elif user.subtype == 'Transport Agency':
+                controller_transport.add_transport_agency(agency)
+            else:
+                raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='subtype is invalid')
+        else:
+            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='Data is invalid')
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=e)
+
     user.type = user.type.title()
     user_info_dict = user.model_dump()
     user_info_dict['password'] = crypt.hash(str(user.password))
@@ -118,7 +150,6 @@ async def register(user: Union[UserDB, AgencyFactory, Person]):
         NATURAL.insert_one(user_info_dict)
     else:
         LEGAL.insert_one(user_info_dict)
-
     access_token = {"sub": user.username,
                     "type": user.type,
                     "subtype": user.subtype}
