@@ -96,7 +96,7 @@ async def get_histories_by_id(dni_person: int,
 @router.get('/case-history/{dni_person}', response_model=Dict)  # Tested
 async def get_histories_by_id(dni_person: int,
                               user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not user.subtype == 'Transport Agency':
+    if not user.subtype == 'Legal Agency':
         if not dni_person == int(user.username):
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                                 headers={"WWW-Authenticate": "Bearer"})
@@ -110,7 +110,7 @@ async def get_histories_by_id(dni_person: int,
 @router.get('/medical-history/{dni_person}', response_model=Dict)  # Tested
 async def get_histories_by_id(dni_person: int,
                               user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not user.subtype == 'Transport Agency':
+    if not user.subtype == 'Health Agency':
         if not dni_person == int(user.username):
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                                 headers={"WWW-Authenticate": "Bearer"})
