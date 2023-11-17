@@ -36,6 +36,10 @@ class TransportFactory(AbstractFactory):
         Returns:
             AbstractAgency: An instance of TransportAgency or its subclass.
         """
+        if vehicle_histories is None:
+            vehicle_histories = []
+        if fine_histories is None:
+            fine_histories = []
         return TransportAgency(username=str(agency.id_entity), agency=agency, information_vehicles=vehicle_histories,
                                information_fines=fine_histories)
 

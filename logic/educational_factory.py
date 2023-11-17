@@ -32,6 +32,8 @@ class EducationalFactory(AbstractFactory):
         Returns:
             AbstractAgency: An instance of EducationalAgency or its subclass.
         """
+        if education_histories is None:
+            education_histories = []
         return EducationalAgency(username=str(agency.id_entity), agency=agency, education_histories=education_histories)
 
     def create_history(self, **data) -> AbstractHistory:

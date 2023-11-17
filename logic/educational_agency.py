@@ -1,4 +1,4 @@
-from typing import List, Union
+from typing import List
 from logic.agency_factory import AgencyFactory, agency1, agency2
 from logic.education_history import EducationHistory, edu_history1, edu_history2
 
@@ -15,13 +15,7 @@ class EducationalAgency(AgencyFactory):
     """
     agency: AgencyFactory = AgencyFactory()
     agency.entity.subtype = 'Educational Agency'
-    education_histories: Union[List[EducationHistory], None] = []
-
-    def __init__(self, username: Union[str, None] = None,  agency: AgencyFactory = AgencyFactory(),
-                 education_histories: List[EducationHistory] = None):
-        super().__init__(agency=agency)
-        self.username = username
-        self.education_histories = education_histories or []
+    education_histories: List[EducationHistory] = []
 
     def to_dict(self):
         educational_histories = []

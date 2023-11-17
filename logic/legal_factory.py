@@ -1,5 +1,4 @@
 from typing import List, Union
-
 from logic.abstract_factory import AbstractFactory
 from logic.abstract_agency import AbstractAgency
 from logic.abstract_history import AbstractHistory
@@ -29,6 +28,8 @@ class LegalFactory(AbstractFactory):
         Returns:
             AbstractAgency: An instance of LegalAgency or its subclass.
         """
+        if case_histories is None:
+            case_histories = []
         return LegalAgency(username=str(agency.id_entity), agency=agency, case_histories=case_histories)
 
     def create_history(self, **data) -> AbstractHistory:
