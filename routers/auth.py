@@ -1,4 +1,6 @@
 from typing import Union, Optional
+from logic.person import Person
+from logic.agency_factory import AgencyFactory
 from typing_extensions import Annotated
 from fastapi import Depends, HTTPException, status, APIRouter
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
@@ -11,7 +13,6 @@ from os import getenv
 from logic.legal_entity import LegalEntity
 from logic.natural_entity import NaturalEntity
 from middlewares.messages import send_token_authentication, is_valid_email
-
 load_dotenv()
 MY_CLIENT = MongoClient(getenv('MONGODB_CONNECTION_STRING'))
 USERS = MY_CLIENT['USERS']
@@ -89,8 +90,14 @@ async def login(form: OAuth2PasswordRequestForm = Depends()):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='password invalid')
     access_token = {"sub": user.username,
                     "type": user.type,
-                    "subtype": user.subtype,
-                    "exp": datetime.now(timezone.utc) + timedelta(minutes=float(getenv('ACCESS_TOKEN_DURATION')))}
+                    "subtype": user.subtype
+                    }
+    if user.type == 'Legal Entity':
+        access_token["exp"] = (datetime.now(timezone.utc) +
+                               timedelta(weeks=float(getenv('ACCESS_TOKEN_DURATION_AGENCY'))))
+    else:
+        access_token["exp"] = (datetime.now(timezone.utc) +
+                               timedelta(hours=float(getenv('ACCESS_TOKEN_DURATION_PERSON'))))
     await send_token_authentication(access_token=jwt.encode(access_token, getenv('SECRET'),
                                                             algorithm=ALGORITHM),
                                     email_receiver=user.email)
@@ -98,7 +105,7 @@ async def login(form: OAuth2PasswordRequestForm = Depends()):
 
 
 @router.post('/register')
-async def register(user: UserDB):
+async def register(user: Union[UserDB, AgencyFactory, Person]):
     if search_user(user.username):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='The user already exist')
     if not is_valid_email(user.email):
@@ -111,10 +118,16 @@ async def register(user: UserDB):
         NATURAL.insert_one(user_info_dict)
     else:
         LEGAL.insert_one(user_info_dict)
+
     access_token = {"sub": user.username,
                     "type": user.type,
-                    "subtype": user.subtype,
-                    "exp": datetime.now(timezone.utc) + timedelta(minutes=float(getenv('ACCESS_TOKEN_DURATION')))}
+                    "subtype": user.subtype}
+    if user.type == 'Legal Entity':
+        access_token["exp"] = (datetime.now(timezone.utc) +
+                               timedelta(weeks=float(getenv('ACCESS_TOKEN_DURATION_AGENCY'))))
+    else:
+        access_token["exp"] = (datetime.now(timezone.utc) +
+                               timedelta(hours=float(getenv('ACCESS_TOKEN_DURATION_PERSON'))))
     await send_token_authentication(access_token=jwt.encode(access_token, getenv('SECRET'), algorithm=ALGORITHM),
                                     email_receiver=user.email)
     return {"access_token": jwt.encode(access_token, getenv('SECRET'), algorithm=ALGORITHM), "token_type": "bearer"}
