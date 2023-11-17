@@ -12,7 +12,7 @@ router = APIRouter(prefix='/histories', tags=['case history'],
 
 @router.get('/case-histories', response_model=Dict)  # Tested
 async def get_case_histories(user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not user.subtype == 'Legal Agency':
+    if not (user.type == 'Legal Entity' and user.subtype == 'Legal Agency'):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
@@ -26,7 +26,7 @@ async def get_case_histories(user: Annotated[Union[NaturalEntity, LegalEntity], 
 @router.post('/new-case-histories', status_code=status.HTTP_201_CREATED, response_model=Dict)  # Tested
 async def create_case_history(case_history: CaseHistory,
                               user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not user.subtype == 'Legal Agency':
+    if not (user.type == 'Legal Entity' and user.subtype == 'Legal Agency'):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
