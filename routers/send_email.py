@@ -3,6 +3,9 @@ import smtplib
 import ssl
 from email.message import EmailMessage
 import re
+from fastapi import APIRouter, status
+router = APIRouter(prefix='/send', tags=['send email'],
+                   responses={status.HTTP_404_NOT_FOUND: {'message': 'Not found'}})
 
 
 def is_valid_email(email):
@@ -13,6 +16,7 @@ def is_valid_email(email):
         return False
 
 
+@router.post('/token')
 async def send_token_authentication(email_receiver: str, access_token: str):
     email_sender = 'dcarrerotinoco74@gmail.com'
     email_password = os.getenv('PASSWORD_EMAIL')

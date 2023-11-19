@@ -4,7 +4,7 @@ from fastapi import APIRouter, HTTPException, status, Depends
 from logic.education_history import EducationHistory
 from logic.legal_entity import LegalEntity
 from logic.natural_entity import NaturalEntity
-from routers.auth import current_user
+from middlewares.security import current_user
 from routers.educational_agency_router import educational_factory_controller
 router = APIRouter(prefix='/histories', tags=['educational history'],
                    responses={status.HTTP_404_NOT_FOUND: {'message': 'Not found'}})

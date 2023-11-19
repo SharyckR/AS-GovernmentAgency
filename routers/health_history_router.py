@@ -4,7 +4,7 @@ from typing_extensions import Annotated
 from logic.legal_entity import LegalEntity
 from logic.medical_history import MedicalHistory
 from logic.natural_entity import NaturalEntity
-from routers.auth import current_user
+from middlewares.security import current_user
 from routers.health_agency_router import health_factory_controller
 router = APIRouter(prefix='/histories', tags=['health history'],
                    responses={status.HTTP_404_NOT_FOUND: {'message': 'Not found'}})

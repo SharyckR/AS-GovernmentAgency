@@ -22,6 +22,8 @@ class LegalFactoryController:
         self.load_data()
 
     def load_data(self):
+        self._legal_agencies = []
+        self._case_histories = []
         for legal_agency in LEGAL_AGENCY.find():
             if "_id" in legal_agency:
                 del legal_agency["_id"]

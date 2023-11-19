@@ -6,7 +6,7 @@ from logic.agency_factory import AgencyFactory
 from logic.case_history import CaseHistory
 from logic.legal_entity import LegalEntity
 from logic.natural_entity import NaturalEntity
-from routers.auth import current_user
+from middlewares.security import current_user
 router = APIRouter(prefix='/agencies', tags=['legal agency'],
                    responses={status.HTTP_404_NOT_FOUND: {'message': 'Not found'}})
 legal_factory_controller = LegalFactoryController()

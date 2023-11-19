@@ -1,12 +1,14 @@
 from typing import Dict, Union, List
 from typing_extensions import Annotated
-from fastapi import APIRouter, HTTPException, status, Depends
+from fastapi import APIRouter, HTTPException, status, Depends, Request
 from controller.health_factory_controller import HealthFactoryController
 from logic.agency_factory import AgencyFactory
 from logic.legal_entity import LegalEntity
 from logic.medical_history import MedicalHistory
 from logic.natural_entity import NaturalEntity
-from routers.auth import current_user
+from middlewares.security import current_user
+from routers.auth import verify_token
+
 router = APIRouter(prefix='/agencies', tags=['health agency'],
                    responses={status.HTTP_404_NOT_FOUND: {'message': 'Not found'}})
 health_factory_controller = HealthFactoryController()

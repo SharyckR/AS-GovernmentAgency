@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, status, Depends
+from fastapi import APIRouter, HTTPException, status, Depends, Request
 from typing import Union, Dict, List
 from typing_extensions import Annotated
 from logic.agency_factory import AgencyFactory
@@ -6,17 +6,20 @@ from controller.educational_factory_controller import EducationalFactoryControll
 from logic.education_history import EducationHistory
 from logic.legal_entity import LegalEntity
 from logic.natural_entity import NaturalEntity
-from routers.auth import current_user
+from middlewares.security import current_user
+from routers.auth import verify_token
+
 router = APIRouter(prefix='/agencies', tags=['educational agency'],
                    responses={status.HTTP_404_NOT_FOUND: {'message': 'Not found'}})
 educational_factory_controller = EducationalFactoryController()
 
 
 @router.get('/educational-agencies', response_model=Dict)  # Tested
-async def get_educational_agencies(user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
+async def get_educational_agencies(request: Request, user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
     if not user.subtype == 'Educational Agency':
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
+    verify_token(request)
     try:
         agencies = educational_factory_controller.get_agencies()
         return {'Educational Agencies': agencies}

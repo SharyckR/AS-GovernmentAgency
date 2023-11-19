@@ -7,7 +7,7 @@ from logic.legal_entity import LegalEntity
 from logic.medical_history import MedicalHistory
 from logic.person import Person
 from logic.vehicle_history import VehicleHistory
-from routers.auth import current_user
+from middlewares.security import current_user
 from logic.natural_entity import NaturalEntity
 router = APIRouter(prefix='/persons', tags=['person'],
                    responses={status.HTTP_404_NOT_FOUND: {'message': 'Not found'}})

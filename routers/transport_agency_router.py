@@ -7,7 +7,7 @@ from logic.fine_history import FineHistory
 from logic.legal_entity import LegalEntity
 from logic.natural_entity import NaturalEntity
 from logic.vehicle_history import VehicleHistory
-from routers.auth import current_user
+from middlewares.security import current_user
 router = APIRouter(prefix='/agencies', tags=['transport agency'],
                    responses={status.HTTP_404_NOT_FOUND: {'message': 'Not found'}})
 transport_factory_controller = TransportFactoryController()
