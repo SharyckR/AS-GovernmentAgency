@@ -14,7 +14,7 @@ from datetime import datetime, timedelta, timezone
 from passlib.context import CryptContext
 from dotenv import load_dotenv
 from os import getenv
-from send_email import send_token_authentication, is_valid_email
+from routers.send_email import send_token_authentication, is_valid_email
 from logic.user_database import UserDB
 
 load_dotenv()
