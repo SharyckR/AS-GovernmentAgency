@@ -1,6 +1,6 @@
 from typing import Dict
 from typing_extensions import Annotated
-from fastapi import APIRouter, HTTPException, status, Depends
+from fastapi import APIRouter, HTTPException, status, Depends, Request
 from controller.mediator import *
 from logic.case_history import CaseHistory
 from logic.legal_entity import LegalEntity
@@ -9,14 +9,16 @@ from logic.person import Person
 from logic.vehicle_history import VehicleHistory
 from middlewares.security import current_user
 from logic.natural_entity import NaturalEntity
+from routers.auth import verify_token
+
 router = APIRouter(prefix='/persons', tags=['person'],
                    responses={status.HTTP_404_NOT_FOUND: {'message': 'Not found'}})
 mediator_controller = Mediator()
 
 
 @router.get('', response_model=Dict)  # Tested
-async def get_person(user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not user.type == 'Legal Entity':
+async def get_person(request: Request, user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
+    if not (verify_token(request) and user.type == 'Legal Entity'):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
@@ -27,9 +29,9 @@ async def get_person(user: Annotated[Union[NaturalEntity, LegalEntity], Depends(
 
 
 @router.get('/{dni_person}', response_model=Dict)  # Tested
-async def get_person_by_id(dni_person: int,
+async def get_person_by_id(request: Request, dni_person: int,
                            user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not (dni_person == int(user.username) or user.type == 'Legal Entity'):
+    if not (verify_token(request) and dni_person == int(user.username) or user.type == 'Legal Entity'):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
@@ -40,8 +42,8 @@ async def get_person_by_id(dni_person: int,
 
 
 @router.post('', status_code=status.HTTP_201_CREATED, response_model=Dict)  # Tested
-async def add_person(person: Person, user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not user.type == 'Legal Entity':
+async def add_person(request: Request, person: Person, user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
+    if not (verify_token(request) and user.type == 'Legal Entity'):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
@@ -52,9 +54,9 @@ async def add_person(person: Person, user: Annotated[Union[NaturalEntity, LegalE
 
 
 @router.get('/educational-history/{dni_person}', response_model=Dict)  # Tested
-async def get_histories_by_id(dni_person: int,
+async def get_histories_by_id(request: Request, dni_person: int,
                               user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not user.subtype == 'Educational Agency':
+    if not (verify_token(request) and user.subtype == 'Educational Agency'):
         if not dni_person == int(user.username):
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                                 headers={"WWW-Authenticate": "Bearer"})
@@ -66,9 +68,9 @@ async def get_histories_by_id(dni_person: int,
 
 
 @router.get('/fine-history/{dni_person}', response_model=Dict)  # Tested
-async def get_histories_by_id(dni_person: int,
+async def get_histories_by_id(request: Request, dni_person: int,
                               user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not user.subtype == 'Transport Agency':
+    if not (verify_token(request) and user.subtype == 'Transport Agency'):
         if not dni_person == int(user.username):
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                                 headers={"WWW-Authenticate": "Bearer"})
@@ -80,9 +82,9 @@ async def get_histories_by_id(dni_person: int,
 
 
 @router.get('/vehicle-history/{dni_person}', response_model=Dict)  # Tested
-async def get_histories_by_id(dni_person: int,
+async def get_histories_by_id(request: Request, dni_person: int,
                               user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not user.subtype == 'Transport Agency':
+    if not (verify_token(request) and user.subtype == 'Transport Agency'):
         if not dni_person == int(user.username):
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                                 headers={"WWW-Authenticate": "Bearer"})
@@ -94,9 +96,9 @@ async def get_histories_by_id(dni_person: int,
 
 
 @router.get('/case-history/{dni_person}', response_model=Dict)  # Tested
-async def get_histories_by_id(dni_person: int,
+async def get_histories_by_id(request: Request, dni_person: int,
                               user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not user.subtype == 'Legal Agency':
+    if not (verify_token(request) and user.subtype == 'Legal Agency'):
         if not dni_person == int(user.username):
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                                 headers={"WWW-Authenticate": "Bearer"})
@@ -108,9 +110,9 @@ async def get_histories_by_id(dni_person: int,
 
 
 @router.get('/medical-history/{dni_person}', response_model=Dict)  # Tested
-async def get_histories_by_id(dni_person: int,
+async def get_histories_by_id(request: Request, dni_person: int,
                               user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not user.subtype == 'Health Agency':
+    if not (verify_token(request) and user.subtype == 'Health Agency'):
         if not dni_person == int(user.username):
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                                 headers={"WWW-Authenticate": "Bearer"})
@@ -123,10 +125,10 @@ async def get_histories_by_id(dni_person: int,
 
 @router.put('/link-educational-history/{dni_person}', status_code=status.HTTP_201_CREATED,
             response_model=Dict)  # Tested
-async def link_education_history_to_person(dni_person: int,
+async def link_education_history_to_person(request: Request, dni_person: int,
                                            user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)],
                                            education_history: EducationHistory = EducationHistory()):
-    if not user.subtype == 'Educational Agency':
+    if not (verify_token(request) and user.subtype == 'Educational Agency'):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
@@ -138,10 +140,10 @@ async def link_education_history_to_person(dni_person: int,
 
 @router.put('/link-fine-history/{dni_person}', status_code=status.HTTP_201_CREATED, response_model=Dict)
 # Tested
-async def link_fine_history_to_person(dni_person: int,
+async def link_fine_history_to_person(request: Request, dni_person: int,
                                       user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)],
                                       fine_history: FineHistory):
-    if not user.subtype == 'Transport Agency':
+    if not (verify_token(request) and user.subtype == 'Transport Agency'):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
@@ -153,10 +155,10 @@ async def link_fine_history_to_person(dni_person: int,
 
 @router.put('/link-vehicle-history/{dni_person}', status_code=status.HTTP_201_CREATED, response_model=Dict)
 # Tested
-async def link_vehicle_history_to_person(dni_person: int,
+async def link_vehicle_history_to_person(request: Request, dni_person: int,
                                          user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)],
                                          vehicle_history: VehicleHistory):
-    if not user.subtype == 'Transport Agency':
+    if not (verify_token(request) and user.subtype == 'Transport Agency'):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
@@ -168,11 +170,10 @@ async def link_vehicle_history_to_person(dni_person: int,
 
 @router.put('/link-case-history/{dni_person}', status_code=status.HTTP_201_CREATED, response_model=Dict)
 # Tested
-async def link_case_history_to_person(dni_person: int,
+async def link_case_history_to_person(request: Request, dni_person: int,
                                       user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)],
                                       case_history: CaseHistory):
-    print(user.type)
-    if not user.subtype == 'Legal Agency':
+    if not (verify_token(request) and user.subtype == 'Legal Agency'):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
@@ -184,10 +185,10 @@ async def link_case_history_to_person(dni_person: int,
 
 @router.put('/link-medical-history/{dni_person}', status_code=status.HTTP_201_CREATED, response_model=Dict)
 # Tested
-async def link_medical_history_to_person(dni_person: int,
+async def link_medical_history_to_person(request: Request, dni_person: int,
                                          user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)],
                                          medical_history: MedicalHistory):
-    if not user.subtype == 'Health Agency':
+    if not (verify_token(request) and user.subtype == 'Health Agency'):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:

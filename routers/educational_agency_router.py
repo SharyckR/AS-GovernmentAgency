@@ -16,10 +16,9 @@ educational_factory_controller = EducationalFactoryController()
 
 @router.get('/educational-agencies', response_model=Dict)  # Tested
 async def get_educational_agencies(request: Request, user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not user.subtype == 'Educational Agency':
+    if not (verify_token(request) and user.subtype == 'Educational Agency'):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
-    verify_token(request)
     try:
         agencies = educational_factory_controller.get_agencies()
         return {'Educational Agencies': agencies}
@@ -28,10 +27,10 @@ async def get_educational_agencies(request: Request, user: Annotated[Union[Natur
 
 
 @router.post('/educational-agencies', status_code=status.HTTP_201_CREATED, response_model=Dict)  # Tested
-async def create_educational_agency(agency: AgencyFactory, educational_histories: Union[List[EducationHistory], None],
+async def create_educational_agency(request: Request, agency: AgencyFactory, educational_histories: Union[List[EducationHistory], None],
                                     user: Annotated[Union[NaturalEntity, LegalEntity],
                                     Depends(current_user)]):
-    if not user.subtype == 'Educational Agency':
+    if not (verify_token(request) and user.subtype == 'Educational Agency'):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
@@ -44,9 +43,9 @@ async def create_educational_agency(agency: AgencyFactory, educational_histories
 
 @router.put('/update-educational-agencies/{id_entity}', status_code=status.HTTP_200_OK, response_model=Dict)
 # Tested
-async def update_educational_agency(id_entity: int, agency: AgencyFactory,
+async def update_educational_agency(request: Request, id_entity: int, agency: AgencyFactory,
                                     user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not user.subtype == 'Educational Agency':
+    if not (verify_token(request) and user.subtype == 'Educational Agency'):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
@@ -58,9 +57,9 @@ async def update_educational_agency(id_entity: int, agency: AgencyFactory,
 
 @router.put('/link-educational-agencies/{id_entity}', status_code=status.HTTP_201_CREATED, response_model=Dict)
 # Tested
-async def link_educational_history(education_history: EducationHistory, id_entity: int,
+async def link_educational_history(request: Request, education_history: EducationHistory, id_entity: int,
                                    user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not user.subtype == 'Educational Agency':
+    if not (verify_token(request) and user.subtype == 'Educational Agency'):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:

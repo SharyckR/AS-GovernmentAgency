@@ -21,9 +21,7 @@ async def send_token_authentication(email_receiver: str, access_token: str):
     email_sender = 'dcarrerotinoco74@gmail.com'
     email_password = os.getenv('PASSWORD_EMAIL')
     subject = 'TOKEN AUTHENTICATION FOR GOVERNMENT AGENCY'
-    body = f"""\n\n\t\t\t\t\tAuthentication successfully, your access toke is : {access_token}
-
-    """
+    body = f"""\n\n\t\t\t\t\tAuthentication successfully, your access toke is : {access_token}"""
     em = EmailMessage()
     em['From'] = email_sender
     em['To'] = email_receiver

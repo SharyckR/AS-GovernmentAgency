@@ -5,14 +5,15 @@ from logic.case_history import CaseHistory
 from logic.legal_entity import LegalEntity
 from logic.natural_entity import NaturalEntity
 from middlewares.security import current_user
+from routers.auth import verify_token
 from routers.legal_agency_router import legal_factory_controller
 router = APIRouter(prefix='/histories', tags=['case history'],
                    responses={status.HTTP_404_NOT_FOUND: {'message': 'Not found'}})
 
 
 @router.get('/case-histories', response_model=Dict)  # Tested
-async def get_case_histories(user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not (user.type == 'Legal Entity' and user.subtype == 'Legal Agency'):
+async def get_case_histories(request: Request,  user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
+    if not (verify_token(request) and user.subtype == 'Legal Agency'):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
@@ -24,9 +25,9 @@ async def get_case_histories(user: Annotated[Union[NaturalEntity, LegalEntity], 
 
 
 @router.post('/new-case-histories', status_code=status.HTTP_201_CREATED, response_model=Dict)  # Tested
-async def create_case_history(case_history: CaseHistory,
+async def create_case_history(request: Request, case_history: CaseHistory,
                               user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not (user.type == 'Legal Entity' and user.subtype == 'Legal Agency'):
+    if not (verify_token(request) and user.subtype == 'Legal Agency'):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
