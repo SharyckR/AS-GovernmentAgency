@@ -109,8 +109,7 @@ def verify_token(request: Request):
     token = dict(request.headers.items()).get('authorization').split(' ')[1]
     try:
         token_decrypted = jwt.decode(token, getenv('SECRET'), algorithms=["HS256"])
-        print(token_decrypted.get('key'))
-        if crypt.verify(token_decrypted.get('key'), crypt.hash(str(token_decrypted.get('sub')))):
+        if crypt.verify(token_decrypted.get('sub'), token_decrypted.get('key')):
             return True
     except JWTError as e:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(e))
