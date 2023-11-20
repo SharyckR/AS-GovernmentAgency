@@ -7,22 +7,34 @@ from logic.agency_factory import AgencyFactory
 class AgencyFlyweight(BaseModel):
     """
     Class representing a flyweight object for agencies.
+    Attributes:
+        shared_state (List[Union[str, int]]): Shared state of the agency.
+        unique_state (Union[dict, None]): Unique state of the agency factory.
+    Methods:
+        __init__(**data): Initializes an AgencyFlyweight instance.
+        operation(unique_state: dict) -> None: Performs an operation with the shared state and unique state.
     """
     shared_state: List[Union[str, int]] = []
     unique_state: Union[dict, None] = None
 
     def __init__(self, **data):
+        """
+        Initializes an AgencyFlyweight instance.
+        Args:
+            **data: Additional keyword arguments for initializing the instance.
+        """
         super().__init__(**data)
 
     def operation(self, unique_state: dict) -> None:
         """
         Performs an operation with the shared state and unique state.
         Args:
-            unique_state (AgencyFactory): Unique state of the agency factory.
+            unique_state (dict): Unique state of the agency factory.
         """
         shared_state_str = ", ".join(str(self.shared_state))
         self.unique_state = unique_state
-        print(f"AgencyFlyweight: Displaying shared ({shared_state_str}) and unique ({list(self.unique_state.values())}) state.", end="")
+        print(f"AgencyFlyweight: Displaying shared ({shared_state_str}) "
+              f"and unique ({list(self.unique_state.values())}) state.", end="")
 
 
 def get_key(state: List[str]) -> str:
@@ -39,6 +51,13 @@ def get_key(state: List[str]) -> str:
 class AgencyFlyweightFactory:
     """
     Class representing a factory for agency flyweight objects.
+    Attributes:
+        flyweights (Dict[str, AgencyFlyweight]): Dictionary to store flyweight objects.
+    Methods:
+        assign_flyweights(initial_flyweights: List[List[Union[str, int]]]) -> None: Assign initial flyweights.
+        get_flyweight(shared_state: List[Union[str, int]]) -> AgencyFlyweight: Get a
+                                                             flyweight object based on the shared state.
+        list_flyweights() -> None: Display the list of available flyweights.
     """
     flyweights: Dict[str, AgencyFlyweight] = {}
 
@@ -46,7 +65,7 @@ class AgencyFlyweightFactory:
         """
         Assign initial flyweights.
         Args:
-            initial_flyweights (List[List[str]]): List of initial states.
+            initial_flyweights (List[List[Union[str, int]]]): List of initial states.
         """
         for state in initial_flyweights:
             key = get_key(state)

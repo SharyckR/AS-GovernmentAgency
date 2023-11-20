@@ -7,18 +7,27 @@ class LegalEntity(Entity):
     Represents a legal entity.
     Attributes:
         type (str): The type of the entity.
-
+        subtype (Union[str, None]): The subtype of the entity.
     Methods:
-        kind_of_entity(): Returns the type of the entity.
-        __str__(): Returns a formatted string with entity information.
+        to_dict() -> dict:
+            Converts the LegalEntity instance to a dictionary.
+        kind_of_entity() -> str:
+            Returns the type of the entity.
+        __str__() -> str:
+            Returns a formatted string with entity information.
     """
     type: str = 'Legal Entity'
     subtype: Union[str, None] = None
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
+        """
+        Returns a dictionary representation of the legal entity.
+        Returns:
+            dict: A dictionary representation of the LegalEntity instance.
+        """
         return {'type': self.type, 'subtype': self.subtype}
 
-    def kind_of_entity(self):
+    def kind_of_entity(self) -> str:
         """
         Returns the type of the entity.
         Returns:
@@ -26,9 +35,10 @@ class LegalEntity(Entity):
         """
         return self.type
 
-    def __str__(self):
-        """ Returns str of legal entity.
-        :returns: string legal entity
-        :rtype: str
+    def __str__(self) -> str:
+        """
+        Returns a formatted string with entity information.
+        Returns:
+            str: Formatted string with legal entity information.
         """
         return 'Type: {!r}, Subtype: {!r}'.format(self.type, self.subtype)

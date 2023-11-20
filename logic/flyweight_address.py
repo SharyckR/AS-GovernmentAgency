@@ -1,12 +1,23 @@
 import json
 from typing import List, Dict, Union
 from pydantic import BaseModel
-from logic.address import Address
 
 
 class AddressFlyweight(BaseModel):
     """
     Class representing a flyweight object for addresses.
+
+    Attributes:
+        shared_state (List[Union[str, int]]): Shared state of the address.
+        unique_state (Union[dict, None]): Unique state of the address.
+
+    Methods:
+        operation(unique_state: dict) -> None:
+            Performs an operation with the shared state and unique state.
+        __str__() -> str:
+            Returns a string representation of the shared state.
+        to_dict() -> dict:
+            Returns a dictionary representation of the shared state.
     """
     shared_state: List[Union[str, int]] = []
     unique_state: Union[dict, None] = None
@@ -15,7 +26,7 @@ class AddressFlyweight(BaseModel):
         """
         Performs an operation with the shared state and unique state.
         Args:
-            unique_state (Address): Unique state of the address.
+            unique_state (dict): Unique state of the address.
         """
         shared_state_str = json.dumps(str(self.shared_state))
         self.unique_state = unique_state
@@ -23,16 +34,22 @@ class AddressFlyweight(BaseModel):
               f"and unique ({list(self.unique_state.values())}) state.", end="")
 
     def __str__(self) -> str:
+        """
+        Returns a string representation of the shared state.
+        Returns:
+            str: String representation of the shared state.
+        """
         return f'{self.shared_state}'
 
     def to_dict(self) -> dict:
+        """
+        Returns a dictionary representation of the shared state.
+        Returns:
+            dict: Dictionary representation of the shared state.
+        """
         return {
-            "street": self.shared_state[0],
-            "number": self.shared_state[1],
-            "apartment": self.shared_state[2],
-            "postal_code": self.shared_state[3],
-            "locality": self.shared_state[4],
-            "department": self.shared_state[5],
+            "street": self.shared_state[0], "number": self.shared_state[1], "apartment": self.shared_state[2],
+            "postal_code": self.shared_state[3], "locality": self.shared_state[4], "department": self.shared_state[5],
             "country": self.shared_state[6]
         }
 
@@ -51,10 +68,28 @@ def get_key(state: List[Union[str, int]]) -> str:
 class AddressFlyweightFactory(BaseModel):
     """
     Class representing a factory for address flyweight objects.
+    Attributes:
+        flyweights (Dict[str, AddressFlyweight]): Dictionary to store flyweight objects.
+    Methods:
+        __init__(**data) -> None:
+            Initializes an AddressFlyweightFactory instance.
+        assign_flyweights(initial_flyweights: List[List[Union[str, int]]]) -> None:
+            Assign initial flyweights.
+        get_flyweight(shared_state: List[Union[str, int]]) -> AddressFlyweight:
+            Get a flyweight object based on the shared state.
+        check_flyweight(shared_state: List[Union[str, int]]) -> bool:
+            Check if a flyweight object based on the shared state exists.
+        list_flyweights() -> int:
+            Display the list of available flyweights.
     """
     flyweights: Dict[str, AddressFlyweight] = {}
 
     def __init__(self, **data):
+        """
+        Initializes an AddressFlyweightFactory instance.
+        Args:
+            **data: Additional keyword arguments for initializing the instance.
+        """
         super().__init__(**data)
 
     def assign_flyweights(self, initial_flyweights: List[List[Union[str, int]]]) -> None:
@@ -86,12 +121,12 @@ class AddressFlyweightFactory(BaseModel):
 
     def check_flyweight(self, shared_state: List[Union[str, int]]) -> bool:
         """
-                Get a flyweight object based on the shared state.
-                Args:
-                    shared_state (List[Union[str, int]]): Shared state.
-                Returns:
-                    AddressFlyweight: Flyweight object.
-                """
+        Check if a flyweight object based on the shared state exists.
+        Args:
+            shared_state (List[Union[str, int]]): Shared state.
+        Returns:
+            bool: True if the flyweight object exists, False otherwise.
+        """
         key = get_key(shared_state)
         print('Key: ', key)
         if not self.flyweights.get(key):
@@ -104,6 +139,8 @@ class AddressFlyweightFactory(BaseModel):
     def list_flyweights(self) -> int:
         """
         Display the list of available flyweights.
+        Returns:
+            int: Number of available flyweights.
         """
         count = len(self.flyweights)
         print(f"AddressFlyweightFactory: I have {count} flyweights:")
@@ -115,11 +152,10 @@ def add_address_to_database(factory_add: AddressFlyweightFactory, data: dict) ->
     """
     Add an address to the database.
     Args:
-        factory_add (AddressFlyweightFactory): AddressFlyweightFactory
-        data (dict)
+        factory_add (AddressFlyweightFactory): AddressFlyweightFactory instance.
+        data (dict): Data representing the address.
     """
     data['apartment'] = "None" if data['apartment'] is None else data['apartment']
     print("\n\nClient: Adding an address to the database.")
-
     flyweight = factory_add.get_flyweight(list(data.values()))
     print(flyweight.shared_state)

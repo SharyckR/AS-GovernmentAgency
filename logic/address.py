@@ -8,13 +8,15 @@ class Address(BaseModel):
     Attributes:
         street (str): Street name.
         number (int): Address number.
-        number (str): Address number.
-        apartment (str): Apartment number.
+        apartment (Union[str, None]): Apartment number.
         postal_code (str): Postal code.
         locality (str): City or locality.
         department (str): Department or state.
         country (str): Country.
+        mediator (object): Mediator.
     Methods:
+        __init__(mediator, **data): Initializes an Address object.
+        to_dict(): Converts the address to a dictionary.
         __str__(): Returns a string representation of the address.
         __eq__(other): Compares two addresses to check if they are equal.
     """
@@ -28,10 +30,21 @@ class Address(BaseModel):
     mediator: object = None
 
     def __init__(self, mediator=None, **data):
+        """
+        Initializes an Address object.
+        Args:
+            mediator (object): Mediator.
+            **data: Additional data for address attributes.
+        """
         super().__init__(**data)
         self.mediator = mediator
 
     def to_dict(self):
+        """
+        Converts the address to a dictionary.
+        Returns:
+            dict: A dictionary representation of the address.
+        """
         apartment_str = str(self.apartment) if self.apartment is not None else "None"
         return {
             "street": self.street,
@@ -46,6 +59,8 @@ class Address(BaseModel):
     def __str__(self):
         """
         Returns a string representation of the address.
+        Returns:
+            str: A string representation of the address.
         """
         apartment_str = str(self.apartment) if self.apartment is not None else "None"
 
@@ -59,7 +74,6 @@ class Address(BaseModel):
         Compares two addresses to check if they are equal.
         Args:
             other (Address): Another address to compare.
-
         Returns:
             bool: True if the addresses are equal, False otherwise.
         """
@@ -73,13 +87,11 @@ class Address(BaseModel):
 
 
 if __name__ == '__main__':
-    # Prueba Address class
-
+    # Test Address class
     address1 = Address(street='The cross', number=10, apartment='Apt 3B', postal_code='1010', locality='Aqueous',
                        department='Cundinamarca', country='Colombia')
     address2 = Address(street='The cross', number=10, apartment='Apt 5C', postal_code='1010', locality='Aqueous',
                        department='Cundinamarca', country='Colombia')
-
     address1_str = address1.__str__()
     print(f"Address 1 Information \n {address1_str}")
     address2_str = address2.__str__()
@@ -87,7 +99,7 @@ if __name__ == '__main__':
     are_equal_address = address1.__eq__(address2)
     print(f"Are equals ? \n {are_equal_address} \n\n")
 
-address1 = Address(street='123 Main St', number=5, apartment='Apt 3B', postal_code='1010', locality='City Ville',
-                   department='State Ville', country='Country Land')
+address1 = Address(street='The cross', number=10, apartment='Apt 3B', postal_code='1010', locality='Aqueous',
+                       department='Cundinamarca', country='Colombia')
 address2 = Address(street='The cross', number=10, apartment='Apt 5C', postal_code='1010', locality='Aqueous',
-                   department='Cundinamarca', country='Colombia')
+                       department='Cundinamarca', country='Colombia')

@@ -24,7 +24,6 @@ class AbstractHistory(ABC, BaseModel):
         Compares two history objects to check if they are equal.
         Args:
             other: Another history object to compare.
-
         Returns:
             bool: True if the histories are equal, False otherwise.
         """

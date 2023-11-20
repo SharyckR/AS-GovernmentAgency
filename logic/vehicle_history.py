@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from typing import Union
+
 from logic.abstract_history import AbstractHistory
 
 
@@ -8,15 +9,22 @@ class VehicleHistory(AbstractHistory, BaseModel):
     Class to represent vehicle history.
 
     Attributes:
-        dni_person (object): DNI of the person associated with the vehicle.
-        licence (str) : Does the person have a license?.
-        type_licence : Type of license of the person ( if they have one ).
-        vehicle (str): Does the person have a vehicle?.
-        type_vehicle (str): Type of vehicle of the person ( if they have one ).
-        description_vehicle (str): A description or additional information about the vehicle.
-        plate_vehicle (str): The license plate number of the vehicle.
-
+        id_history (int): The ID associated with the vehicle history.
+        dni_person (int): DNI of the person associated with the vehicle.
+        licence (Union[str, None]): Does the person have a license?.
+        number_licence (Union[int, None]): Number of the license.
+        type_licence (Union[str, None]): Type of license of the person (if they have one).
+        vehicle (Union[str, None]): Does the person have a vehicle?.
+        type_vehicle (Union[str, None]): Type of vehicle of the person (if they have one).
+        description_vehicle (Union[str, None]): A description or additional information about the vehicle.
+        plate_vehicle (Union[str, None]): The license plate number of the vehicle.
+        expedition_date (Union[str, None]): The date of vehicle expedition.
+        expiration_date (Union[str, None]): The date of vehicle expiration.
+        insurance (Union[int, None]): The insurance information.
+        mediator (Union[object, None]): The mediator for managing interactions.
     Methods:
+        __init__(mediator=None, **data): Initializes a VehicleHistory object.
+        to_dict(): Converts the VehicleHistory object to a dictionary.
         __str__(): Returns a string representation of the VehicleHistory object.
         __eq__(other): Compares two VehicleHistory objects to check if they are equal.
     """
@@ -35,10 +43,21 @@ class VehicleHistory(AbstractHistory, BaseModel):
     mediator: Union[object, None] = None
 
     def __init__(self, mediator=None, **data):
+        """
+        Initializes a VehicleHistory object.
+        Args:
+            mediator (object, optional): The mediator for managing interactions.
+            **data: Additional data to initialize the object.
+        """
         super().__init__(**data)
         self.mediator = mediator
 
     def to_dict(self):
+        """
+        Returns a dictionary representation of the vehicle history.
+        Returns:
+            dict: A dictionary representation of the VehicleHistory object.
+        """
         number_licence_int = int(self.number_licence) if self.number_licence is not None else "None"
         type_licence_str = str(self.type_licence) if self.type_licence is not None else "None"
         type_vehicle_str = str(self.type_vehicle) if self.type_vehicle is not None else "None"
@@ -49,25 +68,17 @@ class VehicleHistory(AbstractHistory, BaseModel):
         insurance_int = int(self.insurance) if self.insurance is not None else "None"
         return {
             str(self.dni_person): {
-                "id_history": self.id_history,
-                "licence": self.licence,
-                "number_licence": number_licence_int,
-                "type_licence": type_licence_str,
-                "expedition_date": expedition_date_str,
-                "expiration_date": expiration_date_str,
-                "vehicle": self.vehicle,
-                "type_vehicle": type_vehicle_str,
-                "description_vehicle": description_vehicle_str,
-                "plate_vehicle": plate_vehicle,
-                "insurance": insurance_int
-            }
-        }
+                "id_history": self.id_history, "licence": self.licence, "number_licence": number_licence_int,
+                "type_licence": type_licence_str, "expedition_date": expedition_date_str,
+                "expiration_date": expiration_date_str, "vehicle": self.vehicle, "type_vehicle": type_vehicle_str,
+                "description_vehicle": description_vehicle_str, "plate_vehicle": plate_vehicle,
+                "insurance": insurance_int}}
 
     def __str__(self) -> str:
         """
         Returns a string representation of the Vehicle History object.
-        :returns: string vehicle history
-        :rtype: str
+        Returns:
+            str: A string representation of the VehicleHistory object.
         """
         number_licence_int = int(self.number_licence) if self.number_licence is not None else "None"
         type_licence_str = str(self.type_licence) if self.type_licence is not None else "None"
@@ -77,7 +88,6 @@ class VehicleHistory(AbstractHistory, BaseModel):
         description_vehicle_str = str(self.description_vehicle) if self.description_vehicle is not None else "None"
         plate_vehicle = str(self.plate_vehicle) if self.plate_vehicle is not None else "None"
         insurance_str = int(self.insurance) if self.insurance is not None else "None"
-
         return ('ID History: {!r} Dni: {!r}, Does the person have a license?: {!r}, Number Licence: {!r},'
                 ' Type of license: {!r}, Expedition Date: {!r}, Expiration Date: {!r},'
                 ' Does the person have a vehicle?: {!r}, Type of vehicle: {!r}, Description of the Vehicle: {!r},'
@@ -89,10 +99,8 @@ class VehicleHistory(AbstractHistory, BaseModel):
     def __eq__(self, other) -> bool:
         """
         Compares two VehicleHistory objects to check if they are equal.
-
         Args:
             other (VehicleHistory): Another VehicleHistory object to compare.
-
         Returns:
             bool: True if the VehicleHistory objects are equal, False otherwise.
         """
@@ -109,25 +117,22 @@ class VehicleHistory(AbstractHistory, BaseModel):
 
 
 if __name__ == '__main__':
-    # Prueba Vehicle History class
-
+    # Test Vehicle History class
     vehicle_history1 = VehicleHistory(
         id_history=13, dni_person=1043638720, licence="Yes", number_licence=123456, type_licence="A2",
         vehicle="Yes", type_vehicle="Car", expedition_date="2020-05-11", expiration_date="2023-05-11",
         description_vehicle="Mazda2", plate_vehicle="BJU-521", insurance=2020)
-
     vehicle_history2 = VehicleHistory(
         id_history=14, dni_person=45761873, licence="No", number_licence=None, type_licence=None, vehicle="Yes",
         type_vehicle="Motorcycle", expedition_date=None, expiration_date=None,
         description_vehicle="Honda", plate_vehicle="PLO-154", insurance=None)
-
     vehicle1_history_str = vehicle_history1.__str__()
     print(f"Vehicle History 1 Information \n {vehicle1_history_str}")
     vehicle2_history_str = vehicle_history1.__str__()
     print(f"Vehicle History 2 Information \n {vehicle2_history_str}")
-
     are_equal_vehicle_history = vehicle_history1.__eq__(vehicle_history2)
     print(f"Are equals ? \n {are_equal_vehicle_history} \n\n")
+
 
 vehicle_history1 = VehicleHistory(
     id_history=13, dni_person=1043638720, licence="Yes", number_licence=123456, type_licence="A2",

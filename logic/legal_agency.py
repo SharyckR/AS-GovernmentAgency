@@ -6,18 +6,29 @@ from logic.case_history import *
 class LegalAgency(AgencyFactory):
     """
     Represents a legal agency.
+
     Attributes:
         agency (object): The associated agency factory.
-        case_histories (List): The legal histories.
+        case_histories (List[CaseHistory]): The legal histories.
+
     Methods:
-        __str__(): Returns a formatted string with legal agency information.
-        __eq__(other): Compares if two instances of LegalAgency are equal.
+        to_dict() -> dict:
+            Converts the LegalAgency instance to a dictionary.
+        __str__() -> str:
+            Returns a formatted string with legal agency information.
+        __eq__(other) -> bool:
+            Compares if two instances of LegalAgency are equal.
     """
     agency: AgencyFactory = AgencyFactory()
     agency.entity.subtype = "Legal Agency"
     case_histories: List[CaseHistory] = []
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
+        """
+        Returns a dictionary representation of the legal agency.
+        Returns:
+            dict: A dictionary representation of the LegalAgency instance.
+        """
         case_histories = []
         for case_history in self.case_histories:
             case_histories.append(case_history.to_dict())
@@ -27,28 +38,27 @@ class LegalAgency(AgencyFactory):
             }
         }
 
-    def __str__(self):
-        """ Returns str of legal agency.
-        :returns: string legal agency
-        :rtype: str
+    def __str__(self) -> str:
+        """
+        Returns a formatted string with legal agency information.
+        Returns:
+            str: Formatted string with legal agency information.
         """
         case_histories = ''
         for case_history in self.case_histories:
             case_histories += case_history.__str__() + ", "
         return 'Agency: {0}, Case Histories: {1}\n'.format(self.agency, case_histories)
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         """
         Compares if two instances of LegalAgency are equal.
-
         Args:
             other (LegalAgency): The other instance to compare.
-
         Returns:
             bool: True if both instances are equal, otherwise False.
         """
         if isinstance(other, LegalAgency):
-            return self.agency == other.agency and self.case_history == other.case_history
+            return self.agency == other.agency and self.case_histories == other.case_histories
         return False
 
 
@@ -58,7 +68,6 @@ if __name__ == '__main__':
     legal2.case_histories.append(case_history1)
     print(f"Legal Agency 1 Information \n {legal1.__str__()}")
     print(f"Legal Agency 2 Information \n {legal2.__str__()}")
-
     are_equal_legal_agency = legal1.__eq__(legal2)
     print(f"Are equals ? \n {are_equal_legal_agency} \n\n")
 

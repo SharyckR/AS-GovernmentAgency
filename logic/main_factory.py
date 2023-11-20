@@ -16,8 +16,7 @@ if __name__ == '__main__':
     legal_factory = LegalFactory()
     transport_factory = TransportFactory()
 
-    edu_agency = educational_factory.create_agency(agency=agency1, education_history=edu_history1,
-                                                   academic_achievements=['Good work', 'High recommended'])
+    edu_agency = educational_factory.create_agency(agency=agency1, education_histories=edu_history1)
 
     ed_history = {
         'id_history': 20,
@@ -64,29 +63,24 @@ if __name__ == '__main__':
 
     edu_history = educational_factory.create_history(**ed_history)
 
-    h_agency = health_factory.create_agency(agency=agency2, medical_history=medical_history1)
+    h_agency = health_factory.create_agency(agency=agency2, medical_histories=medical_history1)
     medical_history = health_factory.create_history(**m_history)
 
-    leg_agency = legal_factory.create_agency(agency=agency1, legal_history=case_history1)
+    leg_agency = legal_factory.create_agency(agency=agency1, case_histories=case_history1)
     legal_history = legal_factory.create_history(**legal_history)
 
-    tr_agency = transport_factory.create_agency(agency=agency1,
-                                                information_vehicle=vehicle_history1,
-                                                information_fine=fine_history1)
+    tr_agency = transport_factory.create_agency(agency=agency1, vehicle_histories=vehicle_history1,
+                                                fine_histories=fine_history1)
 
     veh_history = transport_factory.create_history(vehicle_inf=vehicle_inf)[0]
-
     fin_history = transport_factory.create_history(fine_inf=fine_inf)[1]
 
     print(f'Info educational agency: {edu_agency.__str__()}\n\n')
     print(f'Info educational history agency: {edu_history.__str__()}')
-
     print(f'Info health agency: {h_agency.__str__()}\n\n')
     print(f'Info medical history agency: {medical_history.__str__()}')
-
     print(f'Info legal agency: {leg_agency.__str__()}\n\n')
     print(f'Info legal history agency: {legal_history.__str__()}')
-
     print(f'Info transport agency: {tr_agency.__str__()}\n\n')
     print(f'Info fine history agency: {fin_history.__str__()}')
     print(f'Info vehicle history agency: {veh_history.__str__()}')

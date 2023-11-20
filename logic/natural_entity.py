@@ -7,9 +7,7 @@ class NaturalEntity(Entity):
     Represents a natural entity.
     Attributes:
         type (str): The type of the entity, which is 'Natural Entity' in this case.
-    Methods:
-        kind_of_entity(): Returns the type of the entity.
-        __str__(): Returns a formatted string representing the natural entity.
+        subtype (Union[str, None]): The subtype of the natural entity, default is 'Person'.
     """
     type: str = 'Natural Entity'
     subtype: Union[str, None] = 'Person'
@@ -25,7 +23,7 @@ class NaturalEntity(Entity):
     def __str__(self):
         """
         Returns a formatted string representing the natural entity.
-        :returns: string natural entity
-        :rtype: str
+        Returns:
+            str: Formatted string representing the natural entity.
         """
         return 'Type: {0}'.format(self.type)

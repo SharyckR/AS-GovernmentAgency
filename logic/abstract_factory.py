@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import Tuple, Union
 from pydantic import BaseModel
 from logic.abstract_agency import AbstractAgency
 from logic.abstract_history import AbstractHistory
@@ -21,7 +22,7 @@ class AbstractFactory(ABC, BaseModel):
         pass
 
     @abstractmethod
-    def create_history(self) -> AbstractHistory:
+    def create_history(self) -> Union[AbstractHistory, Tuple[AbstractHistory, AbstractHistory]]:
         """
         Create an instance of an AbstractHistory.
         Returns:
