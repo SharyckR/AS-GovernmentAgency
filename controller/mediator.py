@@ -141,15 +141,13 @@ class Mediator:
     # Create Person
     def add_person(self, person: Person = Person()):
         self.load_data()
-        if NATURAL.find_one({f"{person.dni_person}": {"$exists": True}}):
-            if not any(p[f"{list(p.keys())[0]}"]["dni_person"] == person.dni_person for p in self._persons):
-                self._persons.append(person.to_dict())
-                person.mediator = self
-                print(f"Added person: {person.name}")
-                COL_PERSON.insert_one(person.to_dict())
-                return person.to_dict()
-            raise Exception(f"Person with DNI {person.dni_person} already exists.")
-        raise Exception(f"User with DNI {person.dni_person} does not exists.")
+        if not any(p[f"{list(p.keys())[0]}"]["dni_person"] == person.dni_person for p in self._persons):
+            self._persons.append(person.to_dict())
+            person.mediator = self
+            print(f"Added person: {person.name}")
+            COL_PERSON.insert_one(person.to_dict())
+            return person.to_dict()
+        raise Exception(f"Person with DNI {person.dni_person} already exists.")
 
     # Link histories with people
 

@@ -63,7 +63,7 @@ async def register(user: UserDB, person: Union[Person, None] = None, agency: Uni
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='The user already exist')
     if not is_valid_email(user.email):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='The email is invalid')
-    if person and user.username == person.dni_person:
+    if person and int(user.username) == person.dni_person:
         mediator.add_person(person=person)
     elif agency and int(user.username) == agency.id_entity:
         if user.subtype == 'Educational Agency':
@@ -78,7 +78,7 @@ async def register(user: UserDB, person: Union[Person, None] = None, agency: Uni
             raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='subtype is invalid')
     else:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT,
-                            detail="The identifiers aren\'t equals in agency and user")
+                            detail="The identifiers aren\'t equals in agency/person and user")
     user.type = user.type.title()
     user_info_dict = user.model_dump()
     user_info_dict['password'] = crypt.hash(str(user.password))
