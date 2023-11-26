@@ -23,7 +23,7 @@ async def get_person(request: Request, user: Annotated[Union[NaturalEntity, Lega
                             headers={"WWW-Authenticate": "Bearer"})
     try:
         persons = mediator_controller.get_persons()
-        return {'Persons:': persons}
+        return {'Persons': persons}
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_204_NO_CONTENT, detail=str(e))
 
