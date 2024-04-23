@@ -4,6 +4,8 @@ FROM python:latest
 # Establece el directorio de trabajo en /app
 WORKDIR /app
 
+RUN mkdir -p /app/routers
+
 # Copia el contenido actual del directorio al directorio de trabajo
 COPY /routers/case_history_router.py /app/routers/
 
