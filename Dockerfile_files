@@ -4,6 +4,8 @@ FROM python:latest
 # Establece el directorio de trabajo en /app
 WORKDIR /app
 
+RUN mkdir -p /app/routers
+
 # Copia el archivo de requisitos al directorio de trabajo
 COPY requirements.txt .
 
