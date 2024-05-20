@@ -51,9 +51,6 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build --info
 
-      - name: Print SONAR_HOST_URL
-        run: echo "SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}"
-
       - name: Install SonarQube Scanner
         run: |
           sudo apt-get update
