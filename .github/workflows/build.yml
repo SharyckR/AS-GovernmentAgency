@@ -37,11 +37,22 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
 
+      # Verificar si el archivo gradlew existe antes de intentar cambiar sus permisos
+      - name: Check for gradlew file
+        run: |
+          if [ ! -f ./gradlew ]; then
+            echo "gradlew file not found!"
+            exit 1
+          fi
+
       - name: Give execute permissions for gradlew
         run: chmod +x ./gradlew
 
       - name: Build with Gradle
         run: ./gradlew build --info
+
+      - name: Print SONAR_HOST_URL
+        run: echo "SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}"
 
       - name: Install SonarQube Scanner
         run: |
