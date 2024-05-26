@@ -1,0 +1,168 @@
+apiVersion: v1
+kind:  Pod
+metadata:
+  labels:
+    name: pod-1
+spec:
+  containers:
+  - name: container-auth
+    image: drasticmitten/auth:latest
+    ports:
+    - containerPort: 8080
+
+---
+apiVersion: v1
+kind:  Pod
+metadata:
+  labels:
+    name: pod-2
+spec:
+  containers:
+  - name: container-case_history
+    image: drasticmitten/case_history:latest
+    ports:
+    - containerPort: 8081
+
+---
+apiVersion: v1
+kind:  Pod
+metadata:
+  labels:
+    name: pod-3
+spec:
+  containers:
+  - name: container-educational_agency
+    image: drasticmitten/educational_agency:latest
+    ports:
+    - containerPort: 8082
+
+---
+apiVersion: v1
+kind:  Pod
+metadata:
+  labels:
+    name: pod-4
+spec:
+  containers:
+  - name: container-educational_history
+    image: drasticmitten/educational_history:latest
+    ports:
+    - containerPort: 8083
+
+---
+apiVersion: v1
+kind:  Pod
+metadata:
+  labels:
+    name: pod-5
+spec:
+  containers:
+  - name: container-email
+    image: drasticmitten/email:latest
+    ports:
+    - containerPort: 8084
+
+---
+apiVersion: v1
+kind:  Pod
+metadata:
+  labels:
+    name: pod-6
+spec:
+  containers:
+  - name: container-app
+    image: drasticmitten/app:latest
+    ports:
+    - containerPort: 8085
+
+---
+apiVersion: v1
+kind:  Pod
+metadata:
+  labels:
+    name: pod-7
+spec:
+  containers:
+  - name: container-fine_history
+    image: drasticmitten/fine_history:latest
+    ports:
+    - containerPort: 8086
+
+---
+apiVersion: v1
+kind:  Pod
+metadata:
+  labels:
+    name: pod-8
+spec:
+  containers:
+  - name: container-health_agency
+    image: drasticmitten/health_agency:latest
+    ports:
+    - containerPort: 8087
+
+---
+apiVersion: v1
+kind:  Pod
+metadata:
+  labels:
+    name: pod-9
+spec:
+  containers:
+  - name: container-health_history
+    image: drasticmitten/health_history:latest
+    ports:
+    - containerPort: 8088
+
+
+---
+apiVersion: v1
+kind:  Pod
+metadata:
+  labels:
+    name: pod-10
+spec:
+  containers:
+  - name: container-legal_agency
+    image: drasticmitten/legal_agency:latest
+    ports:
+    - containerPort: 8089
+
+---
+apiVersion: v1
+kind:  Pod
+metadata:
+  labels:
+    name: pod-11
+spec:
+  containers:
+  - name: container-person
+    image: drasticmitten/person:latest
+    ports:
+    - containerPort: 8090
+
+---
+apiVersion: v1
+kind:  Pod
+metadata:
+  labels:
+    name: pod-12
+spec:
+  containers:
+  - name: container-vehicle_history
+    image: drasticmitten/vehicle_history:latest
+    ports:
+    - containerPort: 8091
+
+---
+apiVersion: v1
+kind:  Pod
+metadata:
+  labels:
+    name: pod-13
+spec:
+  containers:
+  - name: container-transport_agency
+    image: drasticmitten/transport_agency:latest
+    ports:
+    - containerPort: 8092
