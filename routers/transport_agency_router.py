@@ -1,14 +1,13 @@
 from typing import Dict, Union, List
-from typing_extensions import Annotated
-from fastapi import APIRouter, HTTPException, status, Depends, Request
-from logic.agency_factory import AgencyFactory
+
+from fastapi import APIRouter, HTTPException, status, Depends
+from identity import web
+
 from controller.transport_factory_controller import TransportFactoryController
+from logic.agency_factory import AgencyFactory
 from logic.fine_history import FineHistory
-from logic.legal_entity import LegalEntity
-from logic.natural_entity import NaturalEntity
 from logic.vehicle_history import VehicleHistory
-from middlewares.security import current_user
-from routers.auth import verify_token
+from routers.auth import get_auth
 
 router = APIRouter(prefix='/agencies', tags=['transport agency'],
                    responses={status.HTTP_404_NOT_FOUND: {'message': 'Not found'}})
@@ -16,8 +15,10 @@ transport_factory_controller = TransportFactoryController()
 
 
 @router.get('/transport-agencies', response_model=Dict)  # Tested
-async def get_transport_agencies(request: Request, user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not (verify_token(request) and user.subtype == 'Transport Agency'):
+async def get_transport_agencies(auth: web.Auth = Depends(get_auth)):
+    user = auth.get_user()
+
+    if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
@@ -28,10 +29,12 @@ async def get_transport_agencies(request: Request, user: Annotated[Union[Natural
 
 
 @router.post('/transport-agencies', status_code=status.HTTP_201_CREATED, response_model=Dict)  # Tested
-async def create_transport_agency(request: Request, agency: AgencyFactory, vehicle_histories: Union[List[VehicleHistory], None],
+async def create_transport_agency(agency: AgencyFactory, vehicle_histories: Union[List[VehicleHistory], None],
                                   fine_histories: Union[List[FineHistory], None],
-                                  user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not (verify_token(request) and user.subtype == 'Transport Agency'):
+                                  auth: web.Auth = Depends(get_auth)):
+    user = auth.get_user()
+
+    if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
@@ -45,9 +48,11 @@ async def create_transport_agency(request: Request, agency: AgencyFactory, vehic
 
 @router.put('/update-transport-agencies/{id_entity}', status_code=status.HTTP_200_OK, response_model=Dict)
 # Tested
-async def update_transport_agency(request: Request, id_entity: int, agency: AgencyFactory,
-                                  user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not (verify_token(request) and user.subtype == 'Transport Agency'):
+async def update_transport_agency(id_entity: int, agency: AgencyFactory,
+                                  auth: web.Auth = Depends(get_auth)):
+    user = auth.get_user()
+
+    if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
@@ -59,9 +64,11 @@ async def update_transport_agency(request: Request, id_entity: int, agency: Agen
 
 @router.put('/link-transport-fine-agencies/{id_entity}', status_code=status.HTTP_201_CREATED, response_model=Dict)
 # Tested
-async def link_fine_history(request: Request, fine_history: FineHistory, id_entity: int,
-                            user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not (verify_token(request) and user.subtype == 'Transport Agency'):
+async def link_fine_history(fine_history: FineHistory, id_entity: int,
+                            auth: web.Auth = Depends(get_auth)):
+    user = auth.get_user()
+
+    if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
@@ -74,9 +81,11 @@ async def link_fine_history(request: Request, fine_history: FineHistory, id_enti
 
 @router.put('/link-transport-vehicle-agencies/{id_entity}', status_code=status.HTTP_201_CREATED, response_model=Dict)
 # Tested
-async def link_vehicle_history(request: Request, vehicle_history: VehicleHistory, id_entity: int,
-                               user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not (verify_token(request) and user.subtype == 'Transport Agency'):
+async def link_vehicle_history(vehicle_history: VehicleHistory, id_entity: int,
+                               auth: web.Auth = Depends(get_auth)):
+    user = auth.get_user()
+
+    if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:

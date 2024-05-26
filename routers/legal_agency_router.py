@@ -1,13 +1,12 @@
 from typing import Dict, Union, List
-from typing_extensions import Annotated
-from fastapi import APIRouter, HTTPException, status, Depends, Request
+
+from fastapi import APIRouter, HTTPException, status, Depends
+from identity import web
+
 from controller.legal_factory_controller import LegalFactoryController
 from logic.agency_factory import AgencyFactory
 from logic.case_history import CaseHistory
-from logic.legal_entity import LegalEntity
-from logic.natural_entity import NaturalEntity
-from middlewares.security import current_user
-from routers.auth import verify_token
+from routers.auth import get_auth
 
 router = APIRouter(prefix='/agencies', tags=['legal agency'],
                    responses={status.HTTP_404_NOT_FOUND: {'message': 'Not found'}})
@@ -15,8 +14,10 @@ legal_factory_controller = LegalFactoryController()
 
 
 @router.get('/legal-agencies', response_model=Dict)  # Tested
-async def get_legal_agencies(request: Request, user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not (verify_token(request) and user.subtype == 'Legal Agency'):
+async def get_legal_agencies(auth: web.Auth = Depends(get_auth)):
+    user = auth.get_user()
+
+    if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
@@ -27,9 +28,10 @@ async def get_legal_agencies(request: Request, user: Annotated[Union[NaturalEnti
 
 
 @router.post('/legal-agencies', status_code=status.HTTP_201_CREATED, response_model=Dict)  # Tested
-async def create_legal_agency(request: Request, agency: AgencyFactory, case_histories: Union[List[CaseHistory], None],
-                              user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not (verify_token(request) and user.subtype == 'Legal Agency'):
+async def create_legal_agency(agency: AgencyFactory, case_histories: Union[List[CaseHistory], None],
+                              auth: web.Auth = Depends(get_auth)):
+    user = auth.get_user()
+    if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
@@ -40,9 +42,10 @@ async def create_legal_agency(request: Request, agency: AgencyFactory, case_hist
 
 
 @router.put('/update-legal-agencies/{id_entity}', status_code=status.HTTP_200_OK, response_model=Dict)  # Tested
-async def update_legal_agency(request: Request, id_entity: int, agency: AgencyFactory,
-                              user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not (verify_token(request) and user.subtype == 'Legal Agency'):
+async def update_legal_agency(id_entity: int, agency: AgencyFactory,
+                              auth: web.Auth = Depends(get_auth)):
+    user = auth.get_user()
+    if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
@@ -54,9 +57,10 @@ async def update_legal_agency(request: Request, id_entity: int, agency: AgencyFa
 
 @router.put('/link-legal-agencies/{id_entity}', status_code=status.HTTP_201_CREATED, response_model=Dict)
 # Tested
-async def link_case_history(request: Request, case_history: CaseHistory, id_entity: int,
-                            user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not (verify_token(request) and user.subtype == 'Legal Agency'):
+async def link_case_history(case_history: CaseHistory, id_entity: int,
+                            auth: web.Auth = Depends(get_auth)):
+    user = auth.get_user()
+    if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:

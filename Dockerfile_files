@@ -1,0 +1,24 @@
+# Usa la imagen base oficial de Python
+FROM python:latest
+
+# Establece el directorio de trabajo en /app
+WORKDIR /app
+
+# Copia el archivo de requisitos al directorio de trabajo
+COPY requirements.txt .
+
+# Instala las dependencias
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copia el contenido actual del directorio al directorio de trabajo
+COPY /logic/ /app/logics/
+COPY /middlewares/ /app/middlewares/
+COPY /test/ /app/test/
+COPY /venv/ /app/venv/
+COPY /app.py /app/
+COPY /README.md /app/
+COPY /requirements.txt /app/
+COPY /controller/ /app/controller/
+
+# Especifica el comando que se ejecutará cuando se inicie el contenedor
+CMD [ "python", "app.py" ]

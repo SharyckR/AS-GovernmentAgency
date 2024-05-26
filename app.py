@@ -1,11 +1,19 @@
+import os
+
 from dotenv import load_dotenv
 from fastapi import FastAPI, Request
+from starlette.middleware.sessions import SessionMiddleware
+
 from routers import (educational_agency_router, health_agency_router, legal_agency_router, person_router,
                      transport_agency_router, educational_history_router, health_history_router, case_history_router,
                      fine_history_router, vehicle_history_router, auth, send_email)
 from fastapi.middleware.cors import CORSMiddleware
 load_dotenv()
 app = FastAPI(title='GOVERNMENT AGENCY')
+app.add_middleware(
+    SessionMiddleware,
+    secret_key=os.getenv('SECRET')# Change this to a more secure key
+)
 origin = ['*']
 app.add_middleware(CORSMiddleware,
                    allow_origins=origin,

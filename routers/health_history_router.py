@@ -1,19 +1,20 @@
-from typing import Dict, Union
-from fastapi import APIRouter, HTTPException, status, Depends, Request
-from typing_extensions import Annotated
-from logic.legal_entity import LegalEntity
+from typing import Dict
+
+from fastapi import APIRouter, HTTPException, status, Depends
+from identity import web
+
 from logic.medical_history import MedicalHistory
-from logic.natural_entity import NaturalEntity
-from middlewares.security import current_user
-from routers.auth import verify_token
+from routers.auth import get_auth
 from routers.health_agency_router import health_factory_controller
+
 router = APIRouter(prefix='/histories', tags=['health history'],
                    responses={status.HTTP_404_NOT_FOUND: {'message': 'Not found'}})
 
 
 @router.get('/health-histories', response_model=Dict)  # Tested
-async def get_medical_histories(request: Request, user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not (verify_token(request) and user.subtype == 'Health Agency'):
+async def get_medical_histories(auth: web.Auth = Depends(get_auth)):
+    user = auth.get_user()
+    if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
@@ -24,9 +25,10 @@ async def get_medical_histories(request: Request, user: Annotated[Union[NaturalE
 
 
 @router.post('/new-medical-histories', status_code=status.HTTP_201_CREATED, response_model=Dict)  # Tested
-async def create_medical_history(request: Request, medical_history: MedicalHistory,
-                                 user: Annotated[Union[NaturalEntity, LegalEntity], Depends(current_user)]):
-    if not (verify_token(request) and user.subtype == 'Health Agency'):
+async def create_medical_history(medical_history: MedicalHistory,
+                                 auth: web.Auth = Depends(get_auth)):
+    user = auth.get_user()
+    if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='UNAUTHORIZED',
                             headers={"WWW-Authenticate": "Bearer"})
     try:
