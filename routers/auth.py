@@ -1,3 +1,5 @@
+import os
+
 import identity.web
 import requests
 from fastapi import Request, Depends, HTTPException, status, APIRouter
@@ -21,9 +23,8 @@ def get_auth(request: Request):
 
 
 @router.get("/login")
-async def login(request: Request, auth: identity.web.Auth = Depends(get_auth)):
-    redirect_uri = str(request.url_for("auth_response"))
-    login_params = auth.log_in(scopes=app_config.SCOPE, redirect_uri=redirect_uri)
+async def login(auth: identity.web.Auth = Depends(get_auth)):
+    login_params = auth.log_in(scopes=app_config.SCOPE, redirect_uri=os.getenv('REDIRECT_URI'))
     return JSONResponse(content=login_params)
 
 

@@ -8,6 +8,3 @@ RUN mkdir -p /app/routers
 
 # Copia el contenido actual del directorio al directorio de trabajo
 COPY /routers/auth.py /app/routers/
-
-
-

@@ -10,10 +10,13 @@ from routers import (educational_agency_router, health_agency_router, legal_agen
 from fastapi.middleware.cors import CORSMiddleware
 load_dotenv()
 app = FastAPI(title='GOVERNMENT AGENCY')
+
+
 app.add_middleware(
     SessionMiddleware,
     secret_key=os.getenv('SECRET')# Change this to a more secure key
 )
+
 origin = ['*']
 app.add_middleware(CORSMiddleware,
                    allow_origins=origin,
